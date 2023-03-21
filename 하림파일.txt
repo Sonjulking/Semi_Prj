@@ -1,2 +1,0 @@
-git merge 테스트
-test 2일차gg
