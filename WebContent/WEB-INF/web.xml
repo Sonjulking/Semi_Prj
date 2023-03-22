@@ -9,20 +9,5 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
-<<<<<<< HEAD
-=======
- 
-  <!-- 서블릿 매핑(N:1) -->
-  <servlet>
-  	<servlet-name>FrontController</servlet-name>
-  	<servlet-class>com.board.controller.FrontController</servlet-class>
-  </servlet>
-  
-  <servlet-mapping>
-  	<servlet-name>FrontController</servlet-name>
-  	<url-pattern>*.do</url-pattern>
-  </servlet-mapping>
-  
-  
->>>>>>> 7b54b8574a68a294254b2512470dd66229339fe8
+
 </web-app>
