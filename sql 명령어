@@ -62,7 +62,7 @@ DB
 글쓴이 : varchar2
 게시판 종류 : varchar2
 말머리 : varchar2
-조회수 : varchar2
+조회수 : number
 추천수 : number
 등록시간 : date
 
