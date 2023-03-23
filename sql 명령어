@@ -2,7 +2,7 @@ DB
 매칭DB : 게임명, 티어, 유저아이디, 유저닉네임, 디코닉네임,카톡 닉네임, 가입시간
 
 
-create table  macthing(
+create table macthing(
 game_name varchar2() check (game_name == 1),
 tier varchar2() not null,
 user_id varchar2() primary key,
