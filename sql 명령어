@@ -1,5 +1,83 @@
-회원
+DB
+매칭DB : 게임명, 티어, 유저아이디, 유저닉네임, 디코닉네임,카톡 닉네임, 가입시간
 
-매칭
+제약조건
+게임명 : not null,
+티어 :  not null
+유저아이디 : pk,
+유저 닉네임 : not null
+디코 닉네임 : 
+카톡 닉네임: 
+가입시간 : not null
 
-게시판
+데이터 타입
+게임명 : varchar2
+티어 : varchar2
+유저아이디 : varchar2
+유저 닉네임 : varchar2
+디코 닉네임 : varchar2
+카톡 닉네임: varchar2
+가입시간 : date
+
+
+회원DB : 아이디, 비번, 닉네임, 선호게임(속성, 3개로 등록), 메일주소, 포인트, 가입일, 폰 번호
+
+제약조건
+인덱스 : not null
+아이디 : primary key,
+비번 : not null
+닉네임 : not null
+선호게임 : 
+메일주소 : 
+포인트 : not null
+가입일 : not null
+폰 번호 : not null
+
+데이터 타입
+아이디 : varchar2
+비번 : varchar2
+닉네임 : varchar2
+선호게임 : varchar2
+메일주소 : varchar2
+포인트 : number
+가입일 : date
+폰 번호 : varchar2
+
+
+게시판 DB : 제목, 내용, 글쓴이, 게시판 종류, 말머리, 조회수, 추천수, 등록시간
+
+제약조건
+제목 : not null
+내용 : 
+글쓴이 : pk 
+게시판 종류 : not null
+말머리 : not null
+조회수 : not null
+추천수 : not null
+등록시간 : not null
+
+데이터 타입
+제목 : varchar2
+내용 : varchar2
+글쓴이 : varchar2
+게시판 종류 : varchar2
+말머리 : varchar2
+조회수 : varchar2
+추천수 : number
+등록시간 : date
+
+
+댓글 DB : 내용, 글쓴이, 등록시간, 추천수
+제약조건
+내용 : 
+글쓴이 : pk
+등록시간 : not null 
+추천수 : not null
+
+데이터 타입
+내용 : varchar2()
+글쓴이 : varchar2()
+등록시간 : date
+추천수 : number(5, 0)
+
+
