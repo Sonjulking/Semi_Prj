@@ -3,13 +3,13 @@ DB
 
 
 create table matching(
-game_name varchar2() check (game_name == 1),
-tier varchar2() not null,
-user_id varchar2() primary key,
-user_nickname varchar2() unique not null,
-discord_nickname varchar2() unique,
-kakao_id varchar2() unique,
-matching_regdate date not null
+game_name varchar2(30) check (game_name == 1),
+tier varchar2(20) not null,
+user_id varchar2(10) primary key,
+user_nickname varchar2(20) unique not null,
+discord_nickname varchar2(20) unique,
+kakao_id varchar2(10) unique,
+matching_regdate date not null enable
 );
 
 회원DB : 아이디, 비번, 닉네임, 선호게임(속성, 3개로 등록), 메일주소, 포인트, 가입일, 폰 번호
@@ -22,27 +22,27 @@ member_nickname varchar2(10) unique not null,
 member_pro_game varchar2(10),
 member_email varchar2(20),
 member_point numebr(100) not null,
-member_regdate date not null,
-member_phone varchar2() not null
+member_regdate date not null enable,
+member_phone varchar2(20) not null
 );
 
 게시판 DB : 제목, 내용, 글쓴이, 게시판 종류, 말머리, 조회수, 추천수, 등록시간
 create board table(
-board_title varchar2() not null,
-board_cont varchar2(),
-board_writer varchar2() primary key,
-board_type varchar2() not null,
-board_heading varchar2() not null,
-board_hit number() default 0,
-board_thumbs number() default 0,
+board_title varchar2(100) not null,
+board_cont varchar2(10000),
+board_writer varchar2(100) primary key,
+board_type varchar2(30) not null,
+board_heading varchar2(20) not null,
+board_hit number(5000) default 0,
+board_thumbs number(1000) default 0,
 board_date date not null enable
 );
 
 댓글 DB : 내용, 글쓴이, 등록시간, 추천수
 create table comment(
-comment_cont varchar2(),
-comment_writer varchar2() primary key,
+comment_cont varchar2(10000),
+comment_writer varchar2(100) primary key,
 commemt_regdate date not null enable,
-comment_hit number default 0
+comment_hit number(5000) default 0
 );
 
