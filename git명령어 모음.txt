@@ -107,3 +107,10 @@ pull 하거나 branch checkout 오류
 git stash : 해당 명령어를 통해 현재 Staging 영역에 있는 파일의 변경사항을 스택에 넣어 둔다.
 git stash pop : 변경 사항을 적용하고, 스택에서 제거 한다.
 해결 : git stash 또는 git commit -m "커밋 메세지" 또는 git stash && git pull origin master && git stash pop
+
+
+error: failed to push some refs to 'https://github.com/Sonjulking/Semi_Prj.git'
+해결 : pull -> merge -> push
+$ git pull origin master
+$ git merge
+$ git push
