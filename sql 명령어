@@ -22,27 +22,17 @@ DB
 
 회원DB : 아이디, 비번, 닉네임, 선호게임(속성, 3개로 등록), 메일주소, 포인트, 가입일, 폰 번호
 
-제약조건
-인덱스 : not null
-아이디 : primary key,
-비번 : not null
-닉네임 : not null
-선호게임 : 
-메일주소 : 
-포인트 : not null
-가입일 : not null
-폰 번호 : not null
-
-데이터 타입
-아이디 : varchar2
-비번 : varchar2
-닉네임 : varchar2
-선호게임 : varchar2
-메일주소 : varchar2
-포인트 : number
-가입일 : date
-폰 번호 : varchar2
-
+create table (
+member_index number(50) not null,
+member_id varchar2(10) primary key,
+member_pwd varchar2(12) not null,
+member_nickname varchar2(10) not null,
+member_progame varchar2(10),
+member_email varchar2(20),
+member_point numebr(100) not null,
+member_regdate date not null,
+member_phone varchar2() not null
+);
 
 게시판 DB : 제목, 내용, 글쓴이, 게시판 종류, 말머리, 조회수, 추천수, 등록시간
 
