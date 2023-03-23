@@ -35,23 +35,14 @@ board_type varchar2() not null,
 board_heading varchar2() not null,
 board_hit number() default 0,
 board_thumbs number() default 0,
-board_date date
+board_date date not null enable
 );
 
 댓글 DB : 내용, 글쓴이, 등록시간, 추천수
 create table comment(
-
+comment_cont varchar2(),
+comment_writer varchar2() primary key,
+commemt_regdate date not null enable,
+comment_hit number default 0
 );
-제약조건
-내용 : 
-글쓴이 : pk
-등록시간 : not null 
-추천수 : not null
-
-데이터 타입
-내용 : varchar2()
-글쓴이 : varchar2()
-등록시간 : date
-추천수 : number(5, 0)
-
 
