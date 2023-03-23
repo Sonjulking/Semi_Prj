@@ -43,6 +43,7 @@
 	        		<label><input type="checkbox" name="lol" value="lol">league of legend</label> <br>
 	        		<label><input type="checkbox" name="battle ground" value="battle ground">battle ground</label> <br>
 	        		<label><input type="checkbox" name="overwatch" value="overwatch">overwatch</label>
+
 	        	</td>
 	        </tr>
 	        <tr>
@@ -54,7 +55,7 @@
 	    </table>
 	    <br>
 	    
-	    <input type="submit" name="join" value="회원가입" >
+	    <input type="submit" name="join" value="회원가입">
 	</div>
 </form>
 </body>
