@@ -2,14 +2,14 @@ DB
 매칭DB : 게임명, 티어, 유저아이디, 유저닉네임, 디코닉네임,카톡 닉네임, 가입시간
 
 
-create table macthing(
+create table matching(
 game_name varchar2() check (game_name == 1),
 tier varchar2() not null,
 user_id varchar2() primary key,
 user_nickname varchar2() unique not null,
 discord_nickname varchar2() unique,
 kakao_id varchar2() unique,
-macthing_regdate date not null
+matching_regdate date not null
 );
 
 회원DB : 아이디, 비번, 닉네임, 선호게임(속성, 3개로 등록), 메일주소, 포인트, 가입일, 폰 번호
