@@ -65,7 +65,6 @@ public class FrontController extends HttpServlet{
 					//action = (Action)url.newInstance();
 					Constructor constructor = url.getConstructor();
 					action = (Action)constructor.newInstance();
-					forward = action.execute(request, response);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
