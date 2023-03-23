@@ -30,7 +30,7 @@ member_phone varchar2(20) not null
 create board table(
 board_title varchar2(100) not null,
 board_cont varchar2(10000),
-board_writer varchar2(100) primary key,
+board_writer varchar2(30) primary key,
 board_type varchar2(30) not null,
 board_heading varchar2(20) not null,
 board_hit number(5000) default 0,
@@ -41,7 +41,7 @@ board_date date not null enable
 댓글 DB : 내용, 글쓴이, 등록시간, 추천수
 create table comment(
 comment_cont varchar2(10000),
-comment_writer varchar2(100) primary key,
+comment_writer varchar2(30) primary key,
 commemt_regdate date not null enable,
 comment_hit number(5000) default 0
 );
