@@ -9,6 +9,7 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list> 
+  
   <!-- 서블릿 매핑(N:1) -->
   <servlet>
   	<servlet-name>FrontController</servlet-name>
