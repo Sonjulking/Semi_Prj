@@ -101,3 +101,9 @@ Automatic merge failed; fix conflicts and then commit the result.
 
 에러 메시지: fatal: Not possible to fast-forward, aborting.
 해결: git pull origin main --rebase
+
+pull 하거나 branch checkout 오류
+에러 메세지 : error: Please commit your changes or stash them before you merge.
+git stash : 해당 명령어를 통해 현재 Staging 영역에 있는 파일의 변경사항을 스택에 넣어 둔다.
+git stash pop : 변경 사항을 적용하고, 스택에서 제거 한다.
+해결 : git stash 또는 git commit -m "커밋 메세지" 또는 git stash && git pull origin master && git stash pop
