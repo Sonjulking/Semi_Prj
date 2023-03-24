@@ -27,7 +27,7 @@ member_phone varchar2(20) not null
 );
 
 게시판 DB : 제목, 내용, 글쓴이, 게시판 종류, 말머리, 조회수, 추천수, 등록시간
-create board table(
+create table board(
 board_index number primary key,
 board_title varchar2(100) not null,
 board_cont varchar2(10000),

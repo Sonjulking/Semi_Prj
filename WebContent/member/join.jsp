@@ -7,6 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+<form method="post" action="<%=request.getContextPath()%>/insert_member.do">
 	<div align="center">
 	    <table border="1">
 	        <tr>
@@ -39,7 +40,7 @@
 	        <tr>
 	        	<th>선호 게임</th>
 	        	<td>
-	        		<label><input type="checkbox" name="lol" value="lol">leage of legend</label> <br>
+	        		<label><input type="checkbox" name="lol" value="lol">league of legend</label> <br>
 	        		<label><input type="checkbox" name="battle ground" value="battle ground">battle ground</label> <br>
 	        		<label><input type="checkbox" name="overwatch" value="overwatch">overwatch</label>
 	        	</td>
@@ -47,13 +48,14 @@
 	        <tr>
 	        	
 	        	<td colspan="2" align="center">
-	        		<label>약관 동의하기<input type="checkbox" name="check_info" value="check_info"></label>
+	        		<label>약관 동의하기<input type="checkbox" name="check_info" value="check_info" required="required"></label>
 	        	</td>
 	        </tr>
 	    </table>
 	    <br>
 	    
-	    <input type="submit" name="join" value="회원가입">
+	    <input type="submit" name="join" value="회원가입" >
 	</div>
+</form>
 </body>
 </html>
