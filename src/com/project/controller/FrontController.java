@@ -1,4 +1,4 @@
-package com.board.action;
+package com.project.controller;
 
 import java.io.FileInputStream;
 import java.io.IOException;

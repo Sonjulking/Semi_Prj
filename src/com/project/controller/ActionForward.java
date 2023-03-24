@@ -1,4 +1,4 @@
-package com.board.action;
+package com.project.controller;
 
 /*
  * ActionForward 클래스

@@ -3,6 +3,36 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script type="text/javascript">
+
+ function lol(obj) {
+	 var checked = obj.checked;
+	 if(checked) {
+		 obj.value = "Y"; 
+	 } else {
+		 obj.value = "N";
+	 }
+ };
+ 
+ function battle_ground(obj) {
+	 var checked = obj.checked;
+	 if(checked) {
+		 obj.value = "Y"; 
+	 } else {
+		 obj.value = "N";
+	 }
+ };
+ 
+ function overwatch(obj) {
+	 var checked = obj.checked;
+	 if(checked) {
+		 obj.value = "Y"; 
+	 } else {
+		 obj.value = "N";
+	 }
+ };
+ 
+</script>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
@@ -40,9 +70,9 @@
 	        <tr>
 	        	<th>선호 게임</th>
 	        	<td>
-	        		<label><input type="checkbox" name="lol" value="lol">league of legend</label> <br>
-	        		<label><input type="checkbox" name="battle ground" value="battle ground">battle ground</label> <br>
-	        		<label><input type="checkbox" name="overwatch" value="overwatch">overwatch</label>
+	        		<label for="lol"><input type="checkbox" name="lol" onchange="lol(this);" value="lol">league of legend</label> <br>
+	        		<label for="battle_ground"><input type="checkbox" name="battle_ground" onchange="battle_groundI(this);" value="battle ground">battle ground</label> <br>
+	        		<label for="overwatch"><input type="checkbox" name="overwatch" onchange="overwatch(this);" value="overwatch">overwatch</label>
 
 	        	</td>
 	        </tr>

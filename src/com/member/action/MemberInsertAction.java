@@ -1,4 +1,4 @@
-package com.board.action;
+package com.member.action;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.member.model.MemberDAO;
 import com.member.model.MemberDTO;
+import com.project.controller.Action;
 
 public class MemberInsertAction implements Action {
 
