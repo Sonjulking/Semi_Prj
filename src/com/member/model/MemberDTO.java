@@ -1,6 +1,7 @@
 package com.member.model;
 
 public class MemberDTO {
+
 	private int member_index;
 	private String member_id;
 	private String member_pwd;
@@ -12,7 +13,6 @@ public class MemberDTO {
 	private String prefer_lol;
 	private String prefer_battle_ground;
 	private String prefer_overwatch;
-	
 	
 	public int getMember_index() {
 		return member_index;
@@ -38,7 +38,7 @@ public class MemberDTO {
 	public void setMember_nickname(String member_nickname) {
 		this.member_nickname = member_nickname;
 	}
-	
+
 	public String getMember_email() {
 		return member_email;
 	}
@@ -81,4 +81,5 @@ public class MemberDTO {
 	public void setPrefer_overwatch(String prefer_overwatch) {
 		this.prefer_overwatch = prefer_overwatch;
 	}
+
 }

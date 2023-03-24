@@ -43,17 +43,18 @@ public class MemberDAO {
 		return instance;
 	}
 	// getInstance() end
-
+	
 	// openConn() start
 	// JDBC 방식이 아닌 DBCP 방식으로 DB와 연동 작업 진행
 	public void openConn() {
-
+		
 		try {
 			// 1단계 : JNDI 서버 객체 생성
 			// 자바의 네이밍 서비스(JNDI)에서 이름과 실제 객체를 연결해 주는 개념이 Context 객체이며,
 			// InitialContext 객체는 네이밍 서비스를 이용하기 위한 시작점이 됨.
 			Context initCtx = new InitialContext();
 
+			
 			// 2단계 : Context 객체를 얻어와야 함.
 			// "java:comp/env" 라는 이름의 인수로 Context 객체를 얻어옴.
 			// "java:comp/env"는 현재 웹 애플리케이션에서 네이밍 서비스를 이용 시 루트 디렉토리라고 생각하면 됨.
@@ -68,7 +69,7 @@ public class MemberDAO {
 
 			// 4단계 : DataSource 객체를 이용하여 커넥션을 하나 가져온다.
 			con = ds.getConnection();
-
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -80,11 +81,11 @@ public class MemberDAO {
 	public void closeConn(ResultSet rs, PreparedStatement pstmt, Connection con) {
 
 		try {
-			if (rs != null)
+			if(rs != null)
 				rs.close();
-			if (pstmt != null)
+			if(pstmt != null)
 				pstmt.close();
-			if (con != null)
+			if(con != null)
 				con.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -93,40 +94,42 @@ public class MemberDAO {
 	}
 	// closeConn() end
 
-	// insertMember() start
-	public int insertMember(MemberDTO dto) {
+	
+	//view에서 회원가입 시 db에 회원정보 삽입
+	public int memberInsert(MemberDTO dto) {
+		
 		int res = 0, count = 0;
-
+		
 		try {
-			openConn();
-
-			sql = "select max(member_index) from member";
-
+			openConn();		// 커넥션풀 방식으로 DB 연동 진행.
+			
+			sql = "select max(num) from member";
+			
 			pstmt = con.prepareStatement(sql);
-
+			
 			rs = pstmt.executeQuery();
-
-			if (rs.next()) {
-				count = rs.getInt(1) + 1;
+			
+			if(rs.next()) {
+				count = rs.getInt(1);
 			}
-
-			sql = "insert into member values(?, ?, ?, ?, ?, ?, ?, sysdate, ?, ?, ?)";
-
-			pstmt = con.prepareStatement(sql);
-
-			pstmt.setInt(1, count);
+			
+			sql = "insert into member values(?, ?, ?, ?, ?, ?, default, sydate, ?, ?, ?)";
+			
+			pstmt.setInt(1, count + 1);
 			pstmt.setString(2, dto.getMember_id());
 			pstmt.setString(3, dto.getMember_pwd());
 			pstmt.setString(4, dto.getMember_nickname());
-			pstmt.setString(4, dto.getPrefer_lol());			
+			pstmt.setString(5, dto.getPrefer_lol());
 			pstmt.setString(6, dto.getMember_email());
-			pstmt.setInt(7, dto.getPoint());
-			pstmt.setString(8, dto.getPhone());
-			pstmt.setString(9, dto.getPrefer_battle_ground());
-			pstmt.setString(10, dto.getPrefer_overwatch());
-
+			pstmt.setString(7, dto.getPhone());
+			pstmt.setString(8, dto.getPrefer_battle_ground());
+			pstmt.setString(9, dto.getPrefer_overwatch());
+			
+			
+			pstmt = con.prepareStatement(sql);
+			
 			res = pstmt.executeUpdate();
-
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -135,6 +138,6 @@ public class MemberDAO {
 		}
 		return res;
 	}
-	// insertMember()
+	//memberInsert() end
 	
 }
