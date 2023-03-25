@@ -9,11 +9,12 @@ import javax.servlet.http.HttpServletResponse;
 import com.member.model.MemberDAO;
 import com.member.model.MemberDTO;
 import com.project.controller.Action;
+import com.project.controller.ActionForward;
 
 public class MemberInsertAction implements Action {
 
 	@Override
-	public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		//
 		String member_id = request.getParameter("id");
 		String member_pwd = request.getParameter("pwd");
@@ -34,6 +35,7 @@ public class MemberInsertAction implements Action {
 
 		MemberDAO dao = MemberDAO.getInstance();
 		
+		ActionForward forward = new ActionForward();
 		int check = dao.memberInsert(dto);
 		
 		PrintWriter out = response.getWriter();
@@ -48,6 +50,7 @@ public class MemberInsertAction implements Action {
 			out.println("alert('회원가입 실패~')");
 			out.println("</script>");
 		}
+		return forward;
 		
 	}
 

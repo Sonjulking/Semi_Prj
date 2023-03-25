@@ -103,34 +103,35 @@ public class MemberDAO {
 		try {
 			openConn();		// 커넥션풀 방식으로 DB 연동 진행.
 			
-			sql = "select max(num) from member";
+			sql = "select max(member_index) from member";
 			
 			pstmt = con.prepareStatement(sql);
 			
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()) {
-				count = rs.getInt(1);
+				count = rs.getInt(1) + 1;
 			}
 			
-			sql = "insert into member values(?, ?, ?, ?, ?, ?, default, sydate, ?, ?, ?)";
+			sql = "insert into member values(?, ?, ?, ?, ?, default, sysdate, ?, ?, ?, ?)";
 			
-			pstmt.setInt(1, count + 1);
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setInt(1, count);
 			pstmt.setString(2, dto.getMember_id());
 			pstmt.setString(3, dto.getMember_pwd());
 			pstmt.setString(4, dto.getMember_nickname());
-			pstmt.setString(5, dto.getPrefer_lol());
-			pstmt.setString(6, dto.getMember_email());
-			pstmt.setString(7, dto.getPhone());
+			pstmt.setString(5, "rd@gmail.com");
+			pstmt.setString(6, dto.getPhone());
+			pstmt.setString(7, dto.getPrefer_lol());
 			pstmt.setString(8, dto.getPrefer_battle_ground());
 			pstmt.setString(9, dto.getPrefer_overwatch());
 			
 			
-			pstmt = con.prepareStatement(sql);
 			
 			res = pstmt.executeUpdate();
 			
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {

@@ -7,6 +7,6 @@ import javax.servlet.http.HttpServletResponse;
 
 public interface Action {
 
-	void execute(HttpServletRequest request, HttpServletResponse response) throws IOException;
+	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws IOException;
 
 }

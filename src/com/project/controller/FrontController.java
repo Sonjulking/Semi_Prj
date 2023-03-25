@@ -12,7 +12,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.board.action.*;
+
+
 
 public class FrontController extends HttpServlet{
 	private static final long serialVersionUID = 1L;
@@ -49,7 +50,7 @@ public class FrontController extends HttpServlet{
 			 *   인자로 들어온 Properties 파일을 읽게 됨.
 			 * - 읽어 들일 때 사용하는 메서드는 load() 라는 메서드를 이용하여 파일을 읽어 들이게 됨.
 			 */
-			FileInputStream fis = new FileInputStream("C:\\Users\\user\\semi_project\\Semi_Prj\\src\\com\\project\\controller\\mapping.properties");
+			FileInputStream fis = new FileInputStream("C:\\NCS\\workspace(jsp2)\\Semi_Prj\\src\\com\\project\\controller\\mapping.properties");
 			prop.load(fis);
 			String value = prop.getProperty(command);
 			System.out.println("value >>> " + value);
@@ -65,6 +66,8 @@ public class FrontController extends HttpServlet{
 					//action = (Action)url.newInstance();
 					Constructor constructor = url.getConstructor();
 					action = (Action)constructor.newInstance();
+					forward = action.execute(request, response);
+						
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
