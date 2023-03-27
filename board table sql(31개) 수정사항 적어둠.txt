@@ -1,0 +1,35 @@
+pull은 16시인가에 받았고, 하람님이 프론트컨트롤러의 mapping.properties수정한거는 반영했습니다!
+
+
+
+webContent에 있는 sql에서 3개 수정하였음.
+1) cont 크기 10000 -> 3000 (varchar2 최대 크기 4000)
+2) heading의 크기 20 -> 25 (리그오브레전드가 길어서 늘림)
+3) hit크기 5000 -> max
+
+
+
+create table board(
+board_index number primary key,
+board_title varchar2(100) not null,
+board_cont varchar2(3000),
+board_writer varchar2(30) not null,
+board_type varchar2(30) not null,
+board_heading varchar2(25) not null,
+board_hit number default 0,
+board_thumbs number(3) default 0,
+board_date date not null enable
+);
+
+
+INSERT INTO board values (1, '첫 번째 게시물 제목', '첫 번째 게시물 내용', '작성자1', '자유게시판', '유머', 10, 5, sysdate);
+INSERT INTO board values (2, '두 번째 게시물 제목', '두 번째 게시물 내용', '작성자2', '공지/기타', '질문', 55, 3, sysdate);
+INSERT INTO board values (3, '세 번째 게시물 제목', '세 번째 게시물 내용', '작성자3', '자유게시판', '유머', 40, 7, sysdate);
+INSERT INTO board values (4, '네 번째 게시물 제목', '네 번째 게시물 내용', '작성자4', '레전드게시판', 'LOL', 35, 0, sysdate);
+INSERT INTO board values (5, '다섯 번째 게시물 제목', '다섯 번째 게시물 내용', '작성자5', '자유게시판', '일상', 20, 1, sysdate);
+INSERT INTO board values (6, '여섯 번째 게시물 제목', '여섯 번째 게시물 내용', '작성자6', '공지/기타', '신고', 5, 2, sysdate);
+INSERT INTO board values (7, '일곱 번째 게시물 제목', '일곱 번째 게시물 내용', '작성자7', '자유게시판', '일상', 40, 6, sysdate);
+INSERT INTO board values (8, '여덟 번째 게시물 제목', '여덟 번째 게시물 내용', '작성자8', '레전드게시판', '배틀그라운드', 90, 25, sysdate);
+INSERT INTO board values (9, '아홉 번째 게시물 제목', '아홉 번째 게시물 내용', '작성자9', '자유게시판', '일상', 50, 9, sysdate);
+INSERT INTO board values (10, '열 번째 게시물 제목', '열 번째 게시물 내용', '작성자10', '공지/기타', '질문', 49, 1, sysdate); 
+INSERT INTO board values (11, '열한 번째 게시물 제목', '열한 번째 게시물 내용', '작성자11', '자유게시판', '유머', 70, 16, sysdate); 
