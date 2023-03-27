@@ -43,18 +43,17 @@ public class MemberDAO {
 		return instance;
 	}
 	// getInstance() end
-	
+
 	// openConn() start
 	// JDBC 방식이 아닌 DBCP 방식으로 DB와 연동 작업 진행
 	public void openConn() {
-		
+
 		try {
 			// 1단계 : JNDI 서버 객체 생성
 			// 자바의 네이밍 서비스(JNDI)에서 이름과 실제 객체를 연결해 주는 개념이 Context 객체이며,
 			// InitialContext 객체는 네이밍 서비스를 이용하기 위한 시작점이 됨.
 			Context initCtx = new InitialContext();
 
-			
 			// 2단계 : Context 객체를 얻어와야 함.
 			// "java:comp/env" 라는 이름의 인수로 Context 객체를 얻어옴.
 			// "java:comp/env"는 현재 웹 애플리케이션에서 네이밍 서비스를 이용 시 루트 디렉토리라고 생각하면 됨.
@@ -69,7 +68,7 @@ public class MemberDAO {
 
 			// 4단계 : DataSource 객체를 이용하여 커넥션을 하나 가져온다.
 			con = ds.getConnection();
-			
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -81,11 +80,11 @@ public class MemberDAO {
 	public void closeConn(ResultSet rs, PreparedStatement pstmt, Connection con) {
 
 		try {
-			if(rs != null)
+			if (rs != null)
 				rs.close();
-			if(pstmt != null)
+			if (pstmt != null)
 				pstmt.close();
-			if(con != null)
+			if (con != null)
 				con.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -94,29 +93,28 @@ public class MemberDAO {
 	}
 	// closeConn() end
 
-	
-	//view에서 회원가입 시 db에 회원정보 삽입
+	// view에서 회원가입 시 db에 회원정보 삽입
 	public int memberInsert(MemberDTO dto) {
-		
+
 		int res = 0, count = 0;
-		
+
 		try {
-			openConn();		// 커넥션풀 방식으로 DB 연동 진행.
-			
+			openConn(); // 커넥션풀 방식으로 DB 연동 진행.
+
 			sql = "select max(member_index) from member";
-			
+
 			pstmt = con.prepareStatement(sql);
-			
+
 			rs = pstmt.executeQuery();
-			
-			if(rs.next()) {
+
+			if (rs.next()) {
 				count = rs.getInt(1) + 1;
 			}
-			
+
 			sql = "insert into member values(?, ?, ?, ?, ?, default, sysdate, ?, ?, ?, ?)";
-			
+
 			pstmt = con.prepareStatement(sql);
-			
+
 			pstmt.setInt(1, count);
 			pstmt.setString(2, dto.getMember_id());
 			pstmt.setString(3, dto.getMember_pwd());
@@ -126,11 +124,9 @@ public class MemberDAO {
 			pstmt.setString(7, dto.getPrefer_lol());
 			pstmt.setString(8, dto.getPrefer_battle_ground());
 			pstmt.setString(9, dto.getPrefer_overwatch());
-			
-			
-			
+
 			res = pstmt.executeUpdate();
-			
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -139,6 +135,38 @@ public class MemberDAO {
 		}
 		return res;
 	}
-	//memberInsert() end
-	
+	// memberInsert() end
+
+	public int loginMember(String userID, String userPassword) {
+
+		int result = 0;
+		try {
+			openConn(); // 커넥션풀 방식으로 DB 연동 진행.
+			sql = "select member_pwd from member where member_id = ?";
+			pstmt = con.prepareStatement(sql);
+
+			pstmt.setString(1, userID);
+
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+
+				if (rs.getString("member_pwd").equals(userPassword)) {
+					result = 1; // 로그인 성공
+				} else {
+					result = 0; // 비밀번호 불일치
+				}
+
+			} else {
+
+				result = -1; // 아이디가없음
+			}
+		} catch (SQLException e) {
+			// TODO 자동 생성된 catch 블록
+			e.printStackTrace();
+		}
+		return result;
+
+	}
+
 }
