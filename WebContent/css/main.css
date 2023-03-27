@@ -1,0 +1,119 @@
+.box_text {
+  font-family: "Malgun Gothic";
+  text-align: center;
+}
+
+/* 메뉴바 설정 */
+.navcolor {
+  background-color: rgb(102, 100, 100);
+}
+
+
+.main_box {
+  width: 400px;
+  height: 600px;
+  border: 2px solid #000000;
+  border-radius: 5px;
+  background-color: rgb(102, 100, 100);
+}
+
+.main_wrap {
+  padding-top: 50px;
+  padding-left: 375px;
+  padding-right: 375px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+.main_wrap a {
+  color: aliceblue;
+  text-decoration: none;
+}
+
+.item {
+  border: 2px solid white;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  align-content: center;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 10px;
+}
+
+.item:hover {
+  background-color: rgb(172, 172, 172);
+}
+
+.ranking {
+  font-weight: 999;
+  font-size: 15pt;
+  font-style: italic;
+  text-decoration: underline;
+  color: aliceblue;
+
+  margin-right: 5px;
+}
+.sumimg {
+  width: 75px;
+  height: 75px;
+}
+
+.date_writer_con {
+  margin-top: 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.date {
+  font-size: 10pt;
+}
+.writer {
+  margin-top: 2px;
+  margin-left: 10px;
+  margin-right: 10px;
+  font-size: 7pt;
+  color: antiquewhite;
+  font-weight: bold;
+}
+
+.comment {
+  font-size: 5pt;
+}
+
+.matching-img {
+  position: relative;
+  top: 75px;
+  left: 250px;
+
+  transform: translate(-50%);
+
+  display: block;
+  margin: auto;
+  width: 450px;
+  height: 225px;
+}
+
+.matching-btn {
+  color: white;
+  position: relative;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%);
+  width: 150px;
+  height: 50px;
+  background-color: rgba(0, 0, 0, 0);
+  border: 2px solid white;
+  border-radius: 3px;
+}
+
+#foot {
+  padding-top: 5px;
+  margin-top: 100px;
+  border-top: 1px solid #000000;
+  
+  color: salmon;
+  text-align: center;
+  font-size: 15px;
+}

@@ -11,7 +11,7 @@ import com.member.model.MemberDTO;
 import com.project.controller.Action;
 import com.project.controller.ActionForward;
 
-public class MemberInsertAction implements Action {
+public class MemberJoinAction implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
