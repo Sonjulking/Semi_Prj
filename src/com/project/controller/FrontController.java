@@ -1,5 +1,6 @@
 package com.project.controller;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
@@ -11,6 +12,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 
 
 
@@ -50,7 +52,13 @@ public class FrontController extends HttpServlet{
 			 *   인자로 들어온 Properties 파일을 읽게 됨.
 			 * - 읽어 들일 때 사용하는 메서드는 load() 라는 메서드를 이용하여 파일을 읽어 들이게 됨.
 			 */
-			FileInputStream fis = new FileInputStream("C:\\Users\\user\\semi_project\\Semi_Prj\\src\\com\\project\\controller\\mapping.properties");
+			File path1 = new File(".");
+			System.out.println(path1.getAbsolutePath());
+			
+			String path2 = FrontController.class.getResource("").getPath();
+			System.out.println(path2);
+			FileInputStream fis = new FileInputStream(path2 + "mapping.properties");
+			
 			prop.load(fis);
 			String value = prop.getProperty(command);
 			System.out.println("value >>> " + value);
