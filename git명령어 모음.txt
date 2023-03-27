@@ -1,0 +1,116 @@
+조장 
+git init : 깃 임시 저장소 생성
+git remote add origin https://github.com/Sonjulking/Semi_Prj.git
+git add . : 전체다 임시 저장소에 저장
+
+git commit -m "커밋명"  : 커밋(등록)
+
+ 원격 저장소 등록
+
+git remote -v 잘 등록됬는지 확인
+
+git push origin master  안되면
+
+git config --system --unset-all credential.helper : 로그인 정보 없애기
+
+조원
+
+git config --global user.email "git가입 이메일 주소"
+
+git config --global user.name "본인 git 닉네임"
+
+git init : 임시 저장소 생성
+
+git remote add origin https://github.com/Sonjulking/Semi_Prj.git
+
+git pull origin master : 파일 당겨오기
+
+ls  :확인
+
+공식 
+
+작업후 
+git add .
+git commit -m ""
+git push origin master
+
+
+당겨오기
+git pull origin master
+
+
+git branch 이름
+
+git branch -d 이름
+
+git checkout 이름
+
+git checkout master 
+
+
+git merge 브랜치명
+
+
+git checkout -b tester
+
+git push origin tester
+
+깃허브사이트 가보면 떠있음
+
+
+작업할때 유의 사항
+git pull origin master
+
+git add .
+
+git commit -m "커밋명"
+
+git push origin 브랜치명
+
+꼬였을때 지우기
+
+git remote remove origin
+git remote add origin (url)
+git push --set-upstream origin master
+
+git log : 로그 보기
+
+error: you need to resolve your current index first
+: 나의 경우 merge가 필요한 상황이었음
+➡️ git reset --merge
+
+error: you need to resolve your current index first
+: 나의 경우 merge가 필요한 상황이었음
+➡️ git reset --merge
+master → main 바꾸고 싶을 때
+➡️ git checkout master
+아래와 같은 에러가 발생했을 때 강제로 push하고 싶을 때
+hint: Updates were rejected because the tip of your current branch is behind
+hint: its remote counterpart. Integrate the remote changes (e.g.
+hint: 'git pull ...') before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+➡️ git push origin +main 또는 git push origin main -f
+➡️ 아니면 다른 분들처럼 clone해놓고 다시 하는 방법도 있다. 🔗게시글, 🔗게시글 참조 (둘 중 하나 참고)
+
+Automatic merge failed; fix conflicts and then commit the result.
+: pull request가 충돌되어 automatically merge가 안되는 상황
+➡️ 1. 깃허브에서 close pull request
+2. 깃허브에서 delete branch for pull request
+3. 나의 경우 터미널에서 다시 git add .부터 실행시켰다.
+그 이외의 경우 해당 🔗블로그를 참고하자.
+
+에러 메시지: fatal: Not possible to fast-forward, aborting.
+해결: git pull origin main --rebase
+
+pull 하거나 branch checkout 오류
+에러 메세지 : error: Please commit your changes or stash them before you merge.
+git stash : 해당 명령어를 통해 현재 Staging 영역에 있는 파일의 변경사항을 스택에 넣어 둔다.
+git stash pop : 변경 사항을 적용하고, 스택에서 제거 한다.
+해결 : git stash 또는 git commit -m "커밋 메세지" 또는 git stash && git pull origin master && git stash pop
+
+
+error: failed to push some refs to 'https://github.com/Sonjulking/Semi_Prj.git'
+해결 : pull -> merge -> push
+$ git pull origin master
+$ git merge
+$ git push
