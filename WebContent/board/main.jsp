@@ -1,5 +1,5 @@
-<%@ page language="java" conhttps://javarevisited.blogspot.com/2016/06/how-to-make-eclipse-use-spaces-instead.htmltentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+	<a href="<%=request.getContextPath() %>/board_list.do">[자유 게시판 목록]</a>
 </body>
 </html>
