@@ -111,7 +111,7 @@ public class MemberDAO {
 				count = rs.getInt(1) + 1;
 			}
 
-			sql = "insert into member values(?, ?, ?, ?, ?, default, sysdate, ?, ?, ?, ?)";
+			sql = "insert into member values(?, ?, ?, ?, ?, default, sysdate(), ?, ?, ?, ?)";
 
 			pstmt = con.prepareStatement(sql);
 

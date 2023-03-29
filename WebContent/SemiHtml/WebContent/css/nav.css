@@ -1,0 +1,138 @@
+@import url("https://fonts.googleapis.com/css2?family=Quicksand&display=swap");
+
+body {
+  /* color: rgb(0, 0, 0); */
+
+  /* background-color: #303030; */
+  /* background-color: rgb(255, 255, 255); */
+  /* font-family: "Quicksand", sans-serif; */
+
+}
+
+/* 아이콘  */
+#logo {
+  width:  100px;
+  height: 100px;
+  margin-left: 70px;
+}
+
+.main_header_wrap {
+  font-family: "Malgun Gothic";
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+.login_wrap a {
+  color: rgb(0, 0, 0);
+  text-decoration-line: none;
+  font-size: large;
+}
+/* a {
+  color: salmon;
+}
+nav ul {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  list-style: none;
+  border-top: 3px solid #814efa;
+  border-bottom: 3px solid #814efa;
+  text-align: center;
+  padding: 20px;
+}
+
+nav ul li {
+  font-weight: 600;
+  font-size: 20pt;
+  color: #814efa;
+} */
+
+nav ul a {
+  position: relative;
+}
+nav ul a::before {
+  content: "";
+  height: 3px;
+  width: 0;
+  /* background-color: black; */
+  transition: 0.3s;
+  position: absolute;
+  bottom: 0;
+  left: 48%;
+  margin-bottom: 0px;
+}
+
+nav ul a:hover::before {
+  width: 50%;
+  background-color: rgb(255, 145, 163);
+}
+
+nav ul a::after {
+  content: "";
+  height: 3px;
+  width: 0;
+  background-color: #fff;
+  border-radius: 10px;
+  transition: 0.3s;
+  position: absolute;
+  bottom: 0;
+  right: 48%;
+  margin-bottom: 0px;
+}
+
+nav ul a:hover::after {
+  width: 50%;
+  background-color: rgb(255, 145, 163);
+}
+
+/* 페이지 제목 설정 */
+#main_logo_text{
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%);
+  font-size: 50px;
+  
+}
+
+
+nav ul a:link,
+#logo_link {
+  color: #911f29;
+  text-decoration: none;
+}
+nav ul a:visited {
+  color: #911f29;
+  text-decoration: none;
+}
+/* nav ul a:hover {
+    color: red;
+    text-decoration: underline;
+  } */
+nav ul a:active {
+  color: pink;
+  text-decoration: none;
+}
+
+
+nav ul {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  list-style: none;
+  border-top: 3px solid #966f6f;
+  border-bottom: 3px solid #966f6f;
+  /* border-top: 3px solid #814efa; */
+  /* border-bottom: 3px solid #814efa; */
+  text-align: center;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+nav ul li {
+  font-weight: 600;
+  font-size: 20pt;
+  color: #911f29;
+}
+
+
