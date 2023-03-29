@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -91,5 +93,91 @@ public class BoardDAO {
 		}
 	}
 	// closeConn() end
-
+	
+	
+	
+	
+	// board 테이블의 전체 게시물의 수를 확인하는 메서드
+		public int getBoardCount() {
+			
+			int count = 0;
+			
+			try {
+				openConn();
+				
+				sql = "select count(*) from board"; // max는 게시물 수가 아니라 수를 가져오는거기 때문에 나중에 문제가 생길 수 있음
+				
+				pstmt = con.prepareStatement(sql);
+				
+				rs = pstmt.executeQuery();
+				
+				if(rs.next()) {
+					count = rs.getInt(1);
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+				closeConn(rs, pstmt, con);
+			}
+			
+			return count;
+		} // getBoardCount() 메서드 end
+	
+		
+		
+	
+	public List<BoardDTO> getBoardList(int page, int rowsize) {
+		
+		List<BoardDTO> list = new ArrayList<BoardDTO>();
+		
+		// 해당 페이지에서 시작 번호 
+		int startNo = (page * rowsize) - (rowsize - 1);
+		
+		// 해당 페이지에서 끝 번호 
+		int endNo = (page * rowsize);
+		
+		try {
+			openConn();
+			
+			sql = "select * from (select row_number() over(order by board_index desc) rnum, b.* from board b) where rnum >= ? and rnum <= ?";
+			
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setInt(1, startNo);
+			pstmt.setInt(2, endNo);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				BoardDTO dto = new BoardDTO();
+				
+				dto.setBoard_index(rs.getInt("board_index"));
+				dto.setBoard_title(rs.getString("board_title"));
+				dto.setBoard_cont(rs.getString("board_cont"));
+				dto.setBoard_writer(rs.getString("board_writer"));
+				dto.setBoard_type(rs.getString("board_type"));
+				dto.setBoard_heading(rs.getString("board_heading"));
+				dto.setBoard_hit(rs.getInt("board_hit"));
+				dto.setBoard_thumbs(rs.getInt("board_thumbs"));
+				dto.setBoard_date(rs.getString("board_date"));
+				
+				list.add(dto);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			closeConn(rs, pstmt, con);
+		}
+		
+		return list;
+		
+	} // getBoardList() end
+	
+	
+	
+	
+	
 }
