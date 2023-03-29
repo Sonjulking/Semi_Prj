@@ -68,6 +68,10 @@
 	        <label class="name" for="name">Name</label>
 	          <input type="text" id="name" name="name" placeholder="겜만추에서 사용할 닉네임">
 	        <br>
+	        
+	        <label class="email" for="email">Email</label>
+	          <input type="text" id="email" name="email" placeholder="Email">
+	        <br>
 	
 	        <label class="phone" for="phone">Phone</label>
 	          <input type="text" id="phone" name="phone" placeholder="전화번호">
