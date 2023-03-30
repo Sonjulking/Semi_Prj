@@ -14,9 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class FrontController extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-<<<<<<< HEAD
-	
+	private static final long serialVersionUID = 1L;	
 		
 		protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 			// 한글 처리 작업 진행
@@ -85,14 +83,14 @@ public class FrontController extends HttpServlet {
 				forward = new ActionForward();
 				forward.setRedirect(false);
 				forward.setPath(value);
-
-		if (forward != null) {
-			if (forward.isRedirect()) { // true 인 경우
-				response.sendRedirect(forward.getPath());
-			} else { // false 인 경우 view page로 이동
-				RequestDispatcher rd = request.getRequestDispatcher(forward.getPath());
-				rd.forward(request, response);
-			}
+	
+			   	if (forward.isRedirect()) { // true 인 경우
+					response.sendRedirect(forward.getPath());
+				} else { // false 인 경우 view page로 이동
+					RequestDispatcher rd = request.getRequestDispatcher(forward.getPath());
+					rd.forward(request, response);
+				}
+			} 
 		}
-	}
 }
+
