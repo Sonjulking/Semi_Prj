@@ -155,12 +155,16 @@ public class BoardDAO {
 				dto.setBoard_index(rs.getInt("board_index"));
 				dto.setBoard_title(rs.getString("board_title"));
 				dto.setBoard_cont(rs.getString("board_cont"));
-				dto.setBoard_writer(rs.getString("board_writer"));
+				dto.setBoard_writer_id(rs.getString("board_writer_id"));
+				dto.setBoard_writer_nickname(rs.getString("board_writer_nickname"));
+				dto.setUpload_file(rs.getString("upload_file"));
+				dto.setUpload_fileImg(rs.getString("upload_fileImg"));
 				dto.setBoard_type(rs.getString("board_type"));
 				dto.setBoard_heading(rs.getString("board_heading"));
 				dto.setBoard_hit(rs.getInt("board_hit"));
 				dto.setBoard_thumbs(rs.getInt("board_thumbs"));
 				dto.setBoard_date(rs.getString("board_date"));
+				dto.setBoard_update(rs.getString("board_update"));
 				
 				list.add(dto);
 			}
@@ -194,16 +198,18 @@ public class BoardDAO {
 				count = rs.getInt(1) + 1;
 			}
 			
-			sql = "insert into upload values (?, ?, ?, ?, ?, ?, default, default, sysdate)";
+			sql = "insert into upload values (?, ?, ?, ?, ?, ?, '', ?, ?, default, default, sysdate, '')";
 			
 			pstmt = con.prepareStatement(sql);
 			
 			pstmt.setInt(1, count);
 			pstmt.setString(2, dto.getBoard_title());
 			pstmt.setString(3, dto.getBoard_cont());
-			pstmt.setString(4, dto.getBoard_writer());
-			pstmt.setString(5, dto.getBoard_type());
-			pstmt.setString(6, dto.getBoard_heading());
+			pstmt.setString(4, dto.getBoard_writer_id());
+			pstmt.setString(5, dto.getBoard_writer_nickname());
+			pstmt.setString(6, dto.getUpload_file());
+			pstmt.setString(7, dto.getBoard_type());
+			pstmt.setString(8, dto.getBoard_heading());
 			
 			result = pstmt.executeUpdate();
 			
@@ -215,8 +221,74 @@ public class BoardDAO {
 		}
 		
 		return result;
-	}
+	} // insertBoard() end
 	
+	
+	public void boardHit(int no) {
+		
+		try {
+			openConn();
+			
+			sql = "update board set board_hit = board_hit + 1 where board_index = ?";
+			
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setInt(1, no);
+			
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			closeConn(rs, pstmt, con);
+		}
+		
+	} // boardHit() end 
+	
+	
+	
+	
+	public BoardDTO boardContent(int no) {
+		
+		BoardDTO dto = null;
+		
+		try {
+			openConn();
+			
+			sql = "select * from upload where upload_no = ?";
+			
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setInt(1, no);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				dto = new BoardDTO();
+				
+				dto.setBoard_index(rs.getInt("board_index"));
+				dto.setBoard_title(rs.getString("board_title"));
+				dto.setBoard_cont(rs.getString("board_cont"));
+				dto.setBoard_writer_id(rs.getString("board_writer_id"));
+				dto.setBoard_writer_nickname(rs.getString("board_writer_nickname"));
+				dto.setUpload_file(rs.getString("upload_file"));
+				dto.setUpload_fileImg(rs.getString("upload_fileImg"));
+				dto.setBoard_type(rs.getString("board_type"));
+				dto.setBoard_heading(rs.getString("board_heading"));
+				dto.setBoard_hit(rs.getInt("board_hit"));
+				dto.setBoard_thumbs(rs.getInt("board_thumbs"));
+				dto.setBoard_date(rs.getString("board_date"));
+				dto.setBoard_update(rs.getString("board_update"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			closeConn(rs, pstmt, con);
+		}
+		
+		return dto;
+	} // boardContent() end
 	
 	
 }
