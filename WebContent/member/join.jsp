@@ -5,15 +5,46 @@
 <head>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.js"></script>
 <script type="text/javascript">
-    
-    $(function() {
-    	$("#idcheck_txt").on("click", function() {
+     
+     // id check
+     $(function() {
+    	$("idcheck_btn").on("click").mouseover(function() {
     		$("#id_check").hide();
+    		let userId = $("#username").val();
     		
-    		let userId = $("")
-    	});
-    });
+    	}); 
+    	
+     });
     
+     
+     // password check
+     $(function() {
+     	$("#password").on("click", function() {
+     		$("#pwd_check").hide();
+     		let userPwd = $("#password").val();
+     		
+     	// 아이디 길이 체크하는 방법
+    		if($.trim($("#password").val()).length < 4) {
+    		    let warningTxt = '<font color="red">비밀번호는 6자 이상이어야 합니다.</font>';
+    		    $("#pwd_check").text("");
+    		    $("#pwd_check").show("");
+    		    $("#pwd_check").append(warningTxt);
+    		    $("#password").val('').focus();
+    		    return false;
+    		} 
+     	    if($.trim($("#password").val()).length > 16) {
+    		    let warningTxt = '<font color="red">비밀번호는 12자 이하이어야 합니다.</font>';
+    		    $("#pwd_check").text("");
+    		    $("#pwd_check").show("");
+    		    $("#pwd_check").append(warningTxt);
+    		    $("#password").val('').focus();
+    		    return false;
+    		}
+     	})
+     	
+      });
+      
+     
 </script>
 <meta charset="UTF-8">
  <title>회원가입</title>
@@ -41,13 +72,13 @@
 		<h1>회원가입</h1>
 		<form method="post" action="<%=request.getContextPath()%>/insert_member.do">
 					        
-	        <label class="username" for="username" id="member_id">ID</label>
-	          <input type="text" id="username" name="id"  id="idcheck_txt" placeholder="아이디">
-	          <span id="id_check"></span> 
+	        <label class="username" for="username">ID</label>
+	          <input type="text" id="username" name="id" size="20" onsubmit="checkId()" placeholder="아이디"><br>
+	          <input type="button" value="아이디중복체크" id="idcheck_btn">
 	        <br>
 	
-	        <label class="password" for="password" >PWD</label>
-	          <input type="password" id="password" name="pwd" id="pwdcheck_txt" placeholder="비밀번호 / 9~12자">
+	        <label class="password" for="password">PWD</label>
+	          <input type="password" id="password" name="pwd" placeholder="비밀번호 / 9~12자"><br>
 	          <span id="pwd_check"></span>
 	        <br>
 	
