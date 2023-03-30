@@ -105,8 +105,6 @@
 
 						<input type="button" value="아이디 중복체크" id="idcheck_btn" size="20">
 						<span id="idcheck"></span></td>
-
-
 				</tr>
 
 			</table>

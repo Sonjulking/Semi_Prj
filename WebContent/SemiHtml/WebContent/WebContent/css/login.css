@@ -1,0 +1,105 @@
+  /* 스타일 시트 */
+body {
+background-color: #ffffff;
+}
+
+/* 로고 및 텍스트 영역 */
+.container1 {
+    position: fixed;
+    transform: translate(+260px, +200px);
+    width: 310px;
+    
+}
+
+.container1 .text1 {
+    margin-left: 5px;
+    font-size: 20px;    
+}
+/* 제목  */
+.title {
+    font-size: 70px;
+}
+
+/* 로그인 컨테이너 영역 */
+.container2 {
+position: fixed;
+transform: translate(+330%, +30%);
+margin: 50px auto;
+width: 300px;
+padding: 20px;
+background-color: rgb(214, 209, 209);
+border-radius: 40px;
+box-shadow: 0px 0px 5px 0px #dcdcdc;
+}
+
+h2 {
+text-align: center;
+margin-bottom: 20px;
+}
+
+/* 이름 비빌번호 입력란 */
+#username, #password {
+width: 100%;
+padding: 12px 20px;
+margin: 8px 0;
+display: inline-block;
+border: 1px solid #ccc;
+border-radius: 4px;
+box-sizing: border-box;
+}
+
+/* 회사 로그인 아이콘 */
+#site-face {
+    position: relative;
+    top: 50%;
+    left: 40%;
+    transform: translate(-90%); 
+    font-size: 50px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+#site-goo {
+    position: relative;
+    top: 50%;
+    left: 40%;
+    transform: translate(-10%); 
+    font-size: 50px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+/* 로그인 버튼 */
+.login {
+background-color: #387fe9;
+color: white;
+padding: 14px 20px;
+margin: 8px 0;
+border: none;
+border-radius: 10px;
+cursor: pointer;
+width: 100%;
+}
+
+/* 회원가입 버튼 */
+.signup {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%);
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    width: 60%;
+   
+}
+
+/* 비밀번호 잊음 */
+.lostpwd {
+    text-align: center;
+    text-decoration: #ccc;
+
+}

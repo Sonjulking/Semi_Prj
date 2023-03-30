@@ -157,5 +157,33 @@ public class MemberDAO {
 		return result;
 
 	}
-
+	
+    // checkMemberId() start
+	public int checkMemberId(String id) {
+		int res = 0;
+		
+		try {
+			openConn();
+			
+			sql = "select * from member where member_id = ?";
+			
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setString(1, id);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				// 중복 값 존재함
+				return -1;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return res;
+	}
+	// checkMemberId() end
+	
 }

@@ -1,6 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%
+int loginCheck = 0;
+
+//Session을 받을때는 값이 null로 올때를 생각해서 조건문을 사용한다.
+if (session.getAttribute("LoginCheck") != null) {
+	//세션의 값을 가져오기
+	loginCheck = (int) session.getAttribute("LoginCheck");
+}
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,11 +30,34 @@
 
 </head>
 <body>
+
+    <header>
+		<div class="free_board_wrap">
+			<span id="main_logo_text"><a href="free_board.jsp">자유게시판</a></span>
+			<!-- <img id="logo" src="../WebContent/img/thumbup.png" alt=""> -->
+			<div class="login_wrap">
+				<%
+				if (loginCheck == 0) {
+				%>
+				<span class="Login"><a href="../member/login.jsp">Login</a></span> <span
+					class="Join"> / <a href="../member/join.jsp">회원가입</a></span>
+
+				<%
+				} else if (loginCheck > 0) {
+				%>
+
+				<span class="Login"><a href="../member/login.jsp">Logout</a></span> <span
+					class="Join"> / <a href="../member/join.jsp">MyPage</a></span>
+
+				<%
+				}
+				;
+				%>
+			</div>
+		</div>
+	</header>
+
 	<div align="center">
-		<hr width="50%" color="red">
-			<h3>BOARD 테이블 전체 게시물 목록 페이지</h3>
-		<hr width="50%" color="red">
-		<br>
 		
 		<form method="post" action="<%=request.getContextPath() %>/board_search.do">
 			<select name="field">

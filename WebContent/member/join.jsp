@@ -8,10 +8,47 @@
      
      // id check
      $(function() {
-    	$("idcheck_btn").on("click").mouseover(function() {
+    	$("#idcheck_btn").on("click", function() {
     		$("#id_check").hide();
     		let userId = $("#username").val();
     		
+    		// 아이디 길이 체크하는 방법
+    		if($.trim($("#username").val()).length > 16) {
+    		    let warningTxt = '<font color="red">아이디는 16자 이하이어야 합니다.</font>';
+    		    $("#id_check").text("");
+    		    $("#id_check").show("");
+    		    $("#id_check").append(warningTxt);
+    		    $("#username").val('').focus();
+    		    return false;
+    		}
+    		
+    		// 아이디 중복 여부 확인 - Ajax 기술 이용하여 진행
+    		$.ajax({
+    			type : "post",
+    			url : "join_check.jsp",
+    			data : {paramId : userId},
+    			datatype : "jsp",
+    			success : function(data) {
+    				if(data == -1) {
+    					// DB에 존재하는 아이디가 중복인 경우
+    					let warningTxt = '<font color="red">중복된 아이디입니다.</font>';
+    	    		    $("#id_check").text("");
+    	    		    $("#id_check").show("");
+    	    		    $("#id_check").append(warningTxt);
+    	    		    $("#username").val('').focus();
+    				} else {
+    					let warningTxt = '<font color="blue">사용 가능한 아이디입니다.</font>';
+    	    		    $("#id_check").text("");
+    	    		    $("#id_check").show("");
+    	    		    $("#id_check").append(warningTxt);
+    				}
+    			},
+    			
+    			error : function(data) {
+    				alert("데이터 통신 오류입니다~~");
+    			}
+    		    
+    		});
     	}); 
     	
      });
@@ -23,7 +60,7 @@
      		$("#pwd_check").hide();
      		let userPwd = $("#password").val();
      		
-     	// 아이디 길이 체크하는 방법
+     	// 비밀번호 길이 체크하는 방법
     		if($.trim($("#password").val()).length < 4) {
     		    let warningTxt = '<font color="red">비밀번호는 6자 이상이어야 합니다.</font>';
     		    $("#pwd_check").text("");
@@ -31,8 +68,8 @@
     		    $("#pwd_check").append(warningTxt);
     		    $("#password").val('').focus();
     		    return false;
-    		} 
-     	    if($.trim($("#password").val()).length > 16) {
+    		}  
+     	    if($.trim($("#password").val()).length > 12) {
     		    let warningTxt = '<font color="red">비밀번호는 12자 이하이어야 합니다.</font>';
     		    $("#pwd_check").text("");
     		    $("#pwd_check").show("");
@@ -75,6 +112,7 @@
 	        <label class="username" for="username">ID</label>
 	          <input type="text" id="username" name="id" size="20" onsubmit="checkId()" placeholder="아이디"><br>
 	          <input type="button" value="아이디중복체크" id="idcheck_btn">
+	          <span id="id_check"></span>
 	        <br>
 	
 	        <label class="password" for="password">PWD</label>
@@ -84,6 +122,8 @@
 	
 	        <label class="name" for="name">Name</label>
 	          <input type="text" id="name" name="name" placeholder="겜만추에서 사용할 닉네임">
+	          <input type="button" value="닉네임중복체크" id="namecheck_btn">
+	          <span id="name_check"></span>
 	        <br>
 	        
 	        <label class="email" for="email">Email</label>
@@ -98,9 +138,9 @@
 			<label for="lol" class="game1"><input type="checkbox" name="lol" value="lol">LOL</label>
 			<br> 
 			<label class="game-title">선호 게임</label>
-			<label class="game2" for="battle_ground"><input type="checkbox" name="battle_ground" value="battle_ground">battleground</label>
+			<label class="game2" for="battle_ground"><input type="checkbox" name="battle_ground" value="battle_ground">Battleground</label>
 			<br>
-			<label for="overwatch" class="game3"><input type="checkbox" name="overwatch" value="overwatch">overwatch2</label>
+			<label for="overwatch" class="game3"><input type="checkbox" name="overwatch" value="overwatch">OverWatch2</label>
 			<br>
 			<br>
 			<label class="check_join"><input type="checkbox" name="check_info" value="check_info" required="required">약관 동의</label>
