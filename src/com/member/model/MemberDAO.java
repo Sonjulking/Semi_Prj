@@ -1,13 +1,10 @@
 package com.member.model;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.sql.DataSource;
 
 public class MemberDAO {
 	// DB와 연동하는 객체.
@@ -46,28 +43,20 @@ public class MemberDAO {
 
 	// openConn() start
 	// JDBC 방식이 아닌 DBCP 방식으로 DB와 연동 작업 진행
+
+	// DB를 연동하는 작업을 진행하는 메서드.
 	public void openConn() {
+		String driver = "com.mysql.cj.jdbc.Driver";
+		String url = "jdbc:mysql://gamemenchu.ciegzzti5gy2.us-west-1.rds.amazonaws.com:3306/semiProject";
+		String user = "admin";
+		String password = "12345678";
 
 		try {
-			// 1단계 : JNDI 서버 객체 생성
-			// 자바의 네이밍 서비스(JNDI)에서 이름과 실제 객체를 연결해 주는 개념이 Context 객체이며,
-			// InitialContext 객체는 네이밍 서비스를 이용하기 위한 시작점이 됨.
-			Context initCtx = new InitialContext();
+			// 1단계 : 오라클 드라이버를 메모리로 로딩 작업 진행.
+			Class.forName(driver);
 
-			// 2단계 : Context 객체를 얻어와야 함.
-			// "java:comp/env" 라는 이름의 인수로 Context 객체를 얻어옴.
-			// "java:comp/env"는 현재 웹 애플리케이션에서 네이밍 서비스를 이용 시 루트 디렉토리라고 생각하면 됨.
-			// 즉, 현재 웹 애플리케이션이 사용할 수 있는 모든 자원은 "java:comp/env" 아래에 위치를 하게 됨.
-			Context ctx = (Context) initCtx.lookup("java:comp/env");
-
-			// 3단계 : lookup() 메서드를 이용하여 매칭되는 커넥션을 찾게 됨.
-			// "java:comp/env" 아래에 위치한 "jcbc/myoracle" 자원을 얻어옴,
-			// 이 자원이 바로 데이터소스(커넥션풀)임.
-			// 여기서 "jdbc/myoracle" 은 context.xml 파일에 추가했던 <Resource> 태그 안에 있던 name 속성의 값임.
-			DataSource ds = (DataSource) ctx.lookup("jdbc/myoracle");
-
-			// 4단계 : DataSource 객체를 이용하여 커넥션을 하나 가져온다.
-			con = ds.getConnection();
+			// 2단계 : 오라클 데이터베이스와 연결 작업 진행.
+			con = DriverManager.getConnection(url, user, password);
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -99,7 +88,7 @@ public class MemberDAO {
 		int res = 0, count = 0;
 
 		try {
-			openConn(); // 커넥션풀 방식으로 DB 연동 진행.
+			openConn();
 
 			sql = "select max(member_index) from member";
 
