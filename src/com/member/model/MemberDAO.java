@@ -100,7 +100,7 @@ public class MemberDAO {
 				count = rs.getInt(1) + 1;
 			}
 
-			sql = "insert into member values(?, ?, ?, ?, ?, default, sysdate(), ?, ?, ?, ?)";
+			sql = "insert into member values(?, ?, ?, ?, ?, default, now(), ?, ?, ?, ?)";
 
 			pstmt = con.prepareStatement(sql);
 
@@ -108,7 +108,7 @@ public class MemberDAO {
 			pstmt.setString(2, dto.getMember_id());
 			pstmt.setString(3, dto.getMember_pwd());
 			pstmt.setString(4, dto.getMember_nickname());
-			pstmt.setString(5, "rd@gmail.com");
+			pstmt.setString(5, dto.getMember_email());
 			pstmt.setString(6, dto.getPhone());
 			pstmt.setString(7, dto.getPrefer_lol());
 			pstmt.setString(8, dto.getPrefer_battle_ground());
