@@ -100,7 +100,7 @@ public class MemberDAO {
 				count = rs.getInt(1) + 1;
 			}
 
-			sql = "insert into member values(?, ?, ?, ?, ?, default, sysdate, ?, ?, ?, ?)";
+			sql = "insert into member values(?, ?, ?, ?, ?, default, now(), ?, ?, ?, ?)";
 
 			pstmt = con.prepareStatement(sql);
 
@@ -108,7 +108,7 @@ public class MemberDAO {
 			pstmt.setString(2, dto.getMember_id());
 			pstmt.setString(3, dto.getMember_pwd());
 			pstmt.setString(4, dto.getMember_nickname());
-			pstmt.setString(5, "rd@gmail.com");
+			pstmt.setString(5, dto.getMember_email());
 			pstmt.setString(6, dto.getPhone());
 			pstmt.setString(7, dto.getPrefer_lol());
 			pstmt.setString(8, dto.getPrefer_battle_ground());
@@ -157,5 +157,37 @@ public class MemberDAO {
 		return result;
 
 	}
+	
+	// 회원 가입시 중복아이디 체크를 처리하는 메서드
+	public int checkMemeberId(String id) {
+		int res = 0;	// 아이디 중복 여부 체크 변수
+		
+		try {
+			openConn();
+			
+			sql = "select * from member where member_id = ?";
+			
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setString(1, id);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+			    // 중복이 되는 경우
+				return -1;
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			closeConn(rs, pstmt, con);
+		}
+		
+		return res;
+		
+	}
+	// checkMemebrId() end
 
 }
