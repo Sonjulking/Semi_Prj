@@ -11,6 +11,8 @@ public class BoardDTO {
 	private int board_hit;
 	private int board_thumbs;
 	private String board_date;
+	
+	
 	public int getBoard_index() {
 		return board_index;
 	}

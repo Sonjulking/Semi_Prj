@@ -80,60 +80,9 @@
 		</table>
 		<br>
 		
-		<!-- Button trigger modal -->
-		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#boardModal"> <%-- target과  밑의 id가  같아야함--%>
-			게시글작성
-		</button>
+		<input type="button" value="게시글 작성" onclick="location.href='board_write.do'">
 		<br>
-		
-		<!-- Modal -->
-		<div class="modal fade" id="boardModal" tabindex="-1" aria-labelledby="boardModalLabel" aria-hidden="true">
-		  <div class="modal-dialog">
-		    <div class="modal-content">
-		      <div class="modal-header">
-		        <h5 class="modal-title" id="boardModalLabel">BOARD 테이블 게시글 등록 폼 페이지</h5>
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-		          <span aria-hidden="true">&times;</span>
-		        </button>
-		      </div>
-		      <div class="modal-body">
-		        <form method="post" name="f" action="<%=request.getContextPath()%>/board_write_ok.do" onsubmit="return check()">
-					<table border="1" cellspacing="0" width="1000">
-						<tr>
-							<th>작성자</th>
-							<td><input type="text" name="writer"></td>
-						</tr>
-						
-						<tr>
-							<th>글제목</th>
-							<td><input type="text" name="title"></td>
-						</tr>
-						
-						<tr>
-							<th>글내용</th>
-							<td>
-								<textarea rows="7" cols="25" name="cont"></textarea>
-							</td>
-						</tr>
-						
-						<tr>
-							<th>글 비밀번호</th>
-							<td><input type="password" name="pwd"></td>
-						</tr>
-						
-					</table>
-					
-					<div class="submit1">
-						<input class="submit_btn btn-primary" type="submit" value="글쓰기">
-						<input class="submit_btn btn-primary" type="reset" value="다시작성">
-					</div>
-				</form>
-		      </div>
-		    </div>
-		  </div>
-		</div>
 		<br>
-		
 		
 		<%-- 페이징 처리 영역 --%>
 		<nav>

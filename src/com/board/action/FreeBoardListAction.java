@@ -11,7 +11,7 @@ import com.board.model.BoardDTO;
 import com.project.controller.Action;
 import com.project.controller.ActionForward;
 
-public class BoardListAction implements Action {
+public class FreeBoardListAction implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
