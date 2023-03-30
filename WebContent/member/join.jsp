@@ -3,33 +3,17 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.js"></script>
 <script type="text/javascript">
-/* 	function lol(obj) {
-		var checked = obj.checked;
-		if (checked) {
-			obj.value = "Y";
-		} else {
-			obj.value = "N";
-		}
-	};
-
-	function battle_ground(obj) {
-		var checked = obj.checked;
-		if (checked) {
-			obj.value = "Y";
-		} else {
-			obj.value = "N";
-		}
-	};
-
-	function overwatch(obj) {
-		var checked = obj.checked;
-		if (checked) {
-			obj.value = "Y";
-		} else {
-			obj.value = "N";
-		}
-	}; */
+    
+    $(function() {
+    	$("#idcheck_txt").on("click", function() {
+    		$("#id_check").hide();
+    		
+    		let userId = $("")
+    	});
+    });
+    
 </script>
 <meta charset="UTF-8">
  <title>회원가입</title>
@@ -57,12 +41,14 @@
 		<h1>회원가입</h1>
 		<form method="post" action="<%=request.getContextPath()%>/insert_member.do">
 					        
-	        <label class="username" for="username">ID</label>
-	          <input type="text" id="username" name="id" placeholder="아이디">
+	        <label class="username" for="username" id="member_id">ID</label>
+	          <input type="text" id="username" name="id"  id="idcheck_txt" placeholder="아이디">
+	          <span id="id_check"></span> 
 	        <br>
 	
-	        <label class="password" for="password">PWD</label>
-	          <input type="password" id="password" name="pwd" placeholder="비밀번호 / 9~12자">
+	        <label class="password" for="password" >PWD</label>
+	          <input type="password" id="password" name="pwd" id="pwdcheck_txt" placeholder="비밀번호 / 9~12자">
+	          <span id="pwd_check"></span>
 	        <br>
 	
 	        <label class="name" for="name">Name</label>
