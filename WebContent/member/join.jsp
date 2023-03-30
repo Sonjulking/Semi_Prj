@@ -12,16 +12,34 @@
     		$("#id_check").hide();
     		let userId = $("#username").val();
     		
-    		// 아이디 길이 체크하는 방법
-    		if($.trim($("#username").val()).length > 16) {
-    		    let warningTxt = '<font color="red">아이디는 16자 이하이어야 합니다.</font>';
-    		    $("#id_check").text("");
-    		    $("#id_check").show("");
-    		    $("#id_check").append(warningTxt);
-    		    $("#username").val('').focus();
-    		    return false;
-    		}
-    		
+
+    		let checkOk = "ABCDEFGHIJKLMNOKQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
+    		for(i = 0; i < userId.lenght; i++) {
+    			check = userId.charAt(i);
+    			for(j = 0; j < checkOk.length; j++) {
+    				
+            	    // 아이디 조합이 영문과 숫자만이 아님
+	            	if(j == check.length) {
+	            		let warningTxt = '<font color="red">아이디는 영문과  숫자이어야 합니다.</font>';
+	        		    $("#id_check").text("");
+	        		    $("#id_check").show("");
+	        		    $("#id_check").append(warningTxt);
+	        		    $("#username").val('').focus();
+	            		return false;
+	            	}
+            	}
+            }
+            
+            
+	/*   // 자바스크립트 정규식
+		var checkOk =/^[A-Za-z0-9]*$/;
+	 	// 아이디 조합이 영문과 숫자만이 아님
+	 	if(!checkOk.text(username)) {alert("아이디는 영문과 숫자이어야 합니다");
+	 		
+	 	}
+	     */
+            
+
     		// 아이디 중복 여부 확인 - Ajax 기술 이용하여 진행
     		$.ajax({
     			type : "post",
@@ -30,8 +48,8 @@
     			datatype : "jsp",
     			success : function(data) {
     				if(data == -1) {
-    					// DB에 존재하는 아이디가 중복인 경우
-    					let warningTxt = '<font color="red">중복된 아이디입니다.</font>';
+		// DB에 존재하는 아이디가 중복인 경우
+		let warningTxt = '<font color="red">중복된 아이디입니다.</font>';
     	    		    $("#id_check").text("");
     	    		    $("#id_check").show("");
     	    		    $("#id_check").append(warningTxt);
@@ -49,11 +67,12 @@
     			}
     		    
     		});
+
     	}); 
     	
      });
     
-     
+
      // password check
      $(function() {
      	$("#password").on("click", function() {
@@ -61,15 +80,15 @@
      		let userPwd = $("#password").val();
      		
      	// 비밀번호 길이 체크하는 방법
-    		if($.trim($("#password").val()).length < 4) {
+    		if($.trim($("#password").val()).length < 6) {
     		    let warningTxt = '<font color="red">비밀번호는 6자 이상이어야 합니다.</font>';
     		    $("#pwd_check").text("");
     		    $("#pwd_check").show("");
     		    $("#pwd_check").append(warningTxt);
     		    $("#password").val('').focus();
     		    return false;
-    		}  
-     	    if($.trim($("#password").val()).length > 12) {
+    		} 
+     	    if($.trim($("#password").val()).length > 16) {
     		    let warningTxt = '<font color="red">비밀번호는 12자 이하이어야 합니다.</font>';
     		    $("#pwd_check").text("");
     		    $("#pwd_check").show("");
@@ -111,6 +130,7 @@
 					        
 	        <label class="username" for="username">ID</label>
 	          <input type="text" id="username" name="id" size="20" onsubmit="checkId()" placeholder="아이디"><br>
+
 	          <input type="button" value="아이디중복체크" id="idcheck_btn">
 	          <span id="id_check"></span>
 	        <br>

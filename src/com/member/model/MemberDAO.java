@@ -174,6 +174,7 @@ public class MemberDAO {
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()) {
+
 				// 중복 값 존재함
 				return -1;
 			}
@@ -185,5 +186,4 @@ public class MemberDAO {
 		return res;
 	}
 	// checkMemberId() end
-	
 }

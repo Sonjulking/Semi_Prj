@@ -1,15 +1,21 @@
+/* 바디 전체 */
+body {
+  background-color: antiquewhite;
+}
+
+
 .box_text {
-  font-family: "Malgun Gothic";
+  font-family: 'Dongle', sans-serif;
   text-align: center;
 }
 /* 로그인 회원가입 */
-.login {
+.login_wrap .Login {
   color:  #911f29;;
 }
 
 /* 메뉴바 설정 */
 .navcolor {
-  background-color: antiquewhite;
+  background-color: rgb(236, 218, 194);
 }
 
 
@@ -122,6 +128,10 @@
   background-color: rgba(0, 0, 0, 0);
   border: 2px solid white;
   border-radius: 3px;
+}
+
+.matching-btn:hover {
+  background-color: rgb(172, 172, 172);
 }
 
 #foot {

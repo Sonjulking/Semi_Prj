@@ -2,17 +2,14 @@
 <launchConfiguration type="org.eclipse.wst.server.ui.launchConfigurationType">
     <stringAttribute key="client-id" value="org.eclipse.wst.server.ui.web"/>
     <stringAttribute key="launchable-adapter-id" value="org.eclipse.jst.server.tomcat.web"/>
-<<<<<<<< HEAD:.metadata/.plugins/org.eclipse.debug.core/.launches/_main.jsp.launch
-    <stringAttribute key="module-artifact" value="org.eclipse.jst.jee.server:project///main.jsp"/>
+<<<<<<<< HEAD:.metadata/.plugins/org.eclipse.debug.core/.launches/_member_login.jsp.launch
+    <stringAttribute key="module-artifact" value="org.eclipse.jst.jee.server:Semi_Prj///member/login.jsp"/>
+========
+    <stringAttribute key="module-artifact" value="org.eclipse.jst.jee.server:project///board/main.jsp"/>
+>>>>>>>> bd4415684fbee0782ebe9a2d4a3c066d99729af3:.metadata/.plugins/org.eclipse.debug.core/.launches/_board_main.jsp (1).launch
     <stringAttribute key="module-artifact-class" value="org.eclipse.wst.server.core.util.WebResource"/>
     <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
         <listEntry value="/project"/>
-========
-    <stringAttribute key="module-artifact" value="org.eclipse.jst.jee.server:16_Ajax///Ex05.jsp"/>
-    <stringAttribute key="module-artifact-class" value="org.eclipse.wst.server.core.util.WebResource"/>
-    <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
-        <listEntry value="/16_Ajax"/>
->>>>>>>> harim:.metadata/.plugins/org.eclipse.debug.core/.launches/_Ex05.jsp.launch
     </listAttribute>
     <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
         <listEntry value="4"/>

@@ -8,12 +8,14 @@ background-color: #ffffff;
     position: fixed;
     transform: translate(+260px, +200px);
     width: 310px;
+    
 }
 
 .container1 .text1 {
     margin-left: 5px;
+    font-size: 20px;    
 }
-/* 제목 및 로고 */
+/* 제목  */
 .title {
     font-size: 70px;
 }
@@ -21,7 +23,7 @@ background-color: #ffffff;
 /* 로그인 컨테이너 영역 */
 .container2 {
 position: fixed;
-transform: translate(+260%, +15%);
+transform: translate(+330%, +30%);
 margin: 50px auto;
 width: 300px;
 padding: 20px;
