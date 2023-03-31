@@ -1,6 +1,7 @@
 package com.board.model;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -48,27 +49,17 @@ public class BoardDAO {
 	// openConn() start
 	// JDBC 방식이 아닌 DBCP 방식으로 DB와 연동 작업 진행
 	public void openConn() {
-		
+		String driver = "com.mysql.cj.jdbc.Driver";
+		String url = "jdbc:mysql://gamemenchu.ciegzzti5gy2.us-west-1.rds.amazonaws.com:3306/semiProject";
+		String user = "admin";
+		String password = "12345678";
+
 		try {
-			// 1단계 : JNDI 서버 객체 생성
-			// 자바의 네이밍 서비스(JNDI)에서 이름과 실제 객체를 연결해 주는 개념이 Context 객체이며,
-			// InitialContext 객체는 네이밍 서비스를 이용하기 위한 시작점이 됨.
-			Context initCtx = new InitialContext();
-			
-			// 2단계 : Context 객체를 얻어와야 함.
-			// "java:comp/env" 라는 이름의 인수로 Context 객체를 얻어옴.
-			// "java:comp/env"는 현재 웹 애플리케이션에서 네이밍 서비스를 이용 시 루트 디렉토리라고 생각하면 됨.
-			// 즉, 현재 웹 애플리케이션이 사용할 수 있는 모든 자원은 "java:comp/env" 아래에 위치를 하게 됨.
-			Context ctx = (Context)initCtx.lookup("java:comp/env");
-			
-			// 3단계 : lookup() 메서드를 이용하여 매칭되는 커넥션을 찾게 됨.
-			//		 "java:comp/env" 아래에 위치한 "jcbc/myoracle" 자원을 얻어옴,
-			//		이 자원이 바로 데이터소스(커넥션풀)임.
-			//		여기서 "jdbc/myoracle" 은 context.xml 파일에 추가했던 <Resource> 태그 안에 있던 name 속성의 값임.
-			DataSource ds = (DataSource)ctx.lookup("jdbc/myoracle");
-			
-			// 4단계 : DataSource 객체를 이용하여 커넥션을 하나 가져온다.
-			con = ds.getConnection();
+			// 1단계 : 오라클 드라이버를 메모리로 로딩 작업 진행.
+			Class.forName(driver);
+
+			// 2단계 : 오라클 데이터베이스와 연결 작업 진행.
+			con = DriverManager.getConnection(url, user, password);
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -105,7 +96,7 @@ public class BoardDAO {
 			try {
 				openConn();
 				
-				sql = "select count(*) from board"; // max는 게시물 수가 아니라 수를 가져오는거기 때문에 나중에 문제가 생길 수 있음
+				sql = "select count(*) from free_board"; // max는 게시물 수가 아니라 수를 가져오는거기 때문에 나중에 문제가 생길 수 있음
 				
 				pstmt = con.prepareStatement(sql);
 				
@@ -140,7 +131,7 @@ public class BoardDAO {
 		try {
 			openConn();
 			
-			sql = "select * from (select row_number() over(order by board_index desc) rnum, b.* from board b) where rnum >= ? and rnum <= ?";
+			sql = "select * from (select row_number() over(order by board_index desc) rnum, b.* from free_board b) where rnum >= ? and rnum <= ?";
 			
 			pstmt = con.prepareStatement(sql);
 			
@@ -152,15 +143,19 @@ public class BoardDAO {
 			while(rs.next()) {
 				BoardDTO dto = new BoardDTO();
 				
+				dto.setBoard_type(rs.getString("board_type"));
 				dto.setBoard_index(rs.getInt("board_index"));
 				dto.setBoard_title(rs.getString("board_title"));
 				dto.setBoard_cont(rs.getString("board_cont"));
-				dto.setBoard_writer(rs.getString("board_writer"));
-				dto.setBoard_type(rs.getString("board_type"));
+				dto.setBoard_writer_id(rs.getString("board_writer_id"));
+				dto.setBoard_writer_nickname(rs.getString("board_writer_nickname"));
+				dto.setUpload_file(rs.getString("upload_file"));
+				dto.setUpload_fileImg(rs.getString("upload_fileImg"));
 				dto.setBoard_heading(rs.getString("board_heading"));
 				dto.setBoard_hit(rs.getInt("board_hit"));
 				dto.setBoard_thumbs(rs.getInt("board_thumbs"));
 				dto.setBoard_date(rs.getString("board_date"));
+				dto.setBoard_update(rs.getString("board_update"));
 				
 				list.add(dto);
 			}
@@ -184,7 +179,7 @@ public class BoardDAO {
 		try {
 			openConn();
 			
-			sql = "select max(board_index) from board";
+			sql = "select max(board_index) from free_board";
 			
 			pstmt = con.prepareStatement(sql);
 			
@@ -194,16 +189,18 @@ public class BoardDAO {
 				count = rs.getInt(1) + 1;
 			}
 			
-			sql = "insert into upload values (?, ?, ?, ?, ?, ?, default, default, sysdate)";
+			sql = "insert into free_board values (?, ?, ?, ?, ?, ?, '', ?, ?, default, default, now(), '')";
 			
 			pstmt = con.prepareStatement(sql);
 			
-			pstmt.setInt(1, count);
-			pstmt.setString(2, dto.getBoard_title());
-			pstmt.setString(3, dto.getBoard_cont());
-			pstmt.setString(4, dto.getBoard_writer());
-			pstmt.setString(5, dto.getBoard_type());
-			pstmt.setString(6, dto.getBoard_heading());
+			pstmt.setString(1, dto.getBoard_type());
+			pstmt.setInt(2, count);
+			pstmt.setString(3, dto.getBoard_title());
+			pstmt.setString(4, dto.getBoard_cont());
+			pstmt.setString(5, dto.getBoard_writer_id());
+			pstmt.setString(6, dto.getBoard_writer_nickname());
+			pstmt.setString(7, dto.getUpload_file());
+			pstmt.setString(8, dto.getBoard_heading());
 			
 			result = pstmt.executeUpdate();
 			
@@ -215,8 +212,74 @@ public class BoardDAO {
 		}
 		
 		return result;
-	}
+	} // insertBoard() end
 	
+	
+	public void boardHit(int no) {
+		
+		try {
+			openConn();
+			
+			sql = "update free_board set board_hit = board_hit + 1 where board_index = ?";
+			
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setInt(1, no);
+			
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			closeConn(rs, pstmt, con);
+		}
+		
+	} // boardHit() end 
+	
+	
+	
+	
+	public BoardDTO boardContent(int no) {
+		
+		BoardDTO dto = null;
+		
+		try {
+			openConn();
+			
+			sql = "select * from free_board where board_no = ?";
+			
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setInt(1, no);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				dto = new BoardDTO();
+				
+				dto.setBoard_index(rs.getInt("board_index"));
+				dto.setBoard_title(rs.getString("board_title"));
+				dto.setBoard_cont(rs.getString("board_cont"));
+				dto.setBoard_writer_id(rs.getString("board_writer_id"));
+				dto.setBoard_writer_nickname(rs.getString("board_writer_nickname"));
+				dto.setUpload_file(rs.getString("upload_file"));
+				dto.setUpload_fileImg(rs.getString("upload_fileImg"));
+				dto.setBoard_type(rs.getString("board_type"));
+				dto.setBoard_heading(rs.getString("board_heading"));
+				dto.setBoard_hit(rs.getInt("board_hit"));
+				dto.setBoard_thumbs(rs.getInt("board_thumbs"));
+				dto.setBoard_date(rs.getString("board_date"));
+				dto.setBoard_update(rs.getString("board_update"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			closeConn(rs, pstmt, con);
+		}
+		
+		return dto;
+	} // boardContent() end
 	
 	
 }

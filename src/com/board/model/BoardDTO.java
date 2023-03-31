@@ -5,12 +5,16 @@ public class BoardDTO {
 	private int board_index;
 	private String board_title;
 	private String board_cont;
-	private String board_writer;
+	private String board_writer_id;
+	private String board_writer_nickname;
+	private String upload_file;
+	private String upload_fileImg;
 	private String board_type;
 	private String board_heading;
 	private int board_hit;
 	private int board_thumbs;
 	private String board_date;
+	private String board_update;
 	
 	
 	public int getBoard_index() {
@@ -31,11 +35,29 @@ public class BoardDTO {
 	public void setBoard_cont(String board_cont) {
 		this.board_cont = board_cont;
 	}
-	public String getBoard_writer() {
-		return board_writer;
+	public String getBoard_writer_id() {
+		return board_writer_id;
 	}
-	public void setBoard_writer(String board_writer) {
-		this.board_writer = board_writer;
+	public void setBoard_writer_id(String board_writer_id) {
+		this.board_writer_id = board_writer_id;
+	}
+	public String getBoard_writer_nickname() {
+		return board_writer_nickname;
+	}
+	public void setBoard_writer_nickname(String board_writer_nickname) {
+		this.board_writer_nickname = board_writer_nickname;
+	}
+	public String getUpload_file() {
+		return upload_file;
+	}
+	public void setUpload_file(String upload_file) {
+		this.upload_file = upload_file;
+	}
+	public String getUpload_fileImg() {
+		return upload_fileImg;
+	}
+	public void setUpload_fileImg(String upload_fileImg) {
+		this.upload_fileImg = upload_fileImg;
 	}
 	public String getBoard_type() {
 		return board_type;
@@ -67,5 +89,12 @@ public class BoardDTO {
 	public void setBoard_date(String board_date) {
 		this.board_date = board_date;
 	}
+	public String getBoard_update() {
+		return board_update;
+	}
+	public void setBoard_update(String board_update) {
+		this.board_update = board_update;
+	}
+	
 	
 }
