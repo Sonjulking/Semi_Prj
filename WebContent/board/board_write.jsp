@@ -1,3 +1,4 @@
+<%@page import="org.apache.tomcat.util.net.AprEndpoint.Sendfile"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -85,44 +86,17 @@
 			</select>
 			
 			<input type="text" name="board_title" placeholder="제목을 입력해주세요">
-		
-		
+			<br>
+			
+			<textarea rows="20" cols="150" name="board_cont"></textarea>
+			
+			<input type="file" name="board_file">
+			
 				
-	<!-- 썸머노트 -->
-	<div class="container">
-		<br>
-		
-		<textarea name="board_cont" id="summernote" rows="15" cols="30" class="form-control"></textarea>
-    
-	</div>
-	
-	<!-- include summernote css/js -->
-	<!-- summernote 스타일관련 cdn -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.6/summernote.css">
-	<!-- summernote 자바스크립트 cdn -->
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.6/summernote.js"></script>
-	<!-- summernote 한글처리관련 cdn -->
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.6/lang/summernote-ko-KR.js"></script>
-	
-	<script type="text/javascript">
-	
-		$(function() {
-			$("#summernote").summernote({
-				lang: 'ko-KR',
-				height: 500,
-				collbacks: {
-					onImageUpload: functo
-				}
-			});
-		});
-	
-	
-	</script>	
-				
-	<input type="button" value="취소" onclick="if(confirm('정말로 취소하시겠습니까?')) {
-												location.href='board_list.do'
-												}else {return; }">	
-	<input type="submit" value="글쓰기">&nbsp;
+			<input type="button" value="취소" onclick="if(confirm('정말로 취소하시겠습니까?')) {
+														location.href='board_list.do'
+														}else {return; }">	
+			<input type="submit" value="글쓰기">&nbsp;
 			
 				
 		

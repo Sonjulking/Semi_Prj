@@ -58,6 +58,10 @@ if (session.getAttribute("LoginCheck") != null) {
 	</header>
 
 	<div align="center">
+		<hr width="50%" color="red">
+			<h3>BOARD 테이블 전체 게시물 목록 페이지</h3>
+		<hr width="50%" color="red">
+		<br>
 		
 		<form method="post" action="<%=request.getContextPath() %>/board_search.do">
 			<select name="field">

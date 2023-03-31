@@ -1,14 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%
-int loginCheck = 0;
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-//Session을 받을때는 값이 null로 올때를 생각해서 조건문을 사용한다.
-if (session.getAttribute("LoginCheck") != null) {
-	//세션의 값을 가져오기
-	loginCheck = (int) session.getAttribute("LoginCheck");
-}
-%>
+<c:set var="loginCheck" value="0"/>
+<c:if test="${!empty sessionScope.LoginCheck}">
+    <c:set var="loginCheck" value="${sessionScope.LoginCheck}"/>
+</c:if>
+
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -40,31 +40,23 @@ body {
 			<span id="main_logo_text"><a id="logo_link" href="main.jsp">겜만추</a></span>
 			<!-- <img id="logo" src="../WebContent/img/thumbup.png" alt=""> -->
 			<div class="login_wrap">
-				<%
-				if (loginCheck == 0) {
-				%>
-				<span class="Login"><a href="member/login.jsp">Login</a></span> <span
-					class="Join"> / <a href="member/join.jsp">회원가입</a></span>
-
-				<%
-				} else if (loginCheck > 0) {
-				%>
-
-				<span class="Login"><a href="member/login.jsp">Logout</a></span> <span
-					class="Join"> / <a href="member/join.jsp">MyPage</a></span>
-
-				<%
-				}
-				;
-				%>
+				
+				<c:if test="${loginCheck == 0 }">
+					<span class="Login"><a href="member/login.jsp">Login</a></span> 
+					<span class="Join"> / <a href="member/join.jsp">회원가입</a></span>
+				</c:if>
+				
+				<c:if test="${loginCheck > 0 }">
+					<span class="Login"><a href="member/login.jsp">Logout</a></span> 
+					<span class="Join"> / <a href="member/join.jsp">MyPage</a></span>
+				</c:if>
 			</div>
 		</div>
 	</header>
 
 	<nav>
 		<ul class="navcolor">
-			<li><a href="<%=request.getContextPath()%>/board_list.do">Free
-					Board</a></li>
+			<li><a href="<%=request.getContextPath()%>/board_list.do">FreeBoard</a></li>
 			<li><a href="">Legend</a></li>
 			<li><a href="">Notice </a></li>
 			<li><a href="">ETC </a></li>
