@@ -153,14 +153,16 @@ public class MemberDAO {
 		} catch (SQLException e) {
 			// TODO 자동 생성된 catch 블록
 			e.printStackTrace();
+		} finally {
+			closeConn(rs, pstmt, con);
 		}
 		return result;
 
 	}
 	
     // checkMemberId() start
-	public int checkMemberId(String id) {
-		int res = 0;
+	public String checkMemberId(String id) {
+		String res = "사용 가능한 아이디입니다.";
 		
 		try {
 			openConn();
@@ -176,11 +178,13 @@ public class MemberDAO {
 			if(rs.next()) {
 
 				// 중복 값 존재함
-				return -1;
+				res = "중복 아이디입니다.";
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			closeConn(rs, pstmt, con);
 		}
 		
 		return res;

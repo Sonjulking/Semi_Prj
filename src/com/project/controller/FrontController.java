@@ -84,13 +84,13 @@ public class FrontController extends HttpServlet {
 				forward.setRedirect(false);
 				forward.setPath(value);
 	
-			   	if (forward.isRedirect()) { // true 인 경우
-					response.sendRedirect(forward.getPath());
-				} else { // false 인 경우 view page로 이동
-					RequestDispatcher rd = request.getRequestDispatcher(forward.getPath());
-					rd.forward(request, response);
-				}
 			} 
+			if (forward.isRedirect()) { // true 인 경우
+				response.sendRedirect(forward.getPath());
+			} else { // false 인 경우 view page로 이동
+				RequestDispatcher rd = request.getRequestDispatcher(forward.getPath());
+				rd.forward(request, response);
+			}
 		}
 }
 

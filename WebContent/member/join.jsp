@@ -4,102 +4,7 @@
 <html>
 <head>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.js"></script>
-<script type="text/javascript">
-     
-     // id check
-     $(function() {
-    	$("#idcheck_btn").on("click", function() {
-    		$("#id_check").hide();
-    		let userId = $("#username").val();
-    		
-
-    		let checkOk = "ABCDEFGHIJKLMNOKQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
-    		for(i = 0; i < userId.lenght; i++) {
-    			check = userId.charAt(i);
-    			for(j = 0; j < checkOk.length; j++) {
-    				
-            	    // 아이디 조합이 영문과 숫자만이 아님
-	            	if(j == check.length) {
-	            		let warningTxt = '<font color="red">아이디는 영문과  숫자이어야 합니다.</font>';
-	        		    $("#id_check").text("");
-	        		    $("#id_check").show("");
-	        		    $("#id_check").append(warningTxt);
-	        		    $("#username").val('').focus();
-	            		return false;
-	            	}
-            	}
-            }
-            
-            
-	/*   // 자바스크립트 정규식
-		var checkOk =/^[A-Za-z0-9]*$/;
-	 	// 아이디 조합이 영문과 숫자만이 아님
-	 	if(!checkOk.text(username)) {alert("아이디는 영문과 숫자이어야 합니다");
-	 		
-	 	}
-	     */
-            
-
-    		// 아이디 중복 여부 확인 - Ajax 기술 이용하여 진행
-    		$.ajax({
-    			type : "post",
-    			url : "join_check.jsp",
-    			data : {paramId : userId},
-    			datatype : "jsp",
-    			success : function(data) {
-    				if(data == -1) {
-		// DB에 존재하는 아이디가 중복인 경우
-		let warningTxt = '<font color="red">중복된 아이디입니다.</font>';
-    	    		    $("#id_check").text("");
-    	    		    $("#id_check").show("");
-    	    		    $("#id_check").append(warningTxt);
-    	    		    $("#username").val('').focus();
-    				} else {
-    					let warningTxt = '<font color="blue">사용 가능한 아이디입니다.</font>';
-    	    		    $("#id_check").text("");
-    	    		    $("#id_check").show("");
-    	    		    $("#id_check").append(warningTxt);
-    				}
-    			},
-    			
-    			error : function(data) {
-    				alert("데이터 통신 오류입니다~~");
-    			}
-    		    
-    		});
-
-    	}); 
-    	
-     });
-    
-
-     // password check
-     $(function() {
-     	$("#password").on("click", function() {
-     		$("#pwd_check").hide();
-     		let userPwd = $("#password").val();
-     		
-     	// 비밀번호 길이 체크하는 방법
-    		if($.trim($("#password").val()).length < 6) {
-    		    let warningTxt = '<font color="red">비밀번호는 6자 이상이어야 합니다.</font>';
-    		    $("#pwd_check").text("");
-    		    $("#pwd_check").show("");
-    		    $("#pwd_check").append(warningTxt);
-    		    $("#password").val('').focus();
-    		    return false;
-    		} 
-     	    if($.trim($("#password").val()).length > 16) {
-    		    let warningTxt = '<font color="red">비밀번호는 12자 이하이어야 합니다.</font>';
-    		    $("#pwd_check").text("");
-    		    $("#pwd_check").show("");
-    		    $("#pwd_check").append(warningTxt);
-    		    $("#password").val('').focus();
-    		    return false;
-    		}
-     	})
-     	
-      });
-      
+<script type="text/javascript" src="../js/join.js">
      
 </script>
 <meta charset="UTF-8">
@@ -129,19 +34,22 @@
 		<form method="post" action="<%=request.getContextPath()%>/insert_member.do">
 					        
 	        <label class="username" for="username">ID</label>
-	          <input type="text" id="username" name="id" size="20" onsubmit="checkId()" placeholder="아이디"><br>
-
-	          <input type="button" value="아이디중복체크" id="idcheck_btn">
-	          <span id="id_check"></span>
+	          <input type="text" id="username" name="id" size="20" placeholder="아이디 / 영문 + 숫자" required="required"><br>
+			  <span id="id_check"></span>
 	        <br>
 	
 	        <label class="password" for="password">PWD</label>
-	          <input type="password" id="password" name="pwd" placeholder="비밀번호 / 9~12자"><br>
+	          <input type="password" id="password" name="pwd" placeholder="비밀번호 / 9~12자" min="6" maxlength="12"><br>
 	          <span id="pwd_check"></span>
+	        <br>
+	        
+	        <label class="dbpassword" for="dbpassword">PWD</label>
+	          <input type="password" id="dbpassword" name="pwd_dbcheck" placeholder="비밀번호 / 9~12자" required="required"><br>
+	          <span id="pwd_dbcheck"></span>
 	        <br>
 	
 	        <label class="name" for="name">Name</label>
-	          <input type="text" id="name" name="name" placeholder="겜만추에서 사용할 닉네임">
+	          <input type="text" id="name" name="name" placeholder="겜만추에서 사용할 닉네임" required="required">
 	          <input type="button" value="닉네임중복체크" id="namecheck_btn">
 	          <span id="name_check"></span>
 	        <br>
@@ -165,7 +73,7 @@
 			<br>
 			<label class="check_join"><input type="checkbox" name="check_info" value="check_info" required="required">약관 동의</label>
 			<br>
-			<button class="signup" type="submit" name="join">회원가입</button>
+			<button class="signup" type="submit" name="join" onsubmit="return joinsubmit()">회원가입</button>
 		</form>	
 		</div>
 </body>
