@@ -45,11 +45,13 @@ public class MemberJoinAction implements Action {
 		if (check > 0) {
 			out.println("<script>");
 			out.println("alert('회원가입 성공!')");
+			out.println("location.href='main.jsp'");
 			out.println("</script>");
 		} else {
 
 			out.println("<script>");
 			out.println("alert('회원가입 실패~')");
+			out.println("history.back()");
 			out.println("</script>");
 		}
 		return forward;

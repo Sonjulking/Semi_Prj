@@ -48,3 +48,58 @@ commemt_regdate date not null enable,
 comment_hit number(5000) default 0
 );
 
+
+------------my sql --------------
+
+create table board(
+board_index int primary key,
+board_title varchar(100) not null,
+board_cont varchar(10000),
+board_writer_id varchar(50) not null,
+ FOREIGN KEY (board_writer_id) REFERENCES
+ member(member_id) ON UPDATE CASCADE,
+board_writer_nickname varchar(50) not null,
+ FOREIGN KEY (board_writer_nickname) REFERENCES
+ member(member_nickname) ON UPDATE CASCADE,
+upload_file varchar(2000),
+upload_fileImg varchar(2000),
+board_type varchar(30) not null,
+board_heading varchar(20) not null,
+board_hit int default 0,
+board_thumbs int default 0,
+board_date timestamp not null,
+board_update timestamp
+);
+
+commit;
+
+create table comment(
+comment_index int primary key,
+comment_cont varchar(5000),
+comment_writer_id varchar(50) not null,
+FOREIGN KEY (comment_writer_id) REFERENCES
+member(member_id) ON UPDATE CASCADE,
+comment_writer_nickname varchar(50) not null,
+FOREIGN KEY (comment_writer_nickname) REFERENCES
+ member(member_nickname) ON UPDATE CASCADE,
+commemt_date timestamp not null,
+commemt_update timestamp,
+comment_hit int default 0
+);
+
+commit;
+
+
+create table semiProject.member(
+member_index int not null unique,
+member_id varchar(50) primary key unique,
+member_pwd varchar(50) not null,
+member_nickname varchar(50) not null unique,
+member_email varchar(50) not null unique,
+member_point int default 0,
+member_regdate timestamp not null,
+member_phone varchar(50) not null,
+prefer_game1 varchar(20) default null,
+prefer_game2 varchar(20) default null,
+prefer_game3 varchar(20) default null 
+);
