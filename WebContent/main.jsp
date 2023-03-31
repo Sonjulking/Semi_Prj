@@ -63,7 +63,8 @@ body {
 
 	<nav>
 		<ul class="navcolor">
-			<li><a href="<%=request.getContextPath() %>/board_list.do">Free Board</a></li>
+			<li><a href="<%=request.getContextPath()%>/board_list.do">Free
+					Board</a></li>
 			<li><a href="">Legend</a></li>
 			<li><a href="">Notice </a></li>
 			<li><a href="">ETC </a></li>
