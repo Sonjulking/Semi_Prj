@@ -26,12 +26,14 @@ public class idCheckServlet extends HttpServlet {
 	
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.setContentType("text/html; charset=UTF-8");
-		PrintWriter out = response.getWriter();
+		
+		response.setContentType("application/json");
+		
 		String userId = request.getParameter("id");
 		MemberDAO dao = MemberDAO.getInstance();
 		String str = dao.checkMemberId(userId);
-		out.println(str);
+		String check = "Y";
+		response.getWriter().append(str.equals(check) ? "true" : "false");
 	}
 
 }

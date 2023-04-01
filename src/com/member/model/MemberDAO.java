@@ -190,4 +190,37 @@ public class MemberDAO {
 		return res;
 	}
 	// checkMemberId() end
+	
+	
+	// nickCheck() start
+	public String nickCheck(String name) {
+		String res = "Y";
+		
+		try {
+			openConn();
+			
+			sql = "select * from member where member_nickname = ?";
+			
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setString(1, name);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+
+				// 중복 값 존재함
+				res = "N";
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			closeConn(rs, pstmt, con);
+		}
+		
+		return res;
+		
+    }
+	// nickCheck() end
 }
