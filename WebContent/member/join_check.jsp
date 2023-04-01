@@ -6,7 +6,7 @@
 	String userId = request.getParameter("paramId").trim();
 	MemberDAO dao = MemberDAO.getInstance();
 	
-	int res = dao.checkMemberId(userId);
+	String res = dao.checkMemberId(userId);
 	
 	// ajax에게 응답을 해주면 됨.
 	out.println(res);
