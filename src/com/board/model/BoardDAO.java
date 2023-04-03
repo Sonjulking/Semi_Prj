@@ -8,10 +8,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.sql.DataSource;
-
 public class BoardDAO {
 	// DB와 연동하는 객체.
 	Connection con = null;
@@ -131,7 +127,7 @@ public class BoardDAO {
 		try {
 			openConn();
 			
-			sql = "select * from (select row_number() over(order by board_index desc) rnum, b.* from free_board b) where rnum >= ? and rnum <= ?";
+			sql = "select * from (select row_number() over(order by board_index desc) rnum, b.* from free_board b) b_rownum where rnum >= ? and rnum <= ?";
 			
 			pstmt = con.prepareStatement(sql);
 			
@@ -189,11 +185,11 @@ public class BoardDAO {
 				count = rs.getInt(1) + 1;
 			}
 			
-			sql = "insert into free_board values (?, ?, ?, ?, ?, ?, '', ?, ?, default, default, now(), '')";
+			sql = "insert into free_board values (?, ?, ?, ?, ?, ?, ?, '', ?, default, default, now(), default)";
 			
 			pstmt = con.prepareStatement(sql);
 			
-			pstmt.setString(1, dto.getBoard_type());
+			pstmt.setString(1, dto.getBoard_type()); 
 			pstmt.setInt(2, count);
 			pstmt.setString(3, dto.getBoard_title());
 			pstmt.setString(4, dto.getBoard_cont());
@@ -246,7 +242,7 @@ public class BoardDAO {
 		try {
 			openConn();
 			
-			sql = "select * from free_board where board_no = ?";
+			sql = "select * from free_board where board_index = ?";
 			
 			pstmt = con.prepareStatement(sql);
 			
@@ -257,6 +253,7 @@ public class BoardDAO {
 			if(rs.next()) {
 				dto = new BoardDTO();
 				
+				dto.setBoard_type(rs.getString("board_type"));
 				dto.setBoard_index(rs.getInt("board_index"));
 				dto.setBoard_title(rs.getString("board_title"));
 				dto.setBoard_cont(rs.getString("board_cont"));
@@ -264,7 +261,6 @@ public class BoardDAO {
 				dto.setBoard_writer_nickname(rs.getString("board_writer_nickname"));
 				dto.setUpload_file(rs.getString("upload_file"));
 				dto.setUpload_fileImg(rs.getString("upload_fileImg"));
-				dto.setBoard_type(rs.getString("board_type"));
 				dto.setBoard_heading(rs.getString("board_heading"));
 				dto.setBoard_hit(rs.getInt("board_hit"));
 				dto.setBoard_thumbs(rs.getInt("board_thumbs"));

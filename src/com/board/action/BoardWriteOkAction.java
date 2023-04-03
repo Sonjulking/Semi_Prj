@@ -47,15 +47,19 @@ public class BoardWriteOkAction implements Action {
 		String board_title = multi.getParameter("board_title").trim();
 		String board_cont = multi.getParameter("board_cont").trim();
 		
+		// hidden 받아주기
+		String board_writer_id = multi.getParameter("board_writer_id").trim();
+		String board_writer_nickname = multi.getParameter("board_writer_nickname").trim();
+		
 		// 자료실 폼 페이지에서 type="file" 속성으로 되어 있으면
 		// getFile() 메서드로 받아 주어야 함
-		File board_file = multi.getFile("board_file");
+		File upload_file = multi.getFile("upload_file");
 		
-		if(board_file != null) {	// 첨부파일이 있다면
+		if(upload_file != null) {	// 첨부파일이 있다면
 			
 			// 우선은 첨부파일의 이름을 알아야 함
 			// getName() 메서드를 이용하면 첨부파일의 이름을 알 수 있음
-			String fileName = board_file.getName();
+			String fileName = upload_file.getName();
 			System.out.println("첨부파일 이름 >>> " + fileName);
 			
 			// 날짜 객체 생성
@@ -79,7 +83,7 @@ public class BoardWriteOkAction implements Action {
 			String reFileName = board_heading+"_"+fileName;
 			
 			// 파일 이름 변경
-			board_file.renameTo(new File(homedir+"/"+reFileName));
+			upload_file.renameTo(new File(homedir+"/"+reFileName));
 			
 			// 실제로 DB에 저장되는 파일 이름
 			// "/2023-03-28/홍길동_파일명)" 으로 저장할 예정
@@ -92,6 +96,8 @@ public class BoardWriteOkAction implements Action {
 		dto.setBoard_heading(board_heading);
 		dto.setBoard_title(board_title);
 		dto.setBoard_cont(board_cont);
+		dto.setBoard_writer_id(board_writer_id);
+		dto.setBoard_writer_nickname(board_writer_nickname);
 		
 		BoardDAO dao = BoardDAO.getInstance();
 		

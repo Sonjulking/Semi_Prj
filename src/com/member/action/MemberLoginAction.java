@@ -23,6 +23,7 @@ public class MemberLoginAction implements Action {
 
 		ActionForward forward = new ActionForward();
 		int check = dao.loginMember(member_id, member_pwd);
+		MemberDTO cont = dao.contentMember(member_id);
 
 		PrintWriter out = response.getWriter();
 
@@ -30,6 +31,7 @@ public class MemberLoginAction implements Action {
 
 			HttpSession session = request.getSession();
 			session.setAttribute("LoginCheck", check);
+			session.setAttribute("Cont", cont);
 
 			out.println("<script>");
 			out.println("alert('로그인 성공!')");
