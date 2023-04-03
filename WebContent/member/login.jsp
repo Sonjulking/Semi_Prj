@@ -30,24 +30,25 @@
 
 		<div class="container2">
 			<h2>로그인</h2>
-			<form>
-				<label for="username">아이디</label> <input type="text" id="username"
-					name="id" placeholder="아이디를 입력하세요."> <label
-					for="password">비밀번호</label> <input type="password" id="password"
-					name="pwd" placeholder="비밀번호를 입력하세요."> <a href="">
-					<i id="site-face" class="fa fa-facebook-square" aria-hidden="true"></i>
-				</a> <a href=""> <i id="site-goo" class="fa fa-google-plus-square"
-					aria-hidden="true"></i>
-				</a>
 
 
-				<button class="login" type="submit">로그인</button>
-			</form>
+			<label for="username">아이디</label> <input type="text" id="username"
+				name="id" placeholder="아이디를 입력하세요."> <label for="password">비밀번호</label>
+			<input type="password" id="password" name="pwd"
+				placeholder="비밀번호를 입력하세요."> <a href=""> <i
+				id="site-face" class="fa fa-facebook-square" aria-hidden="true"></i>
+			</a> <a href=""> <i id="site-goo" class="fa fa-google-plus-square"
+				aria-hidden="true"></i>
+			</a>
+
+
+			<button class="login" type="submit">로그인</button>
+
 			<h6 class="lostpwd">
 				<a href="">비밀번호를 잊으셨나요?</a>
 			</h6>
 
-			<button class="signup" type="submit">회원가입</button>
+			<a href="/Semi_Prj/member/join.jsp"><button class="signup" type="button">회원가입</button></a>
 
 
 		</div>
