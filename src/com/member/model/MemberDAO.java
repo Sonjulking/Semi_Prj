@@ -232,7 +232,7 @@ public class MemberDAO {
 	
 	// nickCheck() start
 	public String nickCheck(String name) {
-		String res = "Y";
+		String res = "사용 가능 닉네임입니다.";
 		
 		try {
 			openConn();
@@ -248,7 +248,7 @@ public class MemberDAO {
 			if(rs.next()) {
 
 				// 중복 값 존재함
-				res = "N";
+				res = "사용 불가 닉네임입니다.";
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
