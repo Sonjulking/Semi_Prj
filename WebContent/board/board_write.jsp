@@ -2,6 +2,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<c:set var="loginCheck" value="0"/>
+<c:if test="${!empty sessionScope.LoginCheck }">
+    <c:set var="loginCheck" value="${sessionScope.LoginCheck }"/>
+</c:if>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -53,6 +59,28 @@
 </script>
 </head>
 <body>
+
+	 <header>
+		<div class="free_board_wrap">
+			<span id="main_logo_text"><a href="free_board.jsp">자유게시판</a></span>
+			<!-- <img id="logo" src="../WebContent/img/thumbup.png" alt=""> -->
+			<div class="login_wrap">
+				<c:if test="${loginCheck == 0 }">
+					<span class="Login"><a href="member/login.jsp">Login</a></span> 
+					<span class="Join"> / <a href="member/join.jsp">회원가입</a></span>
+					
+				</c:if>
+				
+				<c:if test="${loginCheck > 0 }">
+					<span class="Login"><a href="member/login.jsp">Logout</a></span> 
+					<span class="Join"> / <a href="member/join.jsp">MyPage</a></span>
+					
+					<c:set var="dto" value="${sessionScope.Cont }"/>
+				</c:if>
+			</div>
+		</div>
+	</header>
+	
 	<div align="center">
 		<hr width="50%" color="gray">
 			<h3>board 테이블 게시판 글쓰기</h3>
@@ -61,6 +89,8 @@
 		
 		<%-- enctype : 파일을 업로드하기 위한 속성, 값: --%>
 		<form method="post" enctype="multipart/form-data" name="f" action="<%=request.getContextPath() %>/board_write_ok.do" onsubmit="return check()">
+		<input type="hidden" name="board_writer_id" value="${dto.getMember_id() }">
+		<input type="hidden" name="board_writer_nickname" value="${dto.getMember_nickname() }">
 			
 			<select name="board_type" id="board_type">
 				<option value="">게시판선택</option>
@@ -90,7 +120,7 @@
 			
 			<textarea rows="20" cols="150" name="board_cont"></textarea>
 			
-			<input type="file" name="board_file">
+			<input type="file" name="upload_file">
 			
 				
 			<input type="button" value="취소" onclick="if(confirm('정말로 취소하시겠습니까?')) {

@@ -1,15 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%
-int loginCheck = 0;
-
-//Session을 받을때는 값이 null로 올때를 생각해서 조건문을 사용한다.
-if (session.getAttribute("LoginCheck") != null) {
-	//세션의 값을 가져오기
-	loginCheck = (int) session.getAttribute("LoginCheck");
-}
-%>
+<c:set var="loginCheck" value="0"/>
+<c:if test="${!empty sessionScope.LoginCheck}">
+    <c:set var="loginCheck" value="${sessionScope.LoginCheck}"/>
+</c:if>
 <!DOCTYPE html>
 <html>
 <head>
@@ -36,23 +31,15 @@ if (session.getAttribute("LoginCheck") != null) {
 			<span id="main_logo_text"><a href="free_board.jsp">자유게시판</a></span>
 			<!-- <img id="logo" src="../WebContent/img/thumbup.png" alt=""> -->
 			<div class="login_wrap">
-				<%
-				if (loginCheck == 0) {
-				%>
-				<span class="Login"><a href="../member/login.jsp">Login</a></span> <span
-					class="Join"> / <a href="../member/join.jsp">회원가입</a></span>
-
-				<%
-				} else if (loginCheck > 0) {
-				%>
-
-				<span class="Login"><a href="../member/login.jsp">Logout</a></span> <span
-					class="Join"> / <a href="../member/join.jsp">MyPage</a></span>
-
-				<%
-				}
-				;
-				%>
+				<c:if test="${loginCheck == 0 }">
+					<span class="Login"><a href="member/login.jsp">Login</a></span> 
+					<span class="Join"> / <a href="member/join.jsp">회원가입</a></span>
+				</c:if>
+				
+				<c:if test="${loginCheck > 0 }">
+					<span class="Login"><a href="member/login.jsp">Logout</a></span> 
+					<span class="Join"> / <a href="member/join.jsp">MyPage</a></span>
+				</c:if>
 			</div>
 		</div>
 	</header>
@@ -98,7 +85,7 @@ if (session.getAttribute("LoginCheck") != null) {
 							<a href="<%=request.getContextPath()%>/board_content.do?no=${dto.getBoard_index() }&page=${page }"> <%--page가 넘어가는 이유는 나왔을 때 다시 그 페이지에 있어야하니까 --%>
 						${dto.getBoard_title() }</a> 
 						</td>
-						<td> ${dto.getBoard_writer() } </td>
+						<td> ${dto.getBoard_writer_nickname() } </td>
 						<td> ${dto.getBoard_hit() } </td>
 						<td> ${dto.getBoard_thumbs() } </td>
 						<td> ${dto.getBoard_date().substring(0, 10) } </td>

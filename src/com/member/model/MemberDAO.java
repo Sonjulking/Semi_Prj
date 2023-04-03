@@ -160,6 +160,44 @@ public class MemberDAO {
 
 	}
 	
+	public MemberDTO contentMember(String id) {
+		MemberDTO dto = null;
+		
+		try {
+			openConn();
+			
+			sql = "select * from member where member_id = ?";
+			
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setString(1, id);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				dto = new MemberDTO();
+				
+				dto.setMember_index(rs.getInt("member_index"));
+				dto.setMember_id(rs.getString("member_id"));
+				dto.setMember_pwd(rs.getString("member_pwd"));
+				dto.setMember_nickname(rs.getString("member_nickname"));
+				dto.setMember_email(rs.getString("member_email"));
+				dto.setPoint(rs.getInt("member_point"));
+				dto.setRegdate(rs.getString("member_regdate"));
+				dto.setPhone(rs.getString("member_phone"));
+				dto.setPrefer_lol(rs.getString("prefer_game1"));
+				dto.setPrefer_battle_ground(rs.getString("prefer_game2"));
+				dto.setPrefer_overwatch(rs.getString("prefer_game3"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			closeConn(rs, pstmt, con);
+		}
+		return dto;
+	} // contentMember() end
+	
     // checkMemberId() start
 	public String checkMemberId(String id) {
 		String res = "사용 가능한 아이디입니다.";
