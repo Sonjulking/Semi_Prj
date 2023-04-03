@@ -37,17 +37,21 @@ public class MemberLoginAction implements Action {
 			out.println("alert('로그인 성공!')");
 			out.println("location.href='main.jsp'");
 			out.println("</script>");
+
 		} else if (check == 0) {
 
 			out.println("<script>");
 			out.println("alert('비밀번호 불일치~')");
 			out.println("history.back()");
 			out.println("</script>");
+
 		} else {
+
 			out.println("<script>");
 			out.println("alert('아이디 없음~')");
 			out.println("history.back()");
 			out.println("</script>");
+
 		}
 
 		return forward;

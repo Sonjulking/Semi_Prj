@@ -19,7 +19,7 @@
 				</c:if>
 
 				<c:if test="${loginCheck > 0 }">
-					<span class="Login"><a href="member/login.jsp">Logout</a></span>
+					<span class="Login"><a href="member/logout.jsp">Logout</a></span>
 					<span class="Join"> / <a href="member/join.jsp">MyPage</a></span>
 				</c:if>
 			</div>
