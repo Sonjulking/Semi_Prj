@@ -31,7 +31,8 @@ public class MemberLoginAction implements Action {
 
 			HttpSession session = request.getSession();
 			session.setAttribute("LoginCheck", check);
-			session.setAttribute("Cont", cont);
+			session.setAttribute("member_id", member_id);
+			session.setAttribute("member_pwd", member_pwd);
 
 			out.println("<script>");
 			out.println("alert('로그인 성공!')");
