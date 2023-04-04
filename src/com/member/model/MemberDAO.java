@@ -159,24 +159,24 @@ public class MemberDAO {
 		return result;
 
 	}
-	
+
 	public MemberDTO contentMember(String id) {
 		MemberDTO dto = null;
-		
+
 		try {
 			openConn();
-			
+
 			sql = "select * from member where member_id = ?";
-			
+
 			pstmt = con.prepareStatement(sql);
-			
+
 			pstmt.setString(1, id);
-			
+
 			rs = pstmt.executeQuery();
-			
-			if(rs.next()) {
+
+			if (rs.next()) {
 				dto = new MemberDTO();
-				
+
 				dto.setMember_index(rs.getInt("member_index"));
 				dto.setMember_id(rs.getString("member_id"));
 				dto.setMember_pwd(rs.getString("member_pwd"));
@@ -197,23 +197,23 @@ public class MemberDAO {
 		}
 		return dto;
 	} // contentMember() end
-	
-    // checkMemberId() start
+
+	// checkMemberId() start
 	public String checkMemberId(String id) {
 		String res = "사용 가능한 아이디입니다.";
-		
+
 		try {
 			openConn();
-			
+
 			sql = "select * from member where member_id = ?";
-			
+
 			pstmt = con.prepareStatement(sql);
-			
+
 			pstmt.setString(1, id);
-			
+
 			rs = pstmt.executeQuery();
-			
-			if(rs.next()) {
+
+			if (rs.next()) {
 
 				// 중복 값 존재함
 				res = "중복 아이디입니다.";
@@ -224,28 +224,27 @@ public class MemberDAO {
 		} finally {
 			closeConn(rs, pstmt, con);
 		}
-		
+
 		return res;
 	}
 	// checkMemberId() end
-	
-	
+
 	// nickCheck() start
 	public String nickCheck(String name) {
 		String res = "사용 가능 닉네임입니다.";
-		
+
 		try {
 			openConn();
-			
+
 			sql = "select * from member where member_nickname = ?";
-			
+
 			pstmt = con.prepareStatement(sql);
-			
+
 			pstmt.setString(1, name);
-			
+
 			rs = pstmt.executeQuery();
-			
-			if(rs.next()) {
+
+			if (rs.next()) {
 
 				// 중복 값 존재함
 				res = "사용 불가 닉네임입니다.";
@@ -256,9 +255,54 @@ public class MemberDAO {
 		} finally {
 			closeConn(rs, pstmt, con);
 		}
-		
+
 		return res;
-		
-    }
+
+	}
 	// nickCheck() end
+
+	// updateMypage() start
+	public int updateMypage(MemberDTO dto, String curr_pwd, String pw1) {
+
+		int result = 0;
+		try {
+			openConn();
+
+			sql = "select * from member where member_id = ?";
+
+			pstmt = con.prepareStatement(sql);
+
+			pstmt.setString(1, dto.getMember_id());
+
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				if (curr_pwd.equals(rs.getString("member_pwd"))) {
+					sql = "update ignore member set member_nickname = ?, member_pwd = ?, prefer_game1 = ? , prefer_game2 = ? , prefer_game3 = ?";
+
+					pstmt = con.prepareStatement(sql);
+
+					pstmt.setString(1, dto.getMember_nickname());
+					pstmt.setString(2, pw1);
+					pstmt.setString(3, dto.getPrefer_lol());
+					pstmt.setString(4, dto.getPrefer_battle_ground());
+					pstmt.setString(5, dto.getPrefer_overwatch());
+
+					result = pstmt.executeUpdate();
+				} else {
+					// 비밀번호가 틀린 경우
+					result = -1;
+				}
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			closeConn(rs, pstmt, con);
+		}
+
+		return result;
+
+	}
 }

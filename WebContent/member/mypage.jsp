@@ -20,7 +20,8 @@
 
 		<form method="post" action="<%=request.getContextPath()%>/myPageOk.do">
 
-
+			<input type="hidden" name="id" value="${dto.getMember_id()}">
+			<input type="hidden" name="db_pwd" value="${dto.getMember_pwd() }">
 			<table border="1">
 				<tr>
 					<th>아이디</th>
@@ -28,7 +29,7 @@
 				</tr>
 				<tr>
 					<th>닉네임</th>
-					<td><input type="text" name="upload_title"
+					<td><input type="text" name="nickname"
 						value="${dto.getMember_nickname() }"></td>
 				</tr>
 
@@ -43,15 +44,15 @@
 				</tr>
 				<tr>
 					<th>비밀번호 변경</th>
-					<td><input type="password" name="upload_pwd"></td>
+					<td><input type="password" name="modify_pwd1"></td>
 				</tr>
 				<tr>
 					<th>비밀번호 확인</th>
-					<td><input type="password" name="upload_pwd"></td>
+					<td><input type="password" name="modify_pwd2"></td>
 				</tr>
 				<tr>
 					<th>현재 비밀번호</th>
-					<td><input type="password" name="upload_pwd"></td>
+					<td><input type="password" name="curr_pwd"></td>
 				</tr>
 				<tr>
 
