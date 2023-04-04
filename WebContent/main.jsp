@@ -22,6 +22,8 @@
 <link rel="stylesheet" href="css/main.css" />
 <link rel="stylesheet" href="css/nav.css " />
 
+<!-- 매칭 창 팝업 js -->
+
 
 </head>
 
@@ -110,10 +112,12 @@
 			<div>
 				<!-- <img class="matching-img" src="../WebContent/img/1.png" /> -->
 			</div>
-			<input type="button" value="매칭하기" class="matching-btn" />
+			<button type="button" class="matching-btn">매칭하기</button>
 		</div>
 
 	</div>
+	
+	<script type="text/javascript" src="matching/pop.js"></script>	
 
 
 	<%@ include file="include/footer.jsp"%>
