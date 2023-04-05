@@ -85,6 +85,7 @@ public class FrontController extends HttpServlet {
 				forward.setPath(value);
 	
 			} 
+			
 			if (forward.isRedirect()) { // true 인 경우
 				response.sendRedirect(forward.getPath());
 			} else { // false 인 경우 view page로 이동
