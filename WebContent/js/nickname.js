@@ -2,16 +2,17 @@
  * 
  */
 
-// ajax start  
-$(function() {     
-    	
-	// 아이디 중복 여부 확인
-	$("#idcheck_btn").click(function() {
+
+$(function() {	
+	
+		// 닉네임 중복 여부 확인
+	$("#namecheck_btn").click(function() {
 		$.ajax({
 			ContentType : "application/x-www-form-urlencoded; charset=UTF-8",
 		    type : "post",
-			url: "/Semi_Prj/idCheck.do",
-			data : {id:  $("#username").val()},
+				// 여러 ajax에서 동일하게 사용되는 속성 설정
+			url: "/Semi_Prj/nicknameCheck.do",
+			data : {id:  $("#name").val()},
 			datatype: "text",
 			success: function(data) {
 				alert(data);
@@ -22,5 +23,10 @@ $(function() {
 			}
 		});
 	});
+	
+ 
 });
+// ajax end
+     
 
+     	

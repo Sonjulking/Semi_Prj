@@ -20,7 +20,7 @@
 
 				<c:if test="${loginCheck > 0 }">
 					<span class="Login"><a href="member/logout.jsp">Logout</a></span>
-					<span class="Join"> / <a href="member/join.jsp">MyPage</a></span>
+					<span class="Join"> / <a href="<%=request.getContextPath()%>/myPage.do?loginId=${member_id}">MyPage</a></span>
 				</c:if>
 			</div>
 		</div>

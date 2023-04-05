@@ -35,7 +35,7 @@
 			<label class="userId" for="Id">ID</label> <input type="text"
 				id="username" name="id" size="20" placeholder="아이디 / 영문 + 숫자"
 				><br> <span id="id_check"></span> <br>
-
+             <input type="button" value="아이디중복체크" id="idcheck_btn">
 			<label class="password" for="password1">PWD</label> <input 
 				type="password" id="password1" class ="inputpwd" name="pwd" placeholder="비밀번호 / 6~12자"><br>
 			<span id="pwd_check"></span> <br> <label class="password" 
@@ -59,7 +59,7 @@
 				name="check_info" value="check_info" required="required">약관
 				동의</label> <br>
 			<button class="signup" type="submit" name="join"
-				onsubmit="return joinsubmit()">회원가입</button>
+				>회원가입</button>
 		</form>
 	</div>
 
@@ -68,5 +68,7 @@
 	<script type="text/javascript"
 		src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.js"></script>
 	<script type="text/javascript" src="../js/joinValidation.js"></script>
+	<script type="text/javascript" src="../js/join.js"></script>
+	<script type="text/javascript" src="../js/nickname.js"></script>
 </body>
 </html>

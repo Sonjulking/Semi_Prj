@@ -57,16 +57,7 @@ $(".joinForm").validate({
 			required: true,
 			minlength: 4,
 			maxlength: 20,
-			engAndNum: true,
-			remote:{
-	            type: 'post',
-	            url:'/Semi_Prj/idCheck.do',
-	            data:{
-	              id : function() {
-	              return $("#username").val();
-              }
-            }
-          }
+			engAndNum: true
 
 		},
 		
