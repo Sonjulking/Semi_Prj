@@ -211,6 +211,39 @@ public class BoardDAO {
 	} // insertBoard() end
 	
 	
+	
+	// board 테이블의 게시물 번호에 해당하는 게시글을 수정하는 메서드
+	public int updateBoard(BoardDTO dto) {
+		
+		int result = 0;
+		
+		try {
+			openConn();
+			
+			sql = "update free_board set board_type = ?, board_heading = ?, board_title = ?, board_cont = ?, board_update = now() where board_index = ?";
+			
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setString(1, dto.getBoard_type());
+			pstmt.setString(2, dto.getBoard_heading());
+			pstmt.setString(3, dto.getBoard_title());
+			pstmt.setString(4, dto.getBoard_cont());
+			pstmt.setInt(5, dto.getBoard_index());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			closeConn(rs, pstmt, con);
+		}
+			
+		return result;
+	} // updateBoard() 메서드 end
+
+	
+	
+	
 	public void boardHit(int no) {
 		
 		try {
@@ -276,6 +309,77 @@ public class BoardDAO {
 		
 		return dto;
 	} // boardContent() end
+	
+	
+	public int deleteBoard(int no) {
+		int result = 0;
+		
+		try {
+			openConn();
+			
+			sql = "delete from free_board where board_index = ?";
+			
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setInt(1, no);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			closeConn(rs, pstmt, con);
+		}
+		return result;
+	} // deleteBoard() end
+	
+	
+	public void updateSequence(int no) {
+		
+		try {
+			openConn();
+			
+			sql = "update free_board set board_index = board_index -1 where board_index > ?";
+			
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setInt(1, no);
+			
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			closeConn(rs, pstmt, con);
+		}
+	} //deleteSequence() 메서드 end
+	
+	
+	public int thumbsBaord(int no) {
+		
+		int result = 0;
+		
+		try {
+			openConn();
+			
+			sql = "update set free_board board_thumbs = board_thumbs + 1 where board_index = ?";
+			
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setInt(1, no);
+			
+			result = pstmt.executeUpdate();
+			
+			System.out.println(result);
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			closeConn(rs, pstmt, con);
+		}
+		return result;
+	} // thumbsBaord() end
 	
 	
 }
