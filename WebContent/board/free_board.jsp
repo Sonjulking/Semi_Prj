@@ -51,6 +51,7 @@
 		<br>
 		
 		<form method="post" action="<%=request.getContextPath() %>/board_search.do">
+			<input type="hidden" name="page" value="${page }">
 			<select name="field">
 				<option value="title">제목</option>
 				<option value="cont">내용</option>

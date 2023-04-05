@@ -185,7 +185,7 @@ public class BoardDAO {
 				count = rs.getInt(1) + 1;
 			}
 			
-			sql = "insert into free_board values (?, ?, ?, ?, ?, ?, ?, '', ?, default, default, now(), default)";
+			sql = "insert into free_board values (?, ?, ?, ?, ?, ?, ?, default, ?, default, default, now(), default)";
 			
 			pstmt = con.prepareStatement(sql);
 			
@@ -380,6 +380,116 @@ public class BoardDAO {
 		}
 		return result;
 	} // thumbsBaord() end
+	
+	
+	
+	
+	public List<BoardDTO> searchBoardList(String field, String keyword) {
+		
+		List<BoardDTO> list = new ArrayList<BoardDTO>();
+		
+		try {
+			openConn();
+			
+			sql = "select * from free_board";
+			if(field.equals("title")) {
+				sql += " where board_title like ?";
+			}else if(field.equals("cont")) {
+				sql += " where board_cont like ?";
+			}else if(field.equals("title_cont")) {
+				sql += " where board_title like ? or board_cont like ?";
+			}else {
+				sql += " where board_writer_nickname like ?";
+			}
+			
+			sql += " order by board_index desc";
+			
+			pstmt = con.prepareStatement(sql);
+			
+			if(field.equals("title_cont")) {
+				pstmt.setString(1, "%"+keyword+"%");
+				pstmt.setString(2, "%"+keyword+"%");
+			}else {
+				pstmt.setString(1, "%"+keyword+"%");
+			}
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				// board테이블에서 하나의 레코드를 가져와서 각각 컬럼의 데이터를 dto객체의 setter() 메서드의 인자로 전달
+				BoardDTO dto = new BoardDTO();
+				
+				dto.setBoard_type(rs.getString("board_type"));
+				dto.setBoard_index(rs.getInt("board_index"));
+				dto.setBoard_title(rs.getString("board_title"));
+				dto.setBoard_cont(rs.getString("board_cont"));
+				dto.setBoard_writer_id(rs.getString("board_writer_id"));
+				dto.setBoard_writer_nickname(rs.getString("board_writer_nickname"));
+				dto.setUpload_file(rs.getString("upload_file"));
+				dto.setUpload_fileImg(rs.getString("upload_fileImg"));
+				dto.setBoard_heading(rs.getString("board_heading"));
+				dto.setBoard_hit(rs.getInt("board_hit"));
+				dto.setBoard_thumbs(rs.getInt("board_thumbs"));
+				dto.setBoard_date(rs.getString("board_date"));
+				dto.setBoard_update(rs.getString("board_update"));
+				
+				list.add(dto);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			closeConn(rs, pstmt, con);
+		}
+		return list;
+		
+	} // searchBoardList()메서드 end
+	
+	
+	
+	public String getReplyList(int no) {
+		
+		String result = "";
+		
+		try {
+			openConn();
+			
+			sql = "select * from free_comment where board_comment_index = ? order by comment_date desc";
+			
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setInt(1, no);
+			
+			rs = pstmt.executeQuery();
+			
+			result += "<replys>";
+			
+			while(rs.next()) {
+				result += "<reply>";
+				result += "<comment_index>"+rs.getInt("comment_index")+"</comment_index>";
+				result += "<board_comment_index>"+rs.getInt("board_comment_index")+"</board_comment_index>";
+				result += "<comment_cont>"+rs.getString("comment_cont")+"</comment_cont>";
+				result += "<comment_writer_id>"+rs.getString("comment_writer_id")+"</comment_writer_id>";
+				result += "<comment_writer_nickname>"+rs.getString("comment_writer_nickname")+"</comment_writer_nickname>";
+				result += "<commemt_date>"+rs.getString("commemt_date")+"</commemt_date>";
+				result += "<commemt_update>"+rs.getString("commemt_update")+"</commemt_update>";
+				result += "<comment_hit>"+rs.getInt("comment_hit")+"</comment_hit>";
+				result += "</reply>";
+			}
+			
+			result += "</replys>";
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			closeConn(rs, pstmt, con);
+		}
+		
+		return result;
+	}  // getReplyList() 메서드 end
+	
 	
 	
 }

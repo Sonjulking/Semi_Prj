@@ -75,7 +75,7 @@
 					<span class="Login"><a href="member/login.jsp">Logout</a></span> 
 					<span class="Join"> / <a href="member/join.jsp">MyPage</a></span>
 					
-					<c:set var="dto" value="${sessionScope.Cont }"/>
+					<c:set var="m_dto" value="${sessionScope.Cont }"/>
 				</c:if>
 			</div>
 		</div>
@@ -89,8 +89,8 @@
 		
 		<%-- enctype : 파일을 업로드하기 위한 속성, 값: --%>
 		<form method="post" enctype="multipart/form-data" name="f" action="<%=request.getContextPath() %>/board_write_ok.do" onsubmit="return check()">
-		<input type="hidden" name="board_writer_id" value="${dto.getMember_id() }">
-		<input type="hidden" name="board_writer_nickname" value="${dto.getMember_nickname() }">
+		<input type="hidden" name="board_writer_id" value="${m_dto.getMember_id() }">
+		<input type="hidden" name="board_writer_nickname" value="${m_dto.getMember_nickname() }">
 			
 			<select name="board_type" id="board_type">
 				<option value="">게시판선택</option>

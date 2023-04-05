@@ -29,7 +29,6 @@
 					<span class="Login"><a href="member/login.jsp">Logout</a></span> 
 					<span class="Join"> / <a href="member/join.jsp">MyPage</a></span>
 					
-					<c:set var="dto" value="${sessionScope.Cont }"/>
 				</c:if>
 			</div>
 		</div>
