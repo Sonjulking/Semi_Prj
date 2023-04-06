@@ -26,7 +26,7 @@ public class BoardSearchAction implements Action {
 		List<BoardDTO> searchList = dao.searchBoardList(field, keyword);
 		
 		request.setAttribute("Search", searchList);
-		request.setAttribute("Page", page);
+		request.setAttribute("page", page);
 		
 		ActionForward forward = new ActionForward();
 		

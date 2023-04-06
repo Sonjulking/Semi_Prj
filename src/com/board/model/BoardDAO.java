@@ -193,8 +193,11 @@ public class BoardDAO {
 			pstmt.setInt(2, count);
 			pstmt.setString(3, dto.getBoard_title());
 			pstmt.setString(4, dto.getBoard_cont());
+			System.out.println("내용 >>>"+dto.getBoard_cont());
 			pstmt.setString(5, dto.getBoard_writer_id());
+			System.out.println("아이디 >>>"+dto.getBoard_writer_id());
 			pstmt.setString(6, dto.getBoard_writer_nickname());
+			System.out.println("닉네임 >>" +dto.getBoard_writer_nickname());
 			pstmt.setString(7, dto.getUpload_file());
 			pstmt.setString(8, dto.getBoard_heading());
 			
@@ -472,8 +475,8 @@ public class BoardDAO {
 				result += "<comment_cont>"+rs.getString("comment_cont")+"</comment_cont>";
 				result += "<comment_writer_id>"+rs.getString("comment_writer_id")+"</comment_writer_id>";
 				result += "<comment_writer_nickname>"+rs.getString("comment_writer_nickname")+"</comment_writer_nickname>";
-				result += "<commemt_date>"+rs.getString("commemt_date")+"</commemt_date>";
-				result += "<commemt_update>"+rs.getString("commemt_update")+"</commemt_update>";
+				result += "<comment_date>"+rs.getString("comment_date")+"</comment_date>";
+				result += "<comment_update>"+rs.getString("comment_update")+"</comment_update>";
 				result += "<comment_hit>"+rs.getInt("comment_hit")+"</comment_hit>";
 				result += "</reply>";
 			}
@@ -491,5 +494,48 @@ public class BoardDAO {
 	}  // getReplyList() 메서드 end
 	
 	
+	
+	// 답변 내용을 tbl_reply 테이블에 저장하는 메서드.
+	public int replyInsert(CommentDTO dto) {
+		
+		int result = 0, count = 0;
+		
+		try {
+			openConn();
+			
+			sql = "select max(comment_index) from free_comment";
+			
+			pstmt = con.prepareStatement(sql);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				count = rs.getInt(1) + 1;
+			}
+			
+			sql = "insert into free_comment values(?, ?, ?, ?, ?, now(), default, default)";	
+			
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setInt(1, count);
+			
+			pstmt.setInt(2, dto.getComment_index());
+			
+			pstmt.setString(3, dto.getComment_cont());
+			
+			pstmt.setString(4, dto.getComment_writer_id());
+			pstmt.setString(5, dto.getComment_writer_nickname());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			closeConn(rs, pstmt, con);
+		}
+		
+		return result;
+	}  // replyInsert() 메서드 end
 	
 }

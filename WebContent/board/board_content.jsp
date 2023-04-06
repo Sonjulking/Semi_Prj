@@ -12,6 +12,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-3.6.3.js"></script>
 </head>
 <body>
 
@@ -28,6 +29,8 @@
 				<c:if test="${loginCheck > 0 }">
 					<span class="Login"><a href="member/login.jsp">Logout</a></span> 
 					<span class="Join"> / <a href="member/join.jsp">MyPage</a></span>
+					
+					<c:set var="m_dto" value="${sessionScope.Cont }"/>
 				</c:if>
 			</div>
 		</div>
@@ -102,7 +105,6 @@
 		</c:if>
 		<br>
 		
-		<%-- 로그인 되어있는 경우하고 안되어있는 경우하고 구분해서 내일여기부터 (mysql이랑 연동하고...) --%>
 		<input type="button" value="글 수정" onclick="location.href='board_modify.do?no=${dto.getBoard_index() }&page=${Page }'">&nbsp;&nbsp;
 		<input type="button" value="글 삭제" onclick="if(confirm('정말로 삭제하시겠습니까?')) {
 														location.href='board_delete.do?no=${dto.getBoard_index() }&page=${Page }'
@@ -130,15 +132,8 @@
 	    	<br>
 	   		
 	   		<h3>댓글 목록</h3>
-		    <div>
-		       <table border="1" cellspacing="0" class="list" cellspacing="0" width="400">
-		          <tr>
-		             <td colspan="2">작성자</td>
-		          </tr>
-		          <tr>
-		             <td>댓글내용</td> <td>작성일자</td>
-		          </tr>
-		       </table>
+		    <div class="list">
+		      
 		    </div>
     	</div>
 	</div>
@@ -155,7 +150,7 @@
 			type : "post"
 		});
 		
-		// TBL_BOARD 테이블의 전체 데이터를 가져오는 함수.
+		// BOARD 테이블의 전체 데이터를 가져오는 함수.
 		function getList() {
 			
 			$.ajax({
@@ -163,32 +158,28 @@
 				data : {no : ${dto.getBoard_index() } },
 				datatype : "xml", 
 				success : function(data) {
-					// 테이블 태그의 타이틀 태그를 제외한
-					// 나머지 댓글 목록을 지우는 작업.
-					$(".list tr:gt(1)").remove();
+					
+					$(".list table").remove();
 					
 					let table = "";
 					
 					$(data).find("reply").each(function() {
-						table += "<tr>";
-						table += "<td colspan='2'>"+$(this).find("comment_writer_nickname").text()+"</td>";
-						table += "</tr>";
 						
+						table += "<table border='1' cellspacing='0' width='500'>";
 						table += "<tr>";
-						table += "<td>"+$(this).find("board_comment_index").text()+"</td>";
-						table += "<td>"+$(this).find("commemt_date").text()+"</td>";
+						table += "<td width='100'>"+$(this).find("comment_writer_nickname").text()+"</td>";
+						table += "<td width='300'>"+$(this).find("comment_cont").text()+"</td>";
+						table += "<td width='100'>"+$(this).find("comment_date").text()+"</td>";
 						table += "</tr>";
+						table += "</table>";
 						
-						table += "<tr>";
-						table += "<td colspan='2'>&nbsp;</td>";
-						table += "</tr>";
 					});
 					
-					$(".list tr:eq(1)").after(table);
+					$(".list").append(table);
 				},
 				
 				error : function() {
-					alert("데이터 통신 오류입니다.~~~");
+					alert("데이터 통신 오류입니다!!!.~~~");
 				}
 			});
 			
@@ -199,25 +190,22 @@
 		$("#replyBtn").on("click", function() {
 			
 			$.ajax({
-				url : "/project/reply_insert_ok.do",
-				data : {
-						  writer : $("#re_writer").val(),
+				url : "reply_insert_ok.do",
+				data : {	
+						  writer_id : "${m_dto.getMember_id() }",
+						  writer_nickname : "${m_dto.getMember_nickname() }",
 					      cont : $("#re_content").val(),
-					      bno : ${dto.getBno() }
+					      bno : ${dto.getBoard_index() }
 						},
 				datatype : "text",
 				success : function(data) {
 					if(data > 0) {
 						alert("댓글 작성 완료!!!");
 						
-						// 댓글 작성 후 다시 전체 댓글 리스트를
-						// 화면에 뿌려주면 됨.
 						getList();
 						
-						// input 태그에 입력된 내용 지우기.
-						$("input[type=text]").each(function() {
-							$(this).val("");  // 입력된 값 지우기.
-						});
+						$("#re_content").val("");  
+						
 					}else {
 						alert("댓글 작성이 실패 하였습니다.~~~");
 					}
@@ -229,14 +217,9 @@
 			});
 		});
 		
-		// 제이쿼리 실행 시마다 전체 댓글 목록 화면에 출력이 되어야 함.
 		getList();
 		
 	});
-
-
-
-
 </script>  
 
 

@@ -50,20 +50,6 @@
 		<hr width="50%" color="red">
 		<br>
 		
-		<form method="post" action="<%=request.getContextPath() %>/board_search.do">
-			<input type="hidden" name="page" value="${page }">
-			<select name="field">
-				<option value="title">제목</option>
-				<option value="cont">내용</option>
-				<option value="title_cont">제목+내용</option>
-				<option value="writer">작성자</option>
-			</select>
-			
-			<input type="text" name="keyword">&nbsp;&nbsp;
-			<input type="submit" value="검색">
-		</form>
-		<br>
-		
 		<table border="1" cellspacing="0" width="1000">
 		
 			<tr>
@@ -83,8 +69,7 @@
 					<tr>
 						<td> ${dto.getBoard_index() } </td>
 						<td> 
-							<a href="<%=request.getContextPath()%>/board_content.do?no=${dto.getBoard_index() }&page=${page }"> <%--page가 넘어가는 이유는 나왔을 때 다시 그 페이지에 있어야하니까 --%>
-						${dto.getBoard_title() }</a> 
+							<a href="<%=request.getContextPath()%>/board_content.do?no=${dto.getBoard_index() }&page=${page }">${dto.getBoard_title() }</a> 
 						</td>
 						<td> ${dto.getBoard_writer_nickname() } </td>
 						<td> ${dto.getBoard_hit() } </td>
@@ -102,6 +87,20 @@
 				<tr>
 			</c:if>
 		</table>
+		<br>
+		
+		<form method="post" action="<%=request.getContextPath() %>/board_search.do">
+		<input type="hidden" name="page" value="${page }">
+			<select name="field">
+				<option value="title">제목</option>
+				<option value="cont">내용</option>
+				<option value="title_cont">제목+내용</option>
+				<option value="writer">작성자</option>
+			</select>
+			
+			<input type="text" name="keyword">&nbsp;&nbsp;
+			<input type="submit" value="검색">
+		</form>
 		<br>
 		
 		<input type="button" value="게시글 작성" onclick="location.href='board_write.do'">
