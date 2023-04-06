@@ -21,16 +21,11 @@ public class FrontController extends HttpServlet {
 			request.setCharacterEncoding("UTF-8");
 			response.setContentType("text/html; charset=UTF-8");
 			
-			// getRequestURI() : "/프로젝트명/파일명(*.do)" 라는 문자열을 반환해 주는 메서드.
 			String uri = request.getRequestURI();
-			System.out.println("URI >>> " + uri);
 			
-			// getContextPath() : 현재 프로젝트명을 문자열로 반환해 주는 메서드.
 			String path = request.getContextPath();
-			System.out.println("Path >>> " + path);
 			
 			String command = uri.substring(path.length() + 1);
-			System.out.println("Command >>> " + command);
 					
 			Action action = null;
 			ActionForward forward = null;
@@ -52,12 +47,10 @@ public class FrontController extends HttpServlet {
 			 */
 			
 			String path2 = FrontController.class.getResource("").getPath();
-			System.out.println(path2);
 			FileInputStream fis = new FileInputStream(path2 + "mapping.properties");
 			
 			prop.load(fis);
 			String value = prop.getProperty(command);
-			System.out.println("value >>> " + value);
 			
 			if(value.substring(0, 7).equals("execute")) {
 				StringTokenizer st = new StringTokenizer(value, "|");
@@ -83,15 +76,17 @@ public class FrontController extends HttpServlet {
 				forward = new ActionForward();
 				forward.setRedirect(false);
 				forward.setPath(value);
-	
 			} 
 			
-			if (forward.isRedirect()) { // true 인 경우
-				response.sendRedirect(forward.getPath());
-			} else { // false 인 경우 view page로 이동
-				RequestDispatcher rd = request.getRequestDispatcher(forward.getPath());
-				rd.forward(request, response);
+			if(forward!=null) {
+				if (forward.isRedirect()) { // true 인 경우
+					response.sendRedirect(forward.getPath());
+				} else { // false 인 경우 view page로 이동
+					RequestDispatcher rd = request.getRequestDispatcher(forward.getPath());
+					rd.forward(request, response);
+				}
 			}
+			
 		}
 }
 

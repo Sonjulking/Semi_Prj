@@ -24,7 +24,8 @@ public class MemberLoginAction implements Action {
 		ActionForward forward = new ActionForward();
 		int check = dao.loginMember(member_id, member_pwd);
 		MemberDTO cont = dao.contentMember(member_id);
-
+		
+		
 		PrintWriter out = response.getWriter();
 
 		if (check == 1) {

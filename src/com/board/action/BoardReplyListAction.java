@@ -24,7 +24,6 @@ public class BoardReplyListAction implements Action {
 		PrintWriter out = response.getWriter();
 		
 		out.println(str);
-		
 		return null;
 	}
 
