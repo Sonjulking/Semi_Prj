@@ -379,8 +379,8 @@ public class MemberDAO {
 
 			pstmt = con.prepareStatement(sql);
 
-			pstmt.setString(1, userId);
-			pstmt.setString(2, tempPwd);
+			pstmt.setString(1, tempPwd);
+			pstmt.setString(2, userId);
 
 			pstmt.executeUpdate();
 
@@ -447,5 +447,34 @@ public class MemberDAO {
 		return res;
 	}
 	// deleteMember() end
+	
+	
+	// findMemberId(), 아이디 찾기 메서드
+	public String findMemberId(String email) {
+		String res = "";
+		
+		try {
+			openConn();
+			
+			sql = "select member_id from member where member_email = ?";
+			
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setString(1, email);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				res = rs.getString("member_id");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			closeConn(rs, pstmt, con);
+		}
+		return res;
+	}
+	// findMemberId() end
 
 }

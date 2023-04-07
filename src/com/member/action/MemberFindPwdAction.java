@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import com.project.controller.Action;
 import com.project.controller.ActionForward;
+import com.sun.net.httpserver.HttpsConfigurator;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -137,7 +138,16 @@ public class MemberFindPwdAction implements Action {
 		 * req.getRequestDispatcher("/views/login_myPage/searchPasswordEnd.jsp").forward
 		 * (req, resp);
 		 */
-		return null;
+		String userId = request.getParameter("id");
+		HttpSession session1 = request.getSession();
+		session1.setAttribute("UserId", userId);
+		request.setAttribute("TempPwd", temp);
+		
+		ActionForward forward = new ActionForward();
+		
+		forward.setRedirect(false);
+		forward.setPath("member/changePwd.jsp");
+		return forward;
 	}
 
 }

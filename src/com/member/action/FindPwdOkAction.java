@@ -35,7 +35,7 @@ public class FindPwdOkAction implements Action {
 			dao.updatePwd(tempPwd, userId);
 			out.println("<script>");
 			out.println("alert('임시 비밀번호로 로그인해주세요.')");
-			out.println("history.back()");
+			out.println("location.href='member/myPage.jsp'");
 			out.println("</script>");
 		} else {
 			out.println("<script>");

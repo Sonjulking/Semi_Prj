@@ -15,21 +15,19 @@
 
 		<%-- enctype : 파일을 업로드하기 위한 속성 --%>
 		<hr width="50%" color="marmoon">
-		<h3>임시 비밀번호 인증 페이지</h3>
-		<h4>받은메일함이나 스팸메일함으로 받은 임시 비밀번호를 입력해 주세요</h4>
+		<h3>아이디 찾기</h3>
+		<h4>회원가입 시 입력한 이메일 주소를 입력해 주세요</h4>
 		<hr width="50%" color="marmoon">
-		<form method="post" action="<%=request.getContextPath()%>/find_pwd_ok.do">
-			<input type="hidden" name="tempPwd" value="${TempPwd }">
-			<input type="hidden" name="userId" value="<%=session.getAttribute("UserId") %>">
+		<form method="post" action="<%=request.getContextPath()%>/find_id.do">
 			
 			<table border="1">
 				<tr>
-					<th>임시 비밀번호 입력</th>
-					<td><input type="password" name="modify_pwd1"></td>
+					<th>이메일</th>
+					<td><input type="text" name="id_find"></td>
 				</tr>
 				<tr>
 					<td colspan="4" align="center"><input type="submit"
-						value="임시 비밀번호 제출">&nbsp;&nbsp; <input type="reset"
+						value="아이디 찾기">&nbsp;&nbsp; <input type="reset"
 						value="다시작성"></td>
 				</tr>
 			</table>
