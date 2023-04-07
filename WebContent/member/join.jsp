@@ -4,8 +4,6 @@
 <html>
 <head>
 
-
-
 <meta charset="UTF-8">
 <title>회원가입</title>
 <meta charset="UTF-8">
@@ -28,36 +26,22 @@
 
 	<div class="container2">
 		<h1>회원가입</h1>
-		<form method="post"
+		<form method="post" enctype="multipart/form-data"
 			action="<%=request.getContextPath()%>/insert_member.do"
 			class="joinForm">
-
-			<label class="userId" for="Id">ID</label> <input type="text"
-<<<<<<< HEAD
-				id="username" name="id" size="20" placeholder="아이디 / 영문 + 숫자"><br>
-			<span id="id_check"></span> <br> <input type="button"
-				value="아이디중복체크" id="idcheck_btn"> <label class="password"
-				for="password1">PWD</label> <input type="password" id="password1"
-				class="inputpwd" name="pwd" placeholder="비밀번호 / 6~12자"><br>
-			<span id="pwd_check"></span> <br> <label class="password"
-				for="password2">PWD2</label> <input type="password" class="inputpwd"
-				id="password2" class="inputpwd" name="pwd_recheck"
-				placeholder="비밀번호 / 6~12자"><br> <span id="pwd_recheck"></span>
-			<br> <label class="name" for="name">NickName</label> <input
-				type="text" id="name" name="name" placeholder="겜만추에서 사용할 닉네임">
-=======
-				id="username" name="id" size="20" placeholder="아이디 / 영문 + 숫자"
-				><br> <span id="id_check"></span> <br>
-             <input type="button" value="아이디중복체크" id="idcheck_btn">
-             <input type="file" value="프로필 사진" id="profile_img">
-			<label class="password" for="password1">PWD</label> <input 
-				type="password" id="password1" class ="inputpwd" name="pwd" placeholder="비밀번호 / 6~12자"><br>
-			<span id="pwd_check"></span> <br> <label class="password" 
-				for="password2">PWD2</label> <input type="password" class ="inputpwd" id="password2" class ="inputpwd"
+			<span>프로필 사진</span> <input type="file" name="profile_img"
+				value="프로필 사진"><br> <label class="userId" for="Id">ID</label>
+			<input type="text" id="username" name="id" size="20"
+				placeholder="아이디 / 영문 + 숫자"><br> <span id="id_check"></span>
+			<br> <input type="button" value="아이디중복체크" id="idcheck_btn">
+			<label class="password" for="password1">PWD</label> <input
+				type="password" id="password1" class="inputpwd" name="pwd"
+				placeholder="비밀번호 / 6~12자"><br> <span id="pwd_check"></span>
+			<br> <label class="password" for="password2">PWD2</label> <input
+				type="password" class="inputpwd" id="password2" class="inputpwd"
 				name="pwd_recheck" placeholder="비밀번호 / 6~12자"><br> <span
 				id="pwd_recheck"></span> <br> <label class="name" for="name">NickName</label>
 			<input type="text" id="name" name="name" placeholder="겜만추에서 사용할 닉네임">
->>>>>>> 2357bc84c00a04ca2ffe02e7f415c3ad8ddd3532
 			<input type="button" value="닉네임중복체크" id="namecheck_btn"> <span
 				id="name_check"></span> <br> <label class="email" for="email">Email</label>
 			<input type="text" id="email" name="email" placeholder="Email">

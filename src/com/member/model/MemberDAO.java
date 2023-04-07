@@ -111,7 +111,7 @@ public class MemberDAO {
 				count = rs.getInt(1) + 1;
 			}
 
-			sql = "insert into member values(?, ?, ?, ?, ?, default,now() ,? ,? ,? ,? ,0 ,'')";
+			sql = "insert ignore into member values(?, ?, ?, ?, ?, default,now() ,? ,? ,? ,? ,0 ,?)";
 
 			pstmt = con.prepareStatement(sql);
 
@@ -124,8 +124,11 @@ public class MemberDAO {
 			pstmt.setString(7, dto.getPrefer_lol());
 			pstmt.setString(8, dto.getPrefer_battle_ground());
 			pstmt.setString(9, dto.getPrefer_overwatch());
+			pstmt.setString(10, dto.getMember_profile());
 
 			res = pstmt.executeUpdate();
+
+			System.out.println("dao" + res);
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -199,6 +202,7 @@ public class MemberDAO {
 				dto.setPrefer_lol(rs.getString("prefer_game1"));
 				dto.setPrefer_battle_ground(rs.getString("prefer_game2"));
 				dto.setPrefer_overwatch(rs.getString("prefer_game3"));
+				dto.setMember_profile(rs.getString("member_profile"));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -289,7 +293,7 @@ public class MemberDAO {
 
 			if (rs.next()) {
 				if (curr_pwd.equals(rs.getString("member_pwd"))) {
-					sql = "update ignore member set member_nickname = ?, member_pwd = ?, prefer_game1 = ? , prefer_game2 = ? , prefer_game3 = ?";
+					sql = "update ignore member set member_nickname = ?, member_pwd = ?, prefer_game1 = ? , prefer_game2 = ? , prefer_game3 = ?, member_profile = ?";
 
 					pstmt = con.prepareStatement(sql);
 
@@ -298,6 +302,7 @@ public class MemberDAO {
 					pstmt.setString(3, dto.getPrefer_lol());
 					pstmt.setString(4, dto.getPrefer_battle_ground());
 					pstmt.setString(5, dto.getPrefer_overwatch());
+					pstmt.setString(6, dto.getMember_profile());
 
 					result = pstmt.executeUpdate();
 				} else {
@@ -389,41 +394,48 @@ public class MemberDAO {
 	// updatePwd() end
 
 	// updateIndex() start, 삭제 시 인덱스 재정렬
-	public void updateIndex(int index) {
-		try {
-			openConn();
-
-			sql = "update member set member_index = member_index - 1 where member_index > ?";
-
-			pstmt = con.prepareStatement(sql);
-
-			pstmt.setInt(1, index);
-
-			pstmt.executeUpdate();
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			closeConn(rs, pstmt, con);
-		}
-	}
+//	public void updateIndex(int index) {
+//		try {
+//			openConn();
+//
+//			sql = "update member set member_index = member_index - 1 where member_index > ?";
+//
+//			pstmt = con.prepareStatement(sql);
+//
+//			pstmt.setInt(1, index);
+//
+//			pstmt.executeUpdate();
+//
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} finally {
+//			closeConn(rs, pstmt, con);
+//		}
+//	}
 	// updateIndex()
 
 	// 회원 삭제
-	public int deleteMember(int index) {
+	public int deleteMember(String id, int index) {
 		int res = 0;
 
 		try {
 			openConn();
 
-			sql = "delete from member where member_index = ?";
+			System.out.println("아이디>>" + id);
+			System.out.println("인덱스 >>> " + index);
+
+			sql = "delete from member where member_id = ?";
 
 			pstmt = con.prepareStatement(sql);
-
-			pstmt.setInt(1, index);
-
+			pstmt.setString(1, id);
 			res = pstmt.executeUpdate();
+
+			sql = "update member set member_index = member_index - 1 where member_index> ? ";
+
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, index);
+			pstmt.executeUpdate();
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
