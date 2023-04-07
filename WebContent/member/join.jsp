@@ -36,6 +36,7 @@
 				id="username" name="id" size="20" placeholder="아이디 / 영문 + 숫자"
 				><br> <span id="id_check"></span> <br>
              <input type="button" value="아이디중복체크" id="idcheck_btn">
+             <input type="file" value="프로필 사진" id="profile_img">
 			<label class="password" for="password1">PWD</label> <input 
 				type="password" id="password1" class ="inputpwd" name="pwd" placeholder="비밀번호 / 6~12자"><br>
 			<span id="pwd_check"></span> <br> <label class="password" 

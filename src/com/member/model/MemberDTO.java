@@ -13,7 +13,14 @@ public class MemberDTO {
 	private String prefer_lol;
 	private String prefer_battle_ground;
 	private String prefer_overwatch;
+	private String member_profile;
 	
+	public String getMember_profile() {
+		return member_profile;
+	}
+	public void setMember_profile(String member_profile) {
+		this.member_profile = member_profile;
+	}
 	public int getMember_index() {
 		return member_index;
 	}
