@@ -111,7 +111,7 @@ public class MemberDAO {
 				count = rs.getInt(1) + 1;
 			}
 
-			sql = "insert into member values(?, ?, ?, ?, ?, default, now(), ?, ?, ?, ?)";
+			sql = "insert into member values(?, ?, ?, ?, ?, default,now() ,? ,? ,? ,? ,0 ,'')";
 
 			pstmt = con.prepareStatement(sql);
 
@@ -345,10 +345,10 @@ public class MemberDAO {
 
 					res = 2;
 				} else {
-					res = 1; 
+					res = 1;
 					System.out.println(rs.getString("member_email"));
 					System.out.println(to_email);
-					
+
 				}
 
 			}
@@ -363,22 +363,22 @@ public class MemberDAO {
 	}
 
 	// checkPwdFind() end
-	
+
 	// updatePwd() start
 	public void updatePwd(String tempPwd, String userId) {
 
 		try {
 			openConn();
-			
+
 			sql = "update member set member_pwd = ? where member_id = ?";
-			
+
 			pstmt = con.prepareStatement(sql);
-			
+
 			pstmt.setString(1, userId);
 			pstmt.setString(2, tempPwd);
-			
+
 			pstmt.executeUpdate();
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -387,20 +387,20 @@ public class MemberDAO {
 		}
 	}
 	// updatePwd() end
-	
+
 	// updateIndex() start, 삭제 시 인덱스 재정렬
 	public void updateIndex(int index) {
 		try {
 			openConn();
-			
+
 			sql = "update member set member_index = member_index - 1 where member_index > ?";
-			
+
 			pstmt = con.prepareStatement(sql);
-			
+
 			pstmt.setInt(1, index);
-			
+
 			pstmt.executeUpdate();
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -409,22 +409,22 @@ public class MemberDAO {
 		}
 	}
 	// updateIndex()
-	
+
 	// 회원 삭제
 	public int deleteMember(int index) {
 		int res = 0;
-		
+
 		try {
 			openConn();
-			
+
 			sql = "delete from member where member_index = ?";
-			
+
 			pstmt = con.prepareStatement(sql);
-			
+
 			pstmt.setInt(1, index);
-			
+
 			res = pstmt.executeUpdate();
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

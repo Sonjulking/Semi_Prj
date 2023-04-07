@@ -33,16 +33,17 @@
 			class="joinForm">
 
 			<label class="userId" for="Id">ID</label> <input type="text"
-				id="username" name="id" size="20" placeholder="아이디 / 영문 + 숫자"
-				><br> <span id="id_check"></span> <br>
-             <input type="button" value="아이디중복체크" id="idcheck_btn">
-			<label class="password" for="password1">PWD</label> <input 
-				type="password" id="password1" class ="inputpwd" name="pwd" placeholder="비밀번호 / 6~12자"><br>
-			<span id="pwd_check"></span> <br> <label class="password" 
-				for="password2">PWD2</label> <input type="password" class ="inputpwd" id="password2" class ="inputpwd"
-				name="pwd_recheck" placeholder="비밀번호 / 6~12자"><br> <span
-				id="pwd_recheck"></span> <br> <label class="name" for="name">NickName</label>
-			<input type="text" id="name" name="name" placeholder="겜만추에서 사용할 닉네임">
+				id="username" name="id" size="20" placeholder="아이디 / 영문 + 숫자"><br>
+			<span id="id_check"></span> <br> <input type="button"
+				value="아이디중복체크" id="idcheck_btn"> <label class="password"
+				for="password1">PWD</label> <input type="password" id="password1"
+				class="inputpwd" name="pwd" placeholder="비밀번호 / 6~12자"><br>
+			<span id="pwd_check"></span> <br> <label class="password"
+				for="password2">PWD2</label> <input type="password" class="inputpwd"
+				id="password2" class="inputpwd" name="pwd_recheck"
+				placeholder="비밀번호 / 6~12자"><br> <span id="pwd_recheck"></span>
+			<br> <label class="name" for="name">NickName</label> <input
+				type="text" id="name" name="name" placeholder="겜만추에서 사용할 닉네임">
 			<input type="button" value="닉네임중복체크" id="namecheck_btn"> <span
 				id="name_check"></span> <br> <label class="email" for="email">Email</label>
 			<input type="text" id="email" name="email" placeholder="Email">
@@ -58,8 +59,7 @@
 			<label class="check_join"><input type="checkbox"
 				name="check_info" value="check_info" required="required">약관
 				동의</label> <br>
-			<button class="signup" type="submit" name="join"
-				>회원가입</button>
+			<button class="signup" type="submit" name="join">회원가입</button>
 		</form>
 	</div>
 

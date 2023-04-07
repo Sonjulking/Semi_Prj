@@ -15,37 +15,36 @@ import com.project.controller.ActionForward;
 import oracle.net.aso.f;
 
 public class MemberDeleteAction implements Action {
-   
+
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, MessagingException, Exception {
-		// 
+		//
 
-		
 		int member_index = Integer.parseInt(request.getParameter("no"));
 		MemberDAO dao = MemberDAO.getInstance();
 		dao.updateIndex(member_index);
-		
+
 		int res = dao.deleteMember(member_index);
 		System.out.println("res at action >> " + res);
 
-        PrintWriter out = response.getWriter();
-        int check = 0;
-        HttpSession session = request.getSession();
-        session.setAttribute("LoginCheck", check);
-		if(res > 0) {
-        	out.println("<script>");
-        	out.println("alert('회원 탈퇴 성공')");
-        	out.println("location.href='main.jsp'");
-        	out.println("</script>");
-        	
-        } else {
-        	out.println("<script>");
-        	out.println("alert('회원 탈퇴 실패')");
-        	out.println("history.back()");
-        	out.println("</script>");
-        	
-        }
+		PrintWriter out = response.getWriter();
+		int check = 0;
+		HttpSession session = request.getSession();
+		session.setAttribute("LoginCheck", check);
+		if (res > 0) {
+			out.println("<script>");
+			out.println("alert('회원 탈퇴 성공')");
+			out.println("location.href='main.jsp'");
+			out.println("</script>");
+
+		} else {
+			out.println("<script>");
+			out.println("alert('회원 탈퇴 실패')");
+			out.println("history.back()");
+			out.println("</script>");
+
+		}
 		return null;
 	}
 
