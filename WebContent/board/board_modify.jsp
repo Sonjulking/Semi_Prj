@@ -40,7 +40,7 @@
 			<h3>${dto.getBoard_writer_nickname() }의 수정페이지</h3>
 		<hr width="50%" color="lightgray">
 		
-		<form method="post" action="<%=request.getContextPath() %>/board_modify_ok.do?no=${dto.getBoard_index() }">
+		<form method="post" enctype="multipart/form-data" action="<%=request.getContextPath() %>/board_modify_ok.do?no=${dto.getBoard_index() }">
 		<input type="hidden" name="num" value="${dto.getBoard_index() }">
 		<input type="hidden" name="page" value="${Page }">
 		
@@ -66,6 +66,15 @@
 				<tr>
 					<th>글 내용</th>
 					<td><textarea rows="7" cols="25" name="cont">${dto.getBoard_cont() }</textarea>
+				</tr>
+
+				<tr>
+					<th>첨부파일</th>
+					<td> 
+						<img src="<%=request.getContextPath() %>/fileUpload${dto.getUpload_file() }" alt="등록된 파일이 없습니다." width="120" height="120" border="0"> 
+						<input type="file" name="new_file">
+	            	
+					</td>
 				</tr>
 				
 				<tr>

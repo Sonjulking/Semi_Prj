@@ -29,7 +29,7 @@
 
 <body>
 	<%@ include file="include/header.jsp"%>
-
+	
 	<div class="main_wrap">
 
 		<img class="ruru" src="img/ruru.png" alt="" title="귀여운 루루"> <img

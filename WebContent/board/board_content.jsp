@@ -74,7 +74,7 @@
 
 					<tr>
 						<th>추천수</th>
-						<td>${dto.getBoard_thumbs() }</td>
+						<td id="thumbs"> <img src="img/thumbup.png" width="30" height="30" onclick="thumbsUp()"> ${dto.getBoard_thumbs() }</td>
 					</tr>
 					
 					<tr>
@@ -219,7 +219,24 @@
 		
 		getList();
 		
+		
 	});
+	
+	function thumbsUp() {
+		
+		$.ajax({
+			url : "board_thumbs.do",
+			data : {no : ${dto.getBoard_index() } },
+			datatype : "text",
+			success : function(data) {
+					$("#thumbs").html(data);
+			},
+			error : function() {
+				alert('데이터 통신 오류입니다.');
+			}
+		});
+		
+	} // thumbsUp() end
 </script>  
 
 

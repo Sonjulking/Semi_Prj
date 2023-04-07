@@ -18,7 +18,6 @@ public class FreeBoardListAction implements Action {
 		// DB상의 jsp_bbs 테이블의 전체 레코드를 조회하여 view page로 이동시키는 비지니스 로직.
 		
 		// 페이징 처리 작업 진행
-		System.out.println("111");
 		// 한 페이지당 보여질 게시물 수
 		int rowsize = 10;
 		
