@@ -29,7 +29,7 @@
 		</div>
 
 		<div class="container2">
-			<h2>로그인</h2>
+			<h2>비밀번호 찾기</h2>
 
 
 			<label for="username">아이디</label> <input type="text" id="username"

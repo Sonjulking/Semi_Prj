@@ -476,5 +476,63 @@ public class MemberDAO {
 		return res;
 	}
 	// findMemberId() end
+	
+	
+	// 이메일 있는지 확인(아이디 비밀번호 찾기 시)
+	public int emailCheck(String email) {
+		int res = 0;
+		
+		try {
+			openConn();
+			
+			sql = "select * from member where member_email = ?";
+			
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setString(1, email);
+			
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				return 1;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return res;
+	}
+	// emailCheck() end
+	
+    // 이메일 있는지 확인(아이디 비밀번호 찾기 시)
+	public int findId(String id, String email) {
+		int res = 0;
+		
+		try {
+			openConn();
+			
+			sql = "select * from member where member_id = ?";
+			
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setString(1, id);
+			
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				if(email.equals(rs.getString("member_email"))) {
+					return 1;
+				} else {
+					return -1;
+				}
+					
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return res;
+	}
+	// emailCheck() end
 
 }

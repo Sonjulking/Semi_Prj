@@ -33,7 +33,10 @@ public class findIdAction implements Action {
 				// 메일 받을 주소
 				/* String to_email = m.getEmail(); */
 				String to_email = request.getParameter("id_find");
-
+                
+				MemberDAO dao = MemberDAO.getInstance();
+				int check = dao.emailCheck(to_email);
+				
 				// SMTP 서버 정보를 설정한다.
 				Properties prop = new Properties();
 
@@ -43,10 +46,7 @@ public class findIdAction implements Action {
 				prop.put("mail.smtp.ssl.enable", "true");
 				prop.put("mail.smtp.ssl.trust", "smtp.gmail.com");
 				
-				String email = request.getParameter("id_find");
-				MemberDAO dao = MemberDAO.getInstance();
-				
-				String id = dao.findMemberId(email);
+				String id = dao.findMemberId(to_email);
                 System.out.println(id);
 				
 				String AuthenticationKey = id.toString(); //  회원 아이디
@@ -92,6 +92,7 @@ public class findIdAction implements Action {
 				 * BCC (Blind Carbon Copy): 이메일 메시지의 숨은 참조 수신자를 나타냅니다. CC와 마찬가지로 선택적으로 지정할 수
 				 * 있지만, 수신자 목록에서 숨겨져 있어 다른 수신자들이 BCC로 지정된 수신자를 볼 수 없습니다.
 				 */
+				PrintWriter out = response.getWriter();
 				try {
 					MimeMessage msg = new MimeMessage(session);
 					msg.setFrom(new InternetAddress(user, "겜만추")); // 보내는 사람
@@ -103,24 +104,27 @@ public class findIdAction implements Action {
 					msg.setText("회원님의 아이디는 :" + id);
 
 					Transport.send(msg);
+					
 					System.out.println("이메일 전송");
-
 				} catch (Exception e) {
 					e.printStackTrace();// TODO: handle exception
 				}
 				HttpSession saveKey = request.getSession();
 				saveKey.setAttribute("AuthenticationKey", AuthenticationKey);
 				
-				PrintWriter out = response.getWriter();
-				if(id.equals("")) {
+				if (check == 1) {
+					out.println("<script>");
 					out.println("alert('받은메일함과 스팸메일함에서 아이디를 확인하세요~')");
+					out.println("location.href='member/login.jsp'");
+					out.println("</script>");
 				} else {
-					out.println("alert('이메일 불일치~')");
+					out.println("<script>");
+					out.println("alert('이메일 틀림')");
+					out.println("history.back()");
+					out.println("</script>");
 				}
-				ActionForward forward = new ActionForward();
-				forward.setRedirect(false);
-				forward.setPath("member/login.jsp");
-		return forward;
+
+		return null;
 	}
 
 }

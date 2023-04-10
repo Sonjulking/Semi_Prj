@@ -14,6 +14,10 @@
 <link rel="stylesheet" type="text/css"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="../css/join.css" />
+<!-- include jQuery -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
+
+
 <style>
 </style>
 </head>
@@ -44,7 +48,9 @@
 			<input type="text" id="name" name="name" placeholder="겜만추에서 사용할 닉네임">
 			<input type="button" value="닉네임중복체크" id="namecheck_btn"> <span
 				id="name_check"></span> <br> <label class="email" for="email">Email</label>
-			<input type="text" id="email" name="email" placeholder="Email">
+			<input type="text" id="email" name="email" placeholder="Email"> <br>
+			<input type="button" id="email_confirm" name="email_confirm" value="인증 메일 전송"> <br>
+			<input id="email_confrim_ok" name="email_confrim_ok">
 			<br> <label class="phone" for="phone">Phone</label> <input
 				type="text" id="phone" name="phone" placeholder="전화번호"> <br>
 			<br> <label for="lol" class="game1"><input
