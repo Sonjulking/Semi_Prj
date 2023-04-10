@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import com.member.model.MemberDTO;
+
 
 public class MatchingDAO {
 	
@@ -86,21 +88,23 @@ public class MatchingDAO {
 		
 		
 		// matching 테이블에 매칭데이터 추가하는 메서드
-		public int insertMatching(MatchingDTO dto) {
+		public int insertMatching(MatchingDTO dto, MemberDTO mdto) {
 			
 			int result = 0;
 			
 			try {
 				openConn();
-																		//  아이디       닉네임
-				sql = "insert into matching values(default, default, ?, ?, 'choi4	', 'choi4', ?, ?, now())";
+																	  //  아이디    닉네임
+				sql = "insert into matching values(default, default, ?, ?, ?, ?, ?, ?, now())";
 				
 				pstmt = con.prepareStatement(sql);
 				
 				pstmt.setString(1, dto.getGame_name());
-				pstmt.setString(2, dto.getTier());	
-				pstmt.setString(3, dto.getDiscord_nikname());
-				pstmt.setString(4, dto.getKakao_id());
+				pstmt.setString(2, dto.getTier());
+				pstmt.setString(3, mdto.getMember_id());
+				pstmt.setString(4, mdto.getMember_nickname());
+				pstmt.setString(5, dto.getDiscord_nikname());
+				pstmt.setString(6, dto.getKakao_id());
 				
 				result = pstmt.executeUpdate();
 				

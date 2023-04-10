@@ -82,15 +82,12 @@
 </head>
 <body>
 	<form method="post" name="f" action="<%=request.getContextPath() %>/matchingdelete_ok.do">
-	
-		<input type="hidden"  name="DiscordID">
-	
 		<div class="loading-wrapper">
 		  <div class="loading-text">Loading...</div>
 		  <div class="arrow-wrapper">
 		    <div class="arrow"></div>
 		  </div>
-		  <button class="cancel-btn">매칭 취소</button>
+		  <button class="cancel-btn"> 매칭 취소</button>
 		</div>
 	</form>
 	

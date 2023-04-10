@@ -19,6 +19,10 @@
 	<form method="post" name="f" action="<%=request.getContextPath() %>/matching_ok.do">
       <h2 align="center">매칭 데이터 입력</h2>
       <div class="container">
+      <c:set var = "dto" value = "${Cont }"/>
+      <input type = "hidden" name="id" value = "${dto.getMember_id() }">
+      <input type = "hidden" name="nickname" value = "${dto.getMember_nickname() }">
+      
         <label for="gamename"><b>게임명</b></label>
         <input type="text" placeholder="이용할 게임을 입력하세요" name="gamename" required>
         
