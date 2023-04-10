@@ -16,13 +16,11 @@ public class MatchingDeleteOkAction implements Action {
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, MessagingException, Exception {
 		// 세션으로 저장된 로그인 아이디로 DB 삭제
-		int 
-		
-		
+
 		MatchingDAO dao = MatchingDAO.getInstance();
-		
+
 		int check = dao.deleteMatching();
-		
+
 		return null;
 	}
 

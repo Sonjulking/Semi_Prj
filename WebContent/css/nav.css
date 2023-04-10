@@ -1,7 +1,11 @@
 /* cdn import */
-@import url('https://fonts.googleapis.com/css2?family=Dongle:wght@700&display=swap');
-
+@import url("https://fonts.googleapis.com/css2?family=Dongle:wght@700&display=swap");
+@font-face {
+  font-family: "pixel"; /* 사용하고 싶은 font-family명을 지정 */
+  src: url("./font/DungGeunMo.woff") format("opentype"); /* 폰트파일 불러오기 */
+}
 body {
+  font-family: "pixel" !important;
   /* color: rgb(0, 0, 0); */
 
   /* background-color: #303030; */
@@ -11,7 +15,7 @@ body {
 
 /* 아이콘  */
 #logo {
-  width:  100px;
+  width: 100px;
   height: 100px;
   margin-left: 70px;
 }
@@ -53,7 +57,7 @@ nav ul li {
   height: 3px;
   width: 0;
   /* background-color: black; */
-  /* transition: 0.3s;
+/* transition: 0.3s;
   position: absolute;
   bottom: 0;
   left: 48%;
@@ -84,26 +88,23 @@ nav ul a:hover::after {
 } */
 
 /* 페이지 제목 설정 */
-#main_logo_text{
+#main_logo_text {
   position: relative;
   top: 50%;
   left: 50%;
   transform: translate(-50%);
   font-size: 110px;
-  font-family: 'Dongle', sans-serif;
+  font-family: "pixel", sans-serif;
 }
-
 
 nav ul a:link,
 #logo_link {
   color: #911f29;
   text-decoration: none;
-
 }
 nav ul a:visited {
   color: #911f29;
   text-decoration: none;
-  
 }
 /* nav ul a:hover {
     color: red;
@@ -113,7 +114,6 @@ nav ul a:active {
   color: pink;
   text-decoration: none;
 }
-
 
 nav ul {
   display: flex;
@@ -131,7 +131,7 @@ nav ul {
   font-size: 40pt;
   margin-top: 0px;
   margin-bottom: 10px;
-  font-family: 'Dongle', sans-serif;
+  font-family: "pixel", sans-serif;
 }
 
 .box_text {
@@ -139,6 +139,3 @@ nav ul {
   margin-top: 8px;
   margin-bottom: 8px;
 }
-
-
-
