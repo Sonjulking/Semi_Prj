@@ -231,7 +231,7 @@ public class MemberDAO {
 			if (rs.next()) {
 
 				// 중복 값 존재함
-				res = "중복 아이디입니다.";
+				res = "중복";
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -262,7 +262,7 @@ public class MemberDAO {
 			if (rs.next()) {
 
 				// 중복 값 존재함
-				res = "사용 불가 닉네임입니다.";
+				res = "중복";
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -447,24 +447,23 @@ public class MemberDAO {
 		return res;
 	}
 	// deleteMember() end
-	
-	
+
 	// findMemberId(), 아이디 찾기 메서드
 	public String findMemberId(String email) {
 		String res = "";
-		
+
 		try {
 			openConn();
-			
+
 			sql = "select member_id from member where member_email = ?";
-			
+
 			pstmt = con.prepareStatement(sql);
-			
+
 			pstmt.setString(1, email);
-			
+
 			rs = pstmt.executeQuery();
-			
-			if(rs.next()) {
+
+			if (rs.next()) {
 				res = rs.getString("member_id");
 			}
 		} catch (SQLException e) {
@@ -476,61 +475,60 @@ public class MemberDAO {
 		return res;
 	}
 	// findMemberId() end
-	
-	
+
 	// 이메일 있는지 확인(아이디 비밀번호 찾기 시)
 	public int emailCheck(String email) {
 		int res = 0;
-		
+
 		try {
 			openConn();
-			
+
 			sql = "select * from member where member_email = ?";
-			
+
 			pstmt = con.prepareStatement(sql);
-			
+
 			pstmt.setString(1, email);
-			
+
 			rs = pstmt.executeQuery();
-			if(rs.next()) {
+			if (rs.next()) {
 				return 1;
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return res;
 	}
 	// emailCheck() end
-	
-    // 이메일 있는지 확인(아이디 비밀번호 찾기 시)
+
+	// 이메일 있는지 확인(아이디 비밀번호 찾기 시)
 	public int findId(String id, String email) {
 		int res = 0;
-		
+
 		try {
 			openConn();
-			
+
 			sql = "select * from member where member_id = ?";
-			
+
 			pstmt = con.prepareStatement(sql);
-			
+
 			pstmt.setString(1, id);
-			
+
 			rs = pstmt.executeQuery();
-			if(rs.next()) {
-				if(email.equals(rs.getString("member_email"))) {
+			if (rs.next()) {
+				if (email.equals(rs.getString("member_email"))) {
 					return 1;
 				} else {
 					return -1;
 				}
-					
+
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return res;
 	}
 	// emailCheck() end
