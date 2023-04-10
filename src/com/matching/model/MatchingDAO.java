@@ -92,13 +92,13 @@ public class MatchingDAO {
 			
 			try {
 				openConn();
-				
-				sql = "insert into matching values(default, default, ?, ?, 'haram', 'ramram00', ?, ?, now())";
+																		//  아이디       닉네임
+				sql = "insert into matching values(default, default, ?, ?, 'choi4	', 'choi4', ?, ?, now())";
 				
 				pstmt = con.prepareStatement(sql);
 				
 				pstmt.setString(1, dto.getGame_name());
-				pstmt.setString(2, dto.getTier());
+				pstmt.setString(2, dto.getTier());	
 				pstmt.setString(3, dto.getDiscord_nikname());
 				pstmt.setString(4, dto.getKakao_id());
 				
@@ -113,5 +113,34 @@ public class MatchingDAO {
 			return result;
 		}	// insertMatching() 메서드 end
 		
+		
+		// matchloading 에서 취소버튼 누르면 matching DB 삭제하는 메서드
+		public int deleteMatching(String id) {
+			
+			int result = 0;
+			
+			try {
+				openConn();
+				
+				if(rs.next()) {
+				
+				sql = "delete from matching where discord_nickname = ?";
+				
+				pstmt = con.prepareStatement(sql);
+				
+				pstmt.setString(1, id);
+				
+				result = pstmt.executeUpdate();
+				
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+				closeConn(rs, pstmt, con);
+			}
+			
+			return result;
+		}	// deleteMatching() 메서드 end
 
 }

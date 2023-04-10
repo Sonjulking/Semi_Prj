@@ -17,7 +17,6 @@ public class MatchingOkAction implements Action {
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		// 매칭 데이터 입력창에서 넘어온 데이터를 DB 저장시키는 로직.
 		
-		
 			String match_gamename = 
 				request.getParameter("gamename").trim();
 			String match_tier = 
@@ -44,7 +43,7 @@ public class MatchingOkAction implements Action {
 			
 			forward.setRedirect(false);
 			
-			forward.setPath("board/board_content.jsp");
+			forward.setPath("matching/matchloading.jsp");
 			
 			return forward;
 		

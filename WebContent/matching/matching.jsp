@@ -11,7 +11,6 @@
 
 <script src="https://code.jquery.com/jquery-3.6.3.js"></script>
 
-
 <link rel="stylesheet" href="matching.css" />
 
 </head>
@@ -32,11 +31,10 @@
         <label for="KakaoID"><b>카카오 아이디</b></label>
         <input type="text" placeholder="카카오 아이디를 입력하세요" name="KakaoID" required>
         
-        
-        <br>
+	    <br>
         
         <div align="center">
-        	<button type="submit">매칭하기!</button>
+        	<button type="submit" class="Matching">매칭하기!</button>
         </div>
         
       </div>

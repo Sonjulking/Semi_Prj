@@ -117,7 +117,8 @@ body {
   height: 225px;
 }
 
-.matching-btn {
+
+#match-btn {
   color: white;
   position: relative;
   top: 30%;
@@ -129,6 +130,7 @@ body {
   border: 2px solid white;
   border-radius: 3px;
 }
+
 
 .matching-btn:hover {
   background-color: rgb(172, 172, 172);
