@@ -14,15 +14,13 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>겜만추</title>
-
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.js"></script>
 <!-- fontawesome cdn -->
 <link rel="stylesheet" type="text/css"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <link rel="stylesheet" href="css/main.css" />
 <link rel="stylesheet" href="css/nav.css " />
-
-<!-- 매칭 창 팝업 js -->
 
 
 </head>
@@ -108,16 +106,26 @@
 		</div>
 
 		<div class="matching_wrap main_box2">
+		
 			<p class="box_text">실시간 매칭</p>
 			<div>
 				<!-- <img class="matching-img" src="../WebContent/img/1.png" /> -->
 			</div>
-			<button type="button" class="matching-btn">매칭하기</button>
+			<c:if test="${loginCheck == 0 }">
+				<button type="button" id="match-btn1" class="PleaseLogin">매칭하기</button>
+			</c:if>
+		
+			<c:if test="${loginCheck > 0 }">
+				<button type="button" id="match-btn2" class="matching-btn">매칭하기</button>
+			</c:if>
+	
 		</div>
 
 	</div>
 	
-	<script type="text/javascript" src="matching/pop.js"></script>	
+	<!-- 매칭 창 팝업 js -->
+	<script type="text/javascript" src="matching/pop.js"></script>
+	<script type="text/javascript" src="matching/pop2.js"></script>
 
 
 	<%@ include file="include/footer.jsp"%>
