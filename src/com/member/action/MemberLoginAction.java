@@ -24,7 +24,8 @@ public class MemberLoginAction implements Action {
 		ActionForward forward = new ActionForward();
 		int check = dao.loginMember(member_id, member_pwd);
 		MemberDTO cont = dao.contentMember(member_id);
-
+		
+		
 		PrintWriter out = response.getWriter();
 
 		if (check == 1) {
@@ -33,6 +34,7 @@ public class MemberLoginAction implements Action {
 			session.setAttribute("LoginCheck", check);
 			session.setAttribute("member_id", member_id);
 			session.setAttribute("member_pwd", member_pwd);
+			session.setAttribute("Cont", cont);
 
 			out.println("<script>");
 			out.println("alert('로그인 성공!')");

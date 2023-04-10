@@ -17,6 +17,7 @@ public class BoardContentAction implements Action {
 		// get방식으로 넘어온 글번호에 해당하는 게시글읠 상세내역을 DB에서 조회하여 view page로 이동시키는 비지니스 로직
 		
 		int board_no = Integer.parseInt(request.getParameter("no").trim());
+		int page = Integer.parseInt(request.getParameter("page").trim());
 		
 		BoardDAO dao = BoardDAO.getInstance();
 		
@@ -27,6 +28,7 @@ public class BoardContentAction implements Action {
 		BoardDTO cont = dao.boardContent(board_no);
 		
 		request.setAttribute("Cont", cont);
+		request.setAttribute("Page", page);
 		
 		ActionForward forward = new ActionForward();
 		

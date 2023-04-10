@@ -20,7 +20,7 @@
 
 <body>
 	<form method="post"
-		action="<%=request.getContextPath()%>/member_findPwd.do">
+		action="<%=request.getContextPath()%>/member_findPwdOk.do">
 
 		<div class="container1">
 			<span class="title">겜만추&nbsp;<i class="fa fa-thumbs-o-up"
@@ -33,10 +33,10 @@
 
 
 			<label for="username">아이디</label> <input type="text" id="username"
-				name="id" placeholder="아이디를 입력하세요."> <label for="email_find">이메일</label>
-			<input id="email_find" name="email_find"
-				placeholder="이메일을 입력하세요."> <a href=""> <i
-				id="site-face" class="fa fa-facebook-square" aria-hidden="true"></i>
+				name="id" placeholder="이메일 입력하세요."> <label for="email_find">이메일</label>
+			<input id="email_find" name="email_find" placeholder="이메일을 입력하세요."> <a href=""> 
+			<br>
+			<i id="site-face" class="fa fa-facebook-square" aria-hidden="true"></i>
 			</a> <a href=""> <i id="site-goo" class="fa fa-google-plus-square"
 				aria-hidden="true"></i>
 			</a>
@@ -45,7 +45,7 @@
 			<button class="login" type="submit">비밀번호 찾기</button>
 
 			<h6 class="lostpwd">
-				<a href="/Semi_Prj/member/findId.jsp">아이디를 잊으셨나요?</a>
+				<a href="/Semi_Prj/member/idFind.jsp">아이디를 잊으셨나요?</a>
 			</h6>
 
 			<a href="/Semi_Prj/member/join.jsp"><button class="signup" type="button">회원가입</button></a>

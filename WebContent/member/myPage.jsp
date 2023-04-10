@@ -18,11 +18,21 @@
 		<h3>${dto.getMember_nickname() }님의MyPage</h3>
 		<hr width="50%" color="marmoon">
 
-		<form method="post" action="<%=request.getContextPath()%>/myPageOk.do">
+		<form method="post" action="<%=request.getContextPath()%>/myPageOk.do"
+			enctype="multipart/form-data">
 
 			<input type="hidden" name="id" value="${dto.getMember_id()}">
 			<input type="hidden" name="db_pwd" value="${dto.getMember_pwd() }">
+			<input type="hidden" name="profile_old"
+				value="${dto.getMember_profile()}">
 			<table border="1">
+				<tr>
+					<th>프로필 사진</th>
+					<td><img width="60" height="60"
+						src="<%=request.getContextPath()%>/img/join/${dto.getMember_profile()}">
+						<input type="file" name="profile_new" value="프로필 이미지 수정">
+					</td>
+				</tr>
 				<tr>
 					<th>아이디</th>
 					<td>${dto.getMember_id()}</td>
@@ -68,8 +78,11 @@
 				<tr>
 					<td colspan="4" align="center"><input type="submit"
 						value="회원 정보 수정">&nbsp;&nbsp; <input type="reset"
-						value="다시작성"></td>
+						value="다시작성"> <input type="button" value="탈퇴"
+						onclick="if(confirm('정말로 탈퇴할거죠...?? 정말인거죠?')){location.href='memberDelete.do?loginId=${dto.getMember_id() }&index=${dto.getMember_index() }'}else{return;}"></td>
 				</tr>
+
+
 			</table>
 		</form>
 	</div>
