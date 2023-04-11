@@ -9,10 +9,9 @@
 <meta charset="UTF-8">
 <title>매칭 데이터 입력</title>
 
-<script src="https://code.jquery.com/jquery-3.6.3.js"></script>
-
-<link rel="stylesheet" href="matching.css" />
-
+<!-- <link rel="stylesheet" href="matching.css" /> -->
+<!-- 동적으로 CSS 적용하는 방법  -->
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/matching/matching.css" /> 
 </head>
 <body>
 
