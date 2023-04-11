@@ -3,6 +3,7 @@ package com.board.action;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -13,17 +14,40 @@ import com.project.controller.ActionForward;
 public class BoardThumbsAction implements Action {
 
 	@Override
-	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws IOException, MessagingException, Exception{
 		
-		int thumbs = Integer.parseInt(request.getParameter("no").trim());
+		int board_no = Integer.parseInt(request.getParameter("no").trim());
+		String board_writer = request.getParameter("board_id").trim();
+		String loginMem = request.getParameter("id").trim();
+		
+		System.out.println(board_no);
+		System.out.println(board_writer);
+		System.out.println(loginMem);
 		
 		BoardDAO dao = BoardDAO.getInstance();
+		int check = dao.checkThumbs(loginMem, board_no);
 		
-		int res = dao.thumbsBaord(thumbs);
+		response.setContentType("text/plain");
+		response.setCharacterEncoding("UTF-8");
 		
 		PrintWriter out = response.getWriter();
 		
+		if(check == 0) {
+			dao.thumbsUpdate(loginMem, board_no);
+			System.out.println("좋아요 성공");
+			out.println("좋아요 누름");
+		} else {
+			dao.thumbsDelete(loginMem, board_no);
+			System.out.println("좋아요 취소 성공");
+			out.println("좋아요 취소함");
+		}
+		int res = dao.thumbscount(board_no);
+		dao.memberPointUpdate(board_no, board_writer);
+		
+		
 		out.println(res);
+		
+		
 		
 		return null;
 	}

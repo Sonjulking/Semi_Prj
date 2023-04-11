@@ -74,7 +74,7 @@
 
 					<tr>
 						<th>추천수</th>
-						<td id="thumbs"> <img src="img/thumbup.png" width="30" height="30" onclick="thumbsUp()"> ${dto.getBoard_thumbs() }</td>
+						<td> <img src="img/thumbup.png" width="30" height="30" id="thumbs"><span class="thumbs_count"></span></td>
 					</tr>
 					
 					<tr>
@@ -93,11 +93,48 @@
 						</c:if>
 					</tr>
 					
-					
-					
 				</table>
 			</div>
-		</c:if>	
+		</c:if>
+		
+<script type="text/javascript">
+	$(function () {
+		$("#thumbs").click(function() {
+			$.ajax({
+				url : "board_thumbs.do",
+				datatype: "text",
+				data : {
+					no : ${dto.getBoard_index() },
+					id : "${member_id}",
+					board_id : "${dto.getBoard_writer_id() }"
+				},
+				success : function(data) {
+					$("#thumbs").html(data);
+					thumbsCount();
+				},
+				error : function() {
+					alert('데이터 통신 오류입니다.');
+				}
+			});
+		}); // thumbsUp() end
+		function thumbsCount() {
+			$.ajax({
+				url: "board_thumbs_count.do",
+				data: {
+					no : ${dto.getBoard_index()}
+				},
+				success: function(count) {
+					$(".thumbs_count").html(count);
+				},
+				error: function() {
+					alert("데이터 통신 오류입니다!");
+				}
+			});
+		}
+		thumbsCount();
+	});
+</script>
+
 		
 		<%-- 데이터가 없는 경우 --%>
 		<c:if test="${empty dto }">
@@ -146,9 +183,10 @@
 		// ajax에서 동일하게 사용되는 속성 설정
 		$.ajaxSetup({
 			// ajax에서 한글 깨짐 문제 해결
-			ContentType : "application/x-www-form-urlencoded;charset=UTF-8",
+			contentType : "application/x-www-form-urlencoded;charset=UTF-8",
 			type : "post"
 		});
+		
 		
 		// BOARD 테이블의 전체 데이터를 가져오는 함수.
 		function getList() {
@@ -219,24 +257,8 @@
 		
 		getList();
 		
-		
 	});
 	
-	function thumbsUp() {
-		
-		$.ajax({
-			url : "board_thumbs.do",
-			data : {no : ${dto.getBoard_index() } },
-			datatype : "text",
-			success : function(data) {
-					$("#thumbs").html(data);
-			},
-			error : function() {
-				alert('데이터 통신 오류입니다.');
-			}
-		});
-		
-	} // thumbsUp() end
 </script>  
 
 

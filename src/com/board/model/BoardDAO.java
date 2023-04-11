@@ -369,44 +369,7 @@ public class BoardDAO {
 			closeConn(rs, pstmt, con);
 		}
 	} //deleteSequence() 메서드 end
-	
-	
-	public int thumbsBaord(int no) {
-		
-		int result = 0;
-		
-		try {
-			openConn();
-			
-			sql = "update free_board set board_thumbs = board_thumbs + 1 where board_index = ?";
-			
-			pstmt = con.prepareStatement(sql);
-			
-			pstmt.setInt(1, no);
-			
-			pstmt.executeUpdate(); 
-			
-			sql = "select board_thumbs from free_board where board_index = ?";
-			
-			pstmt = con.prepareStatement(sql);
-			
-			pstmt.setInt(1, no);
-			
-			rs = pstmt.executeQuery();
-			
-			if(rs.next()) {
-				result = rs.getInt(1);
-			}
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			closeConn(rs, pstmt, con);
-		}
-		return result;
-	} // thumbsBaord() end
-	
+
 	
 	
 	
@@ -560,5 +523,150 @@ public class BoardDAO {
 		
 		return result;
 	}  // replyInsert() 메서드 end
+	
+	
+	public int checkThumbs(String loginMem, int board_no) {
+		int res = 0;
+		
+		try {
+			openConn();
+			
+			sql = "select count(*) from board_thumbs where member_id = ? and board_index = ? and board_type = ?";
+			
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setString(1, loginMem);
+			pstmt.setInt(2, board_no);
+			pstmt.setNString(3, "free");
+			
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				res = rs.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			closeConn(rs, pstmt, con);
+		} 
+		return res;
+	}
+	
+	
+    public void thumbsUpdate(String loginMem, int board_no) {
+    	try {
+    		openConn();
+    		
+    		sql = "insert into board_thumbs values(?, ?, ?)";
+    		
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setString(1, loginMem);
+			pstmt.setString(2, "free");
+			pstmt.setInt(3, board_no);
+			
+			pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			closeConn(rs, pstmt, con);
+		}
+    }
+    
+    public void thumbsDelete(String loginMem, int board_no) {
+    	
+    	try {
+    		openConn();
+    		
+    		sql = "delete from board_thumbs where member_id = ? and board_index = ? and board_type = ?";
+    		
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setString(1, loginMem);
+			pstmt.setInt(2, board_no);
+			pstmt.setString(3, "free");
+			
+			pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			closeConn(rs, pstmt, con);
+		}
+    
+    }
+    
+    public void memberPointUpdate(int board_no, String id) {
+    	
+    	try {
+    		openConn();
+    		
+    		sql = "select count(*) from board_thumbs where member_id = ?";
+    		
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setString(1, id);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				sql = "update member set member_point = ? where member_id = ?";
+				
+				pstmt = con.prepareStatement(sql);
+				
+				pstmt.setInt(1, rs.getInt(1));
+				pstmt.setString(2, id);
+				
+				pstmt.executeUpdate();
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			closeConn(rs, pstmt, con);
+		}
+    }
+    
+    public int thumbscount(int board_no) {
+    	int res = 0;
+    	try {
+    		openConn();
+    		
+    		sql = "select count(*) from board_thumbs where board_index = ? and board_type = ?";
+    		
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setInt(1, board_no);
+			pstmt.setString(2, "free");
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				
+				
+				sql = "update free_board set board_thumbs = ? where board_index = ? and board_type = ?";
+				
+				pstmt = con.prepareStatement(sql);
+				
+				pstmt.setInt(1, rs.getInt(1));
+				pstmt.setInt(2, board_no);
+				pstmt.setString(3, "free");
+				
+				res = pstmt.executeUpdate();
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			closeConn(rs, pstmt, con);
+		}
+    	return res;
+    }
 	
 }
