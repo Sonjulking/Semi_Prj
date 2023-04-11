@@ -18,6 +18,7 @@ public class MatchingDeleteOkAction implements Action {
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, MessagingException, Exception {
 		// 세션으로 저장된 로그인 아이디로 DB 삭제
+
 		String member_id = request.getParameter("id").trim();
 		
 		MatchingDAO dao = MatchingDAO.getInstance();
@@ -37,6 +38,7 @@ public class MatchingDeleteOkAction implements Action {
 		forward.setPath("matching/matching.jsp");
 		
 		return forward;
+
 	}
 
 }

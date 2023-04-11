@@ -30,7 +30,7 @@
 
 	<div class="main_wrap">
 
-		<img class="ruru" src="img/ruru.png" alt="" title="귀여운 루루"> <img
+		<img class="ruru" src="img/rurupixel.png" alt="" title="귀여운 루루"> <img
 			class="nar" src="img/nar.png" alt="" title="포악한 나르"> <img
 			class="timo" src="img/timo.png" alt="" title="혐모"> <img
 			class="youme" src="img/youme.png" alt="" title="버스충 유미">

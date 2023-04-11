@@ -31,8 +31,8 @@ public class idCheckServlet extends HttpServlet {
 		String userId = request.getParameter("id");
 		MemberDAO dao = MemberDAO.getInstance();
 		String res = dao.checkMemberId(userId);
-		PrintWriter out = response.getWriter();
-		out.println(res);
+//		PrintWriter out = response.getWriter();
+		response.getWriter().write(res);
 	}
 
 }

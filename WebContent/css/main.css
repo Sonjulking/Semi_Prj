@@ -1,11 +1,15 @@
 /* 바디 전체 */
+@font-face {
+  font-family: "pixel"; /* 사용하고 싶은 font-family명을 지정 */
+  src: url("./font/neodgm.woff") format("opentype"); /* 폰트파일 불러오기 */
+}
 body {
   background-color: antiquewhite;
 }
 
 
 .box_text {
-  font-family: 'Dongle', sans-serif;
+  font-family: 'pixel', sans-serif;
   text-align: center;
 }
 /* 로그인 회원가입 */

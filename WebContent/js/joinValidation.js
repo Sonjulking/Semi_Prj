@@ -80,7 +80,7 @@ $(".joinForm").validate({
 			specialChars: "특수문자 입력해주세요."
 		},
 		pwd_recheck: {
-			required: "이름은 필수 입니다.",
+			required: "중복체크는 필수 입니다.",
 			equalTo: "일치하지 않아요...."
 
 		},
@@ -90,7 +90,7 @@ $(".joinForm").validate({
 			minlength: "최소 4글자 이상 입력해주세요",
 			maxlength: "20글자를 넘지 말아주세요",
 			engAndNum: "아이디는 영문과 숫자로만 작성해 주세요.",
-			remote: "중복 아이디입니다."
+			remote: "중복 아이디 입니다.!!!"
 		},
 
 		email: {
