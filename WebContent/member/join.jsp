@@ -16,9 +16,7 @@
 <link rel="stylesheet" href="../css/join.css" />
 <style>
 </style>
-<%-- <script type="text/javascript">
-	let join = <%=%> 
-</script> --%>
+
 </head>
 <body>
 	<div class="container1">
@@ -30,7 +28,7 @@
 	<div class="container2">
 		<h1>회원가입</h1>
 		<form method="post" enctype="multipart/form-data"
-			action="<%=request.getContextPath()%>/insert_member.do"
+			action="<%=request.getContextPath()%>/email_member.do"
 			class="joinForm">
 			<span>프로필 사진</span> <input type="file" name="profile_img"
 				value="프로필 사진"><br> <label class="userId" for="Id">ID</label>
@@ -49,12 +47,13 @@
 			<!-- <input type="button" value="닉네임중복체크" id="namecheck_btn"> -->
 			<span id="name_check"></span> <br> <label class="email"
 				for="email">Email</label> <input type="text" id="email" name="email"
-				placeholder="Email"> <br> <label class="phone"
-				for="phone">Phone</label> <input type="text" id="phone" name="phone"
-				placeholder="전화번호"> <br> <br> <label for="lol"
-				class="game1"><input type="checkbox" name="lol" value="lol">LOL</label>
-			<br> <label class="game-title">선호 게임</label> <label
-				class="game2" for="battle_ground"><input type="checkbox"
+				placeholder="Email"><span id="email_check"></span> <br>
+			<label class="phone" for="phone">Phone</label> <input type="text"
+				id="phone" name="phone" placeholder="전화번호"> <br> <br>
+			<label for="lol" class="game1"><input type="checkbox"
+				name="lol" value="lol">LOL</label> <br> <label
+				class="game-title">선호 게임</label> <label class="game2"
+				for="battle_ground"><input type="checkbox"
 				name="battle_ground" value="battle_ground">Battleground</label> <br>
 			<label for="overwatch" class="game3"><input type="checkbox"
 				name="overwatch" value="overwatch">OverWatch2</label> <br> <br>
@@ -65,7 +64,10 @@
 
 		</form>
 	</div>
-
+	<%-- <script type="text/javascript">
+	let link ="<%=request.getContextPath()%>
+		";
+	</script> --%>
 	<script type="text/javascript"
 		src="https://code.jquery.com/jquery-3.6.1.js"></script>
 	<script type="text/javascript"
@@ -73,6 +75,7 @@
 	<script type="text/javascript" src="../js/joinValidation.js"></script>
 	<script type="text/javascript" src="../js/join.js"></script>
 	<script type="text/javascript" src="../js/nickname.js"></script>
+	<script type="text/javascript" src="../js/emailCheck.js"></script>
 
 </body>
 </html>

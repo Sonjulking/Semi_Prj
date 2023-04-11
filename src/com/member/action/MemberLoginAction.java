@@ -16,16 +16,15 @@ public class MemberLoginAction implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		// TODO 자동 생성된 메소드 스텁
+
 		String member_id = request.getParameter("id");
 		String member_pwd = request.getParameter("pwd");
 		MemberDAO dao = MemberDAO.getInstance();
 
-		ActionForward forward = new ActionForward();
+//		ActionForward forward = new ActionForward();
 		int check = dao.loginMember(member_id, member_pwd);
 		MemberDTO cont = dao.contentMember(member_id);
-		
-		
+
 		PrintWriter out = response.getWriter();
 
 		if (check == 1) {
@@ -57,7 +56,7 @@ public class MemberLoginAction implements Action {
 
 		}
 
-		return forward;
+		return null;
 	}
 
 }

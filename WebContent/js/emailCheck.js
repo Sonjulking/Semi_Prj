@@ -12,30 +12,25 @@ $(function() {
 	let isChecked = false;
 
 	// 아이디 중복 여부 확인
-	$("#name").keyup(function() {
+	$("#email").keyup(function() {
 		$.ajax({
 			ContentType: "application/x-www-form-urlencoded; charset=UTF-8",
 			type: "post",
-			url: "/Semi_Prj/nicknameCheck.do",
-			data: { name: $("#name").val() }, /*키 : 밸류 */
+			url: "/Semi_Prj/emailCheck.do",
+			data: { email: $("#email").val() }, /*키 : 밸류 */
 			datatype: "text",
 			success: function(data) {
 				console.log(data);
 				if (data === "중복") {
-					// set the response data to an element in the DOM
 					isChecked = false;
-
-					$("#name_check").text("중복입니다.");
+					$("#email_check").text("중복입니다.");
 					console.log(data);
 					console.log(isChecked);
-
 				} else {
-					// set the response data to an element in the DOM
 					isChecked = true;
 					console.log(data);
 					console.log(isChecked);
-					$("#name_check").text("사용가능!");
-
+					$("#email_check").text("사용가능!");
 				}
 			},
 

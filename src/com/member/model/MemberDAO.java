@@ -215,7 +215,7 @@ public class MemberDAO {
 
 	// checkMemberId() start
 	public String checkMemberId(String id) {
-		String res = "사용 가능한 아이디입니다.";
+		String res = "사용 가능";
 
 		try {
 			openConn();
@@ -246,7 +246,7 @@ public class MemberDAO {
 
 	// nickCheck() start
 	public String nickCheck(String name) {
-		String res = "사용 가능 닉네임입니다.";
+		String res = "사용 가능";
 
 		try {
 			openConn();
@@ -275,6 +275,36 @@ public class MemberDAO {
 
 	}
 	// nickCheck() end
+
+	public String checkEmail(String email) {
+
+		String res = "사용 가능";
+
+		try {
+			openConn();
+
+			sql = "select * from member where member_email = ?";
+
+			pstmt = con.prepareStatement(sql);
+
+			pstmt.setString(1, email);
+
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				// 중복 값 존재함
+				res = "중복";
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			closeConn(rs, pstmt, con);
+		}
+
+		return res;
+
+	}
 
 	// updateMypage() start
 	public int updateMypage(MemberDTO dto, String curr_pwd, String pw1) {
