@@ -40,8 +40,8 @@ public class nickCheckServlet extends HttpServlet {
 		String res = dao.nickCheck(nickname);
 		
 		// 아이디 중복 체크 결과를 클라이언트(Ajax)로 전송
-		PrintWriter out = response.getWriter();
-		out.println(res);
+//		PrintWriter out = response.getWriter();
+		response.getWriter().write(res);
 	}
 
 }

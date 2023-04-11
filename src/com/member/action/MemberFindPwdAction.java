@@ -1,7 +1,7 @@
 package com.member.action;
 
 import java.util.Random;
-
+import java.io.PrintWriter;
 import java.util.Properties;
 
 import javax.mail.Message;
@@ -12,8 +12,10 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.servlet.http.HttpSession;
 
+import com.member.model.MemberDAO;
 import com.project.controller.Action;
 import com.project.controller.ActionForward;
+import com.sun.net.httpserver.HttpsConfigurator;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -40,6 +42,9 @@ public class MemberFindPwdAction implements Action {
 		// 메일 받을 주소
 		/* String to_email = m.getEmail(); */
 		String to_email = request.getParameter("email_find");
+		
+		MemberDAO dao = MemberDAO.getInstance();
+		
 
 		// SMTP 서버 정보를 설정한다.
 		Properties prop = new Properties();
@@ -137,6 +142,31 @@ public class MemberFindPwdAction implements Action {
 		 * req.getRequestDispatcher("/views/login_myPage/searchPasswordEnd.jsp").forward
 		 * (req, resp);
 		 */
+		String userId = request.getParameter("id");
+		HttpSession session1 = request.getSession();
+		session1.setAttribute("UserId", userId);
+		request.setAttribute("TempPwd", temp);
+		
+		int check = dao.emailCheck(to_email);
+		int id = dao.findId(userId, to_email);
+		PrintWriter out = response.getWriter();
+		if (check == 1 && id == 1) {
+			out.println("<script>");
+			out.println("alert('받은메일함과 스팸메일함에서 아이디를 확인하세요~')");
+			out.println("location.href='member/changePwd.jsp'");
+			out.println("</script>");
+		} else if(id == 0) {
+			out.println("<script>");
+			out.println("alert('아이디 틀림')");
+			out.println("history.back()");
+			out.println("</script>");
+			
+		} else {
+			out.println("<script>");
+			out.println("alert('이메일 틀림')");
+			out.println("history.back()");
+			out.println("</script>");
+		}
 		return null;
 	}
 

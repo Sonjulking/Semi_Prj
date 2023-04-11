@@ -29,7 +29,7 @@
 		</div>
 
 		<div class="container2">
-			<h2>로그인</h2>
+			<h2>비밀번호 찾기</h2>
 
 
 			<label for="username">아이디</label> <input type="text" id="username"
@@ -45,7 +45,7 @@
 			<button class="login" type="submit">비밀번호 찾기</button>
 
 			<h6 class="lostpwd">
-				<a href="/Semi_Prj/member/findId.jsp">아이디를 잊으셨나요?</a>
+				<a href="/Semi_Prj/member/idFind.jsp">아이디를 잊으셨나요?</a>
 			</h6>
 
 			<a href="/Semi_Prj/member/join.jsp"><button class="signup" type="button">회원가입</button></a>

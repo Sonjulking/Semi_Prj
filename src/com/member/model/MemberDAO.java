@@ -111,7 +111,7 @@ public class MemberDAO {
 				count = rs.getInt(1) + 1;
 			}
 
-			sql = "insert into member values(?, ?, ?, ?, ?, default, now(), ?, ?, ?, ?)";
+			sql = "insert ignore into member values(?, ?, ?, ?, ?, default,now() ,? ,? ,? ,? ,0 ,?)";
 
 			pstmt = con.prepareStatement(sql);
 
@@ -124,8 +124,11 @@ public class MemberDAO {
 			pstmt.setString(7, dto.getPrefer_lol());
 			pstmt.setString(8, dto.getPrefer_battle_ground());
 			pstmt.setString(9, dto.getPrefer_overwatch());
+			pstmt.setString(10, dto.getMember_profile());
 
 			res = pstmt.executeUpdate();
+
+			System.out.println("dao" + res);
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -199,6 +202,7 @@ public class MemberDAO {
 				dto.setPrefer_lol(rs.getString("prefer_game1"));
 				dto.setPrefer_battle_ground(rs.getString("prefer_game2"));
 				dto.setPrefer_overwatch(rs.getString("prefer_game3"));
+				dto.setMember_profile(rs.getString("member_profile"));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -227,7 +231,7 @@ public class MemberDAO {
 			if (rs.next()) {
 
 				// 중복 값 존재함
-				res = "중복 아이디입니다.";
+				res = "중복";
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -258,7 +262,7 @@ public class MemberDAO {
 			if (rs.next()) {
 
 				// 중복 값 존재함
-				res = "사용 불가 닉네임입니다.";
+				res = "중복";
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -289,7 +293,7 @@ public class MemberDAO {
 
 			if (rs.next()) {
 				if (curr_pwd.equals(rs.getString("member_pwd"))) {
-					sql = "update ignore member set member_nickname = ?, member_pwd = ?, prefer_game1 = ? , prefer_game2 = ? , prefer_game3 = ?";
+					sql = "update ignore member set member_nickname = ?, member_pwd = ?, prefer_game1 = ? , prefer_game2 = ? , prefer_game3 = ?, member_profile = ?";
 
 					pstmt = con.prepareStatement(sql);
 
@@ -298,6 +302,7 @@ public class MemberDAO {
 					pstmt.setString(3, dto.getPrefer_lol());
 					pstmt.setString(4, dto.getPrefer_battle_ground());
 					pstmt.setString(5, dto.getPrefer_overwatch());
+					pstmt.setString(6, dto.getMember_profile());
 
 					result = pstmt.executeUpdate();
 				} else {
@@ -317,43 +322,215 @@ public class MemberDAO {
 
 	}
 
-	/*
-	 * public String sendEmail(String userEmail) throws MessagingException{ String
-	 * user = "gamemanchu"; String password = "abcd@1234"; String result = "fail";
-	 * Properties prop = new Properties(); prop.put("mail.stmp.host",
-	 * "stmp.gmail.com"); prop.put("mail.stmp.port", 465);
-	 * prop.put("mail.stmp.auth", "true"); prop.put("mail.stmp.ssl.enable", "true");
-	 * prop.put("mail.stmp.ssl.trust", "stmp.gmail.com");
-	 * 
-	 * Session session = Session.getDefaultInstance(prop, new Authenticator() {
-	 * protected PasswordAuthentication getAuthentication() { return new
-	 * PasswordAuthentication(user, password); } });
-	 * 
-	 * Random ran = new Random();
-	 * 
-	 * StringBuffer buffer = new StringBuffer();
-	 * 
-	 * for(int i = 0; i < 6; i++) { if (ran.nextBoolean()) {
-	 * buffer.append((int)(ran.nextInt(10))); } else {
-	 * buffer.append((char)((int)(Math.random()*26)+65)); } }
-	 * 
-	 * MimeMessage message = new MimeMessage(session); message.setFrom(new
-	 * InternetAddress());
-	 * 
-	 * message.addRecipient(Message.RecipientType.TO, new
-	 * InternetAddress(userEmail));
-	 * 
-	 * message.setSubject("겜만추 비밀번호 찾기 메일입니다.");
-	 * 
-	 * message.setText("비밀번호 변경 인증번호는 [ "+ buffer +" ] 입니다.");
-	 * 
-	 * 
-	 * Transport.send(message); System.out.println("메일 보내기 성공"); result =
-	 * buffer.toString();
-	 * 
-	 * return result; }
-	 */
+	// checkPwdFind() start
+	public int checkPwdFind(String userId, String to_email) {
+		int res = 0;
 
-	
+		try {
+			openConn();
+
+			sql = "select * from member where member_id = ?";
+
+			pstmt = con.prepareStatement(sql);
+
+			pstmt.setString(1, userId);
+
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+
+				if (rs.getString("member_email").equals(to_email)) {
+					sql = "select * from member where member_email = ?";
+
+					pstmt = con.prepareStatement(sql);
+
+					pstmt.setString(1, to_email);
+
+					rs = pstmt.executeQuery();
+
+					res = 2;
+				} else {
+					res = 1;
+					System.out.println(rs.getString("member_email"));
+					System.out.println(to_email);
+
+				}
+
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			closeConn(rs, pstmt, con);
+		}
+		System.out.println("res >> " + res);
+		return res;
+	}
+
+	// checkPwdFind() end
+
+	// updatePwd() start
+	public void updatePwd(String tempPwd, String userId) {
+
+		try {
+			openConn();
+
+			sql = "update member set member_pwd = ? where member_id = ?";
+
+			pstmt = con.prepareStatement(sql);
+
+			pstmt.setString(1, tempPwd);
+			pstmt.setString(2, userId);
+
+			pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			closeConn(rs, pstmt, con);
+		}
+	}
+	// updatePwd() end
+
+	// updateIndex() start, 삭제 시 인덱스 재정렬
+//	public void updateIndex(int index) {
+//		try {
+//			openConn();
+//
+//			sql = "update member set member_index = member_index - 1 where member_index > ?";
+//
+//			pstmt = con.prepareStatement(sql);
+//
+//			pstmt.setInt(1, index);
+//
+//			pstmt.executeUpdate();
+//
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} finally {
+//			closeConn(rs, pstmt, con);
+//		}
+//	}
+	// updateIndex()
+
+	// 회원 삭제
+	public int deleteMember(String id, int index) {
+		int res = 0;
+
+		try {
+			openConn();
+
+			System.out.println("아이디>>" + id);
+			System.out.println("인덱스 >>> " + index);
+
+			sql = "delete from member where member_id = ?";
+
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			res = pstmt.executeUpdate();
+
+			sql = "update member set member_index = member_index - 1 where member_index> ? ";
+
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, index);
+			pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			closeConn(rs, pstmt, con);
+		}
+		System.out.println("res at dao >> " + res);
+		return res;
+	}
+	// deleteMember() end
+
+	// findMemberId(), 아이디 찾기 메서드
+	public String findMemberId(String email) {
+		String res = "";
+
+		try {
+			openConn();
+
+			sql = "select member_id from member where member_email = ?";
+
+			pstmt = con.prepareStatement(sql);
+
+			pstmt.setString(1, email);
+
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				res = rs.getString("member_id");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			closeConn(rs, pstmt, con);
+		}
+		return res;
+	}
+	// findMemberId() end
+
+	// 이메일 있는지 확인(아이디 비밀번호 찾기 시)
+	public int emailCheck(String email) {
+		int res = 0;
+
+		try {
+			openConn();
+
+			sql = "select * from member where member_email = ?";
+
+			pstmt = con.prepareStatement(sql);
+
+			pstmt.setString(1, email);
+
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				return 1;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return res;
+	}
+	// emailCheck() end
+
+	// 이메일 있는지 확인(아이디 비밀번호 찾기 시)
+	public int findId(String id, String email) {
+		int res = 0;
+
+		try {
+			openConn();
+
+			sql = "select * from member where member_id = ?";
+
+			pstmt = con.prepareStatement(sql);
+
+			pstmt.setString(1, id);
+
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				if (email.equals(rs.getString("member_email"))) {
+					return 1;
+				} else {
+					return -1;
+				}
+
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return res;
+	}
+	// emailCheck() end
 
 }

@@ -1,13 +1,17 @@
 package com.member.action;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.member.model.MemberDAO;
 import com.member.model.MemberDTO;
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 import com.project.controller.Action;
 import com.project.controller.ActionForward;
 
@@ -15,15 +19,43 @@ public class MemberJoinAction implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		//
-		String member_id = request.getParameter("id");
-		String member_pwd = request.getParameter("pwd");
-		String member_nickname = request.getParameter("name");
-		String member_email = request.getParameter("email");
-		String member_phone = request.getParameter("phone");
-		String prefer_lol = request.getParameter("lol");
-		String prefer_battle_ground = request.getParameter("battle_ground");
-		String prefer_overwatch = request.getParameter("overwatch");
+
+		// 파일 업로드 할 때 설정해야할 내용.
+		// 1.첨부 파일 저장 경로 지정.
+//		String saveFolder = "C:\\NCS\\workspace(jsp2)\\15_Board_FileUpload\\src\\main\\webapp\\fileUpload";
+		Properties prop = new Properties();
+		FileInputStream fis = new FileInputStream(request.getServletContext()
+				.getRealPath("\\WEB-INF\\classes\\com\\project\\controller\\mapping.properties"));
+		prop.load(fis);
+		fis.close();
+//		System.out.println(System.getenv("USERPROFILE")); //자기 컴터 이름 궁금하면 주석풀고 해보세요.
+		// 시스템안에있는 환경변수중에서 USERPROFILE를 따옵니다. 그게 보통 C:\Users\KangChan 이렇게 나오는데 앞에 3개를
+		// 없애요.
+		// 그러면 Users\Kangchan이 나오겠죠.(미리 프로퍼티스에 저장해둬요 절대경로를) 거기에 폴더 경로(현재는 join)를 붙여줍니다.
+		String saveFolder = prop.getProperty(System.getenv("USERPROFILE").substring(3)) + "\\join";
+		// 2.첨부 파일 크기 지정.
+
+		int fileSize = 20 * 1024 * 1024; // 20mb
+
+		// 3.MultipartRequest 객체 생성 ==> 파일 업로드를 진행하기 위한 객체 생성
+
+		MultipartRequest multi = new MultipartRequest(request, saveFolder, fileSize, "UTF-8",
+				new DefaultFileRenamePolicy());
+		// request : 일반적인 request 객체
+		// saveDirectory 첨부파일이 저장될 경로
+		// maxPostSize업로드할 첨부파일의 최대 사이즈
+		// "UTF-8" 문자 인코딩 방식
+		// new DefaultFileRenamePolicy() : 첨부 파일의 이름이 같은 경우 중복이 안되게 설정
+
+		String member_id = multi.getParameter("id");
+		String member_pwd = multi.getParameter("pwd");
+		String member_nickname = multi.getParameter("name");
+		String member_email = multi.getParameter("email");
+		String member_phone = multi.getParameter("phone");
+		String prefer_lol = multi.getParameter("lol");
+		String prefer_battle_ground = multi.getParameter("battle_ground");
+		String prefer_overwatch = multi.getParameter("overwatch");
+		String member_profile = multi.getFilesystemName("profile_img");
 
 		MemberDTO dto = new MemberDTO();
 		dto.setMember_id(member_id);
@@ -34,6 +66,7 @@ public class MemberJoinAction implements Action {
 		dto.setPrefer_lol(prefer_lol);
 		dto.setPrefer_battle_ground(prefer_battle_ground);
 		dto.setPrefer_overwatch(prefer_overwatch);
+		dto.setMember_profile(member_profile);
 
 		MemberDAO dao = MemberDAO.getInstance();
 
@@ -42,6 +75,7 @@ public class MemberJoinAction implements Action {
 
 		PrintWriter out = response.getWriter();
 
+		System.out.println("action" + check);
 		if (check > 0) {
 			out.println("<script>");
 			out.println("alert('회원가입 성공!')");
