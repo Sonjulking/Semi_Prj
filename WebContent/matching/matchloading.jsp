@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -82,6 +86,9 @@
 </head>
 <body>
 	<form method="post" name="f" action="<%=request.getContextPath() %>/matchingdelete_ok.do">
+		<c:set var="dto" value="${Cont }" />
+		<input type="hidden" name="id" value="${dto.getMember_id() }">
+		
 		<div class="loading-wrapper">
 		  <div class="loading-text">Loading...</div>
 		  <div class="arrow-wrapper">

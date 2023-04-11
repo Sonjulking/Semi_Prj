@@ -119,24 +119,22 @@ public class MatchingDAO {
 		
 		
 		// matchloading 에서 취소버튼 누르면 matching DB 삭제하는 메서드
-		public int deleteMatching(String id) {
+		public int deleteMatching(MemberDTO mdto) {
 			
 			int result = 0;
 			
 			try {
 				openConn();
 				
-				if(rs.next()) {
-				
-				sql = "delete from matching where discord_nickname = ?";
+				sql = "delete from matching where matching_user_id = ?";
 				
 				pstmt = con.prepareStatement(sql);
 				
-				pstmt.setString(1, id);
+				pstmt.setString(1, mdto.getMember_id());
 				
 				result = pstmt.executeUpdate();
 				
-				}
+				
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
