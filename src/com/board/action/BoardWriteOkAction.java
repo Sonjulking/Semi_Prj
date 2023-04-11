@@ -25,11 +25,13 @@ public class BoardWriteOkAction implements Action {
 
 		// 파일 업로드 시에는 설정해야 할 내용이 있음.
 		// 1. 첨부파일 저장 경로 지정(보통은 서버에 지정함)
+
 		String saveFolder = "C:\\NCS\\workspace(jsp2)\\Semi_Prj\\WebContent\\fileUpload";
 		// String saveFolder =
 		// prop.getProperty(System.getenv("USERPROFILE").substring(3))+"\\review";
 		// 2. 첨부 파일 크기 지정(20MB)
 		int fileSize = 20 * 1024 * 1024;
+
 
 		// 3. MultipartRequest 객체 생성
 		// ==> 파일 업로드를 진행하기 위한 객체 생성 (cos라이브러리에 있는 클래스임)

@@ -223,15 +223,28 @@ public class BoardDAO {
 		try {
 			openConn();
 			
-			sql = "update free_board set board_type = ?, board_heading = ?, board_title = ?, board_cont = ?, board_update = now() where board_index = ?";
-			
-			pstmt = con.prepareStatement(sql);
-			
-			pstmt.setString(1, dto.getBoard_type());
-			pstmt.setString(2, dto.getBoard_heading());
-			pstmt.setString(3, dto.getBoard_title());
-			pstmt.setString(4, dto.getBoard_cont());
-			pstmt.setInt(5, dto.getBoard_index());
+			if(dto.getUpload_file() != null) {
+				sql = "update free_board set board_type = ?, board_heading = ?, board_title = ?, board_cont = ?, board_update = now(), upload_file = ? where board_index = ?";
+				
+				pstmt = con.prepareStatement(sql);
+				
+				pstmt.setString(1, dto.getBoard_type());
+				pstmt.setString(2, dto.getBoard_heading());
+				pstmt.setString(3, dto.getBoard_title());
+				pstmt.setString(4, dto.getBoard_cont());
+				pstmt.setString(5, dto.getUpload_file());
+				pstmt.setInt(6, dto.getBoard_index());
+			}else {
+				sql = "update free_board set board_type = ?, board_heading = ?, board_title = ?, board_cont = ?, board_update = now() where board_index = ?";
+				
+				pstmt = con.prepareStatement(sql);
+				
+				pstmt.setString(1, dto.getBoard_type());
+				pstmt.setString(2, dto.getBoard_heading());
+				pstmt.setString(3, dto.getBoard_title());
+				pstmt.setString(4, dto.getBoard_cont());
+				pstmt.setInt(5, dto.getBoard_index());
+			}
 			
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -365,15 +378,25 @@ public class BoardDAO {
 		try {
 			openConn();
 			
-			sql = "update set free_board board_thumbs = board_thumbs + 1 where board_index = ?";
+			sql = "update free_board set board_thumbs = board_thumbs + 1 where board_index = ?";
 			
 			pstmt = con.prepareStatement(sql);
 			
 			pstmt.setInt(1, no);
 			
-			result = pstmt.executeUpdate();
+			pstmt.executeUpdate(); 
 			
-			System.out.println(result);
+			sql = "select board_thumbs from free_board where board_index = ?";
+			
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setInt(1, no);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				result = rs.getInt(1);
+			}
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
