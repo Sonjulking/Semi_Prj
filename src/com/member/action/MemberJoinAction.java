@@ -4,9 +4,17 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Properties;
+import java.util.Random;
 
+import javax.mail.Message;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.member.model.MemberDAO;
 import com.member.model.MemberDTO;
@@ -20,6 +28,17 @@ public class MemberJoinAction implements Action {
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
+		String input_temp_key = request.getParameter("temp_key");
+		String email_temp_key = request.getParameter("email_key");
+		PrintWriter out = response.getWriter();
+
+		if(input_temp_key != email_temp_key) {
+			out.println("<script>");
+			out.println("alert('인증키 틀림! 다시 입력해 주세요~')");
+			out.println("history.back()");
+			out.println("</script>");
+		}
+		
 		// 파일 업로드 할 때 설정해야할 내용.
 		// 1.첨부 파일 저장 경로 지정.
 //		String saveFolder = "C:\\NCS\\workspace(jsp2)\\15_Board_FileUpload\\src\\main\\webapp\\fileUpload";
@@ -71,11 +90,12 @@ public class MemberJoinAction implements Action {
 		dto.setMember_profile(member_profile);
 
 		MemberDAO dao = MemberDAO.getInstance();
+		
 
+		
 		// ActionForward forward = new ActionForward();
 		int check = dao.memberInsert(dto);
-
-		PrintWriter out = response.getWriter();
+		
 
 		System.out.println("action" + check);
 		if (check > 0) {

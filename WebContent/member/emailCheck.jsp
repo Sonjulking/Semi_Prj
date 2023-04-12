@@ -13,7 +13,7 @@
 			action="<%=request.getContextPath()%>/insert_member.do"
 			class="joinForm">
 			<input type="hidden" name="profile_img" value="${Member_Profile}">
-			${Member_Profile} <input type="hidden" id="username" name="id"
+			 <input type="hidden" id="username" name="id"
 				value="${ID}"> <input type="hidden" id="password1"
 				name="pwd" value="${Member_Pwd}"> <input type="hidden"
 				id="name" name="name" value="${Member_Nickname}"> <input
@@ -22,6 +22,8 @@
 			<input type="hidden" name="lol" value="${Prefer_lol}"> <input
 				type="hidden" name="battle_ground" value="${Prefer_battle_ground}">
 			<input type="hidden" name="overwatch" value="${ Prefer_overwatch}">
+			<input type="hidden" name="email_key" value="${AuthenticationKey }">
+			
 
 			<input type="text" name="temp_key">
 
