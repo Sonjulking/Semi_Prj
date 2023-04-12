@@ -192,23 +192,22 @@ public class MemberEmailAction implements Action {
 		}
 		HttpSession saveKey = request.getSession();
 		saveKey.setAttribute("AuthenticationKey", AuthenticationKey);
+		request.setAttribute("AuthenticationKey", AuthenticationKey);
 		PrintWriter out = response.getWriter();
 		
 		System.out.println("이메일 인증키 >>>" +temp);
 		System.out.println(AuthenticationKey);
-		
+		ActionForward forward = new ActionForward();
 		if(AuthenticationKey != null) {
-			out.println("<script>");
-			out.println("alert('받은메일함과 스팸메일함에서 인증번호를 확인하세요~')");
-			out.println("location.href='./member/emailCheck.jsp'");
-			out.println("</script>");
+			forward.setRedirect(false);
+			forward.setPath("./member/emailCheck.jsp");
 		} else {
 			out.println("<script>");
 			out.println("alert('인증메일 발송 실패, 메일주소 확인해주세요~')");
 			out.println("history.back()");
 			out.println("</script>");
 		}
-		return null;
+		return forward;
 	}
 
 }

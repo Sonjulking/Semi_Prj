@@ -28,17 +28,6 @@ public class MemberJoinAction implements Action {
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-		String input_temp_key = request.getParameter("temp_key");
-		String email_temp_key = request.getParameter("email_key");
-		PrintWriter out = response.getWriter();
-
-		if(input_temp_key != email_temp_key) {
-			out.println("<script>");
-			out.println("alert('인증키 틀림! 다시 입력해 주세요~')");
-			out.println("history.back()");
-			out.println("</script>");
-		}
-		
 		// 파일 업로드 할 때 설정해야할 내용.
 		// 1.첨부 파일 저장 경로 지정.
 //		String saveFolder = "C:\\NCS\\workspace(jsp2)\\15_Board_FileUpload\\src\\main\\webapp\\fileUpload";
@@ -66,6 +55,19 @@ public class MemberJoinAction implements Action {
 		// "UTF-8" 문자 인코딩 방식
 		// new DefaultFileRenamePolicy() : 첨부 파일의 이름이 같은 경우 중복이 안되게 설정
 
+		String input_temp_key = multi.getParameter("temp_key");
+		String email_temp_key = multi.getParameter("email_key");
+		System.out.println(input_temp_key);
+		System.out.println(email_temp_key);
+		PrintWriter out = response.getWriter();
+		System.out.println(input_temp_key.equals(email_temp_key));
+		if(!input_temp_key.equals(email_temp_key)) {
+			out.println("<script>");
+			out.println("alert('인증키 틀림! 다시 입력해 주세요~')");
+			out.println("history.back()");
+			out.println("</script>");
+		}
+		
 		String member_id = multi.getParameter("id");
 		String member_pwd = multi.getParameter("pwd");
 		String member_nickname = multi.getParameter("name");
