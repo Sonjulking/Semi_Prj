@@ -52,6 +52,7 @@ public class FreeBoardListAction implements Action {
 		// 해당 페이지에서 마지막 블럭
 		int endBlock = (((page - 1) / block) * block) + block;
 		
+		
 		BoardDAO dao = BoardDAO.getInstance();
 		
 		totalRecord = dao.getBoardCount();
