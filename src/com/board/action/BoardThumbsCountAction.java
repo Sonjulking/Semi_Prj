@@ -18,11 +18,17 @@ public class BoardThumbsCountAction implements Action {
 			throws IOException, MessagingException, Exception {
 		//
 		int board_no = Integer.parseInt(request.getParameter("no").trim());
+		
 		BoardDAO dao = BoardDAO.getInstance();
+		
 		int count = dao.thumbscount(board_no);
+		
 		PrintWriter out = response.getWriter();
+		
 		out.println(count);
+		
 		out.close();
+		
 		return null;
 	}
 
