@@ -373,35 +373,22 @@ public class BoardDAO {
 	
 	
 	
-	public List<BoardDTO> searchBoardList(String field, String keyword) {
+	public List<BoardDTO> searchBoardList(String field, String keyword, int start, int end) {
 		
 		List<BoardDTO> list = new ArrayList<BoardDTO>();
 		
 		try {
 			openConn();
 			
-			sql = "select * from free_board";
-			if(field.equals("title")) {
-				sql += " where board_title like ?";
-			}else if(field.equals("cont")) {
-				sql += " where board_cont like ?";
-			}else if(field.equals("title_cont")) {
-				sql += " where board_title like ? or board_cont like ?";
+			if(field.equals("board_title_cont")) {
+				sql = "select * from (select row_number() over(order by board_index desc) rnum, b.* from free_board b where board_title like '%"+keyword+"%' or board_cont like '%"+keyword+"%') b_rownum where rnum >= ? and rnum <= ?";
 			}else {
-				sql += " where board_writer_nickname like ?";
+				sql = "select * from (select row_number() over(order by board_index desc) rnum, b.* from free_board b where "+field+" like '%"+keyword+"%') b_rownum where rnum >= ? and rnum <= ?";
 			}
-			
-			sql += " order by board_index desc";
 			
 			pstmt = con.prepareStatement(sql);
-			
-			if(field.equals("title_cont")) {
-				pstmt.setString(1, "%"+keyword+"%");
-				pstmt.setString(2, "%"+keyword+"%");
-			}else {
-				pstmt.setString(1, "%"+keyword+"%");
-			}
-			
+			pstmt.setInt(1, start);
+			pstmt.setInt(2, end);
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
@@ -437,9 +424,40 @@ public class BoardDAO {
 	
 	
 	
+	public int getTotalRecord(String field, String keyword) {
+		
+		int result = 0;
+		
+		openConn();
+		
+		try {
+			if(field.equals("board_title_cont")) {
+				sql = "select count(*) from free_board where board_title like '%"+keyword+"%'or board_cont like '%"+keyword+"%'";
+			}else {
+				sql = "select count(*) from free_board where "+field+" like '%"+keyword+"%'";
+			}
+			pstmt = con.prepareStatement(sql);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				result = rs.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			closeConn(rs, pstmt, con);
+		}
+		return result;
+	}// getTotalRecord() end
+	
+	
+	
 	public String getReplyList(int no) {
 		
-		String result = "";
+		String res = "";
 		
 		try {
 			openConn();
@@ -452,22 +470,22 @@ public class BoardDAO {
 			
 			rs = pstmt.executeQuery();
 			
-			result += "<replys>";
+			res += "<replys>";
 			
 			while(rs.next()) {
-				result += "<reply>";
-				result += "<comment_index>"+rs.getInt("comment_index")+"</comment_index>";
-				result += "<board_comment_index>"+rs.getInt("board_comment_index")+"</board_comment_index>";
-				result += "<comment_cont>"+rs.getString("comment_cont")+"</comment_cont>";
-				result += "<comment_writer_id>"+rs.getString("comment_writer_id")+"</comment_writer_id>";
-				result += "<comment_writer_nickname>"+rs.getString("comment_writer_nickname")+"</comment_writer_nickname>";
-				result += "<comment_date>"+rs.getString("comment_date")+"</comment_date>";
-				result += "<comment_update>"+rs.getString("comment_update")+"</comment_update>";
-				result += "<comment_hit>"+rs.getInt("comment_hit")+"</comment_hit>";
-				result += "</reply>";
+				res += "<reply>";
+				res += "<comment_index>"+rs.getInt("comment_index")+"</comment_index>";
+				res += "<board_comment_index>"+rs.getInt("board_comment_index")+"</board_comment_index>";
+				res += "<comment_cont>"+rs.getString("comment_cont")+"</comment_cont>";
+				res += "<comment_writer_id>"+rs.getString("comment_writer_id")+"</comment_writer_id>";
+				res += "<comment_writer_nickname>"+rs.getString("comment_writer_nickname")+"</comment_writer_nickname>";
+				res += "<comment_date>"+rs.getString("comment_date")+"</comment_date>";
+				res += "<comment_update>"+rs.getString("comment_update")+"</comment_update>";
+				res += "<comment_hit>"+rs.getInt("comment_hit")+"</comment_hit>";
+				res += "</reply>";
 			}
 			
-			result += "</replys>";
+			res += "</replys>";
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -476,7 +494,7 @@ public class BoardDAO {
 			closeConn(rs, pstmt, con);
 		}
 		
-		return result;
+		return res;
 	}  // getReplyList() 메서드 end
 	
 	
@@ -537,7 +555,7 @@ public class BoardDAO {
 			
 			pstmt.setString(1, loginMem);
 			pstmt.setInt(2, board_no);
-			pstmt.setNString(3, "free");
+			pstmt.setString(3, "free");
 			
 			
 			rs = pstmt.executeQuery();
@@ -607,24 +625,15 @@ public class BoardDAO {
     	try {
     		openConn();
     		
-    		sql = "select count(*) from board_thumbs where member_id = ?";
-    		
+    		sql = "update member set member_point = (select count(*) from board_thumbs where member_id = ?) where member_id = ?";
+			
 			pstmt = con.prepareStatement(sql);
 			
 			pstmt.setString(1, id);
+			pstmt.setString(2, id);
 			
-			rs = pstmt.executeQuery();
+			pstmt.executeUpdate();
 			
-			if(rs.next()) {
-				sql = "update member set member_point = ? where member_id = ?";
-				
-				pstmt = con.prepareStatement(sql);
-				
-				pstmt.setInt(1, rs.getInt(1));
-				pstmt.setString(2, id);
-				
-				pstmt.executeUpdate();
-			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -638,28 +647,17 @@ public class BoardDAO {
     	try {
     		openConn();
     		
-    		sql = "select count(*) from board_thumbs where board_index = ? and board_type = ?";
-    		
+    		sql = "update free_board set board_thumbs = (select count(*) from board_thumbs where board_index = ? and board_type = ?) where board_index = ? and board_type = ?";
+			
 			pstmt = con.prepareStatement(sql);
 			
 			pstmt.setInt(1, board_no);
 			pstmt.setString(2, "free");
+			pstmt.setInt(3, board_no);
+			pstmt.setString(4, "free");
 			
-			rs = pstmt.executeQuery();
+			res = pstmt.executeUpdate();
 			
-			if(rs.next()) {
-				
-				
-				sql = "update free_board set board_thumbs = ? where board_index = ? and board_type = ?";
-				
-				pstmt = con.prepareStatement(sql);
-				
-				pstmt.setInt(1, rs.getInt(1));
-				pstmt.setInt(2, board_no);
-				pstmt.setString(3, "free");
-				
-				res = pstmt.executeUpdate();
-			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -52,6 +52,7 @@ public class FreeBoardListAction implements Action {
 		// 해당 페이지에서 마지막 블럭
 		int endBlock = (((page - 1) / block) * block) + block;
 		
+		
 		BoardDAO dao = BoardDAO.getInstance();
 		
 		totalRecord = dao.getBoardCount();
@@ -67,6 +68,7 @@ public class FreeBoardListAction implements Action {
 		// 현재 페이지에 해당하는 게시물을 가져오는 메서드 호출
 		List<BoardDTO> pageList = dao.getBoardList(page, rowsize);
 		// 지금까지 페이징 처리 시 작업했던 모든 데이터들을  view page로 이동을 시키자
+		request.setAttribute("check", "board_list.do?");
 		request.setAttribute("page", page);
 		request.setAttribute("rowsize", rowsize);
 		request.setAttribute("block", block);
