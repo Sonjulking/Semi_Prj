@@ -87,6 +87,7 @@
 		<br>
 		
 		<form method="post" action="<%=request.getContextPath() %>/board_search.do">
+		<input type="hidden" name="page" value="${page }">
 			<select name="field">
 				<option value="board_title">제목</option>
 				<option value="board_cont">내용</option>
@@ -97,7 +98,7 @@
 			<input type="text" name="keyword">&nbsp;&nbsp;
 			<input type="submit" value="검색">
 		</form>
-		<br>
+		<br>	
 		
 		<input type="button" value="게시글 작성" onclick="location.href='board_write.do'">
 		<br>
@@ -107,33 +108,33 @@
 		<nav>
 			<ul class="pagination">
 				<li class="page-item">
-					<a class="page-link" href="board_list.do?page=1">First</a>
+					<a class="page-link" href="${check }page=1">First</a>
 				</li>
 				<li>
-					<a class="page-link" href="board_list.do?page=${page -1 }">Previous</a>
+					<a class="page-link" href="${check }page=${page -1 }">Previous</a>
 				</li>
 				
 				<c:forEach begin="${startBlock }" end="${endBlock }" var="i">
 					<c:if test="${i == page }">
 						<li class="page-item active" aria-current="page">
-							<a class="page-link" href="board_list.do?page=${i }">${i }</a>
+							<a class="page-link" href="${check }page=${i }">${i }</a>
 						</li>
 					</c:if>
 					
 					<c:if test="${i != page }">
 						<li class="page-item">
-							<a class="page-link" href="board_list.do?page=${i }">${i }</a>
+							<a class="page-link" href="${check }page=${i }">${i }</a>
 						</li>
 					</c:if>
 				</c:forEach>
 				
 				<c:if test="${endBlock < allPage }">
 					<li class="page-item">
-						<a class="page-link" href="board_list.do?page=${page + 1 }">Next</a>
+						<a class="page-link" href="${check }page=${page + 1 }">Next</a>
 					</li>
 					
 					<li class="page-item">
-						<a class="page-link" href="board_list.do?page=${allPage }">End</a>
+						<a class="page-link" href="${check }page=${allPage }">End</a>
 					</li>
 				</c:if>
 			</ul>

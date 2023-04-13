@@ -424,6 +424,37 @@ public class BoardDAO {
 	
 	
 	
+	public int getTotalRecord(String field, String keyword) {
+		
+		int result = 0;
+		
+		openConn();
+		
+		try {
+			if(field.equals("board_title_cont")) {
+				sql = "select count(*) from free_board where board_title like '%"+keyword+"%'or board_cont like '%"+keyword+"%'";
+			}else {
+				sql = "select count(*) from free_board where "+field+" like '%"+keyword+"%'";
+			}
+			pstmt = con.prepareStatement(sql);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				result = rs.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			closeConn(rs, pstmt, con);
+		}
+		return result;
+	}// getTotalRecord() end
+	
+	
+	
 	public String getReplyList(int no) {
 		
 		String res = "";
