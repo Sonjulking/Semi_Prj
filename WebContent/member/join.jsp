@@ -60,7 +60,8 @@
 			<label class="check_join"><input type="checkbox"
 				name="check_info" value="check_info" required="required">약관
 				동의</label> <br>
-			<button id="signup-btn" class="signup" type="submit" name="join">회원가입</button>
+			<button id="signup-btn" class="signup submit-btn" type="submit"
+				name="join" onclick="">회원가입</button>
 
 		</form>
 	</div>
@@ -72,6 +73,7 @@
 		src="https://code.jquery.com/jquery-3.6.1.js"></script>
 	<script type="text/javascript"
 		src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.js"></script>
+
 	<script type="text/javascript" src="../js/joinValidation.js"></script>
 	<script type="text/javascript" src="../js/join.js"></script>
 	<script type="text/javascript" src="../js/nickname.js"></script>
