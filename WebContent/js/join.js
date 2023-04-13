@@ -45,7 +45,7 @@ $(function() {
 	});
 
 	$("#signup-btn").click(function(event) {
-		$("#idcheck_btn").click();
+		//$("#idcheck_btn").click();
 		/*		if (isChecked) {
 					window.history.back();
 		

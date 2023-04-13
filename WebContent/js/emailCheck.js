@@ -43,7 +43,7 @@ $(function() {
 	});
 
 	$("#signup-btn").click(function(event) {
-		$("#idcheck_btn").click();
+		//$("#idcheck_btn").click();
 		/*		if (isChecked) {
 					window.history.back();
 		
@@ -51,10 +51,8 @@ $(function() {
 			
 				}
 		*/
-
-
 		if (!isChecked) {
-			alert("닉네임 중복 체크를 먼저 진행해주세요.");
+			alert("이메일 중복 체크를 먼저 진행해주세요.");
 			event.preventDefault(); // 다음 페이지로 이동을 막음
 		}
 	});
