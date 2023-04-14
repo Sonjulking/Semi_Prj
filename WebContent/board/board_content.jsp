@@ -74,7 +74,9 @@
 
 					<tr>
 						<th>추천수</th>
+
 						<td> <img src="img/thumbup.png" width="30" height="30" id="thumbs" onclick="thumbsClick()"><span class="thumbs_count"></span></td>
+
 					</tr>
 					
 					<tr>
@@ -97,6 +99,7 @@
 			</div>
 		</c:if>
 		
+
 		<%-- 데이터가 없는 경우 --%>
 		<c:if test="${empty dto }">
 			<span>삭제된 게시물입니다</span>

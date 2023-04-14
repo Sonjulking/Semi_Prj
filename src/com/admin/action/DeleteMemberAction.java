@@ -1,4 +1,4 @@
-package com.member.action;
+package com.admin.action;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -12,16 +12,14 @@ import com.member.model.MemberDAO;
 import com.project.controller.Action;
 import com.project.controller.ActionForward;
 
-import oracle.net.aso.f;
-
-public class MemberDeleteAction implements Action {
+public class DeleteMemberAction implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, MessagingException, Exception {
-		//
+		// 
 		int member_index = Integer.parseInt(request.getParameter("no"));
-		String member_id = request.getParameter("loginId");
+		String member_id = request.getParameter("id");
 		MemberDAO dao = MemberDAO.getInstance();
 //		dao.updateIndex(member_index);
 
@@ -34,13 +32,13 @@ public class MemberDeleteAction implements Action {
 		session.setAttribute("LoginCheck", check);
 		if (res > 0) {
 			out.println("<script>");
-			out.println("alert('회원 탈퇴 성공')");
-			out.println("location.href='main.jsp'");
+			out.println("alert('회원 삭제 성공')");
+			out.println("location.href='admin/member_board.jsp'");
 			out.println("</script>");
 
 		} else {
 			out.println("<script>");
-			out.println("alert('회원 탈퇴 실패')");
+			out.println("alert('회원 삭제 실패')");
 			out.println("history.back()");
 			out.println("</script>");
 
