@@ -111,7 +111,7 @@ public class MemberDAO {
 				count = rs.getInt(1) + 1;
 			}
 
-			sql = "insert ignore into member values(?, ?, ?, ?, ?, default,now() ,? ,? ,? ,? ,0 ,?)";
+			sql = "insert ignore into member values(?, ?, ?, ?, ?, default, now() ,? ,? ,? ,? ,?)";
 
 			pstmt = con.prepareStatement(sql);
 

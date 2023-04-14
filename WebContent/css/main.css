@@ -148,6 +148,31 @@ body {
   border-radius: 3px;
 }
 
+#memberList1 {
+  color: white;
+  position: relative;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%);
+  width: 150px;
+  height: 50px;
+  background-color: rgba(0, 0, 0, 0);
+  border: 2px solid white;
+  border-radius: 3px;	
+}
+
+#memberList2 {
+  color: white;
+  position: relative;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%);
+  width: 150px;
+  height: 50px;
+  background-color: rgba(0, 0, 0, 0);
+  border: 2px solid white;
+  border-radius: 3px;	
+}
 
 .matching-btn:hover {
   background-color: rgb(172, 172, 172);

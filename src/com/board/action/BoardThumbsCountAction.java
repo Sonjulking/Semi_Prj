@@ -16,12 +16,14 @@ public class BoardThumbsCountAction implements Action {
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, MessagingException, Exception {
-		//
+		// 게시판 글번호 가져오기
 		int board_no = Integer.parseInt(request.getParameter("no").trim());
+		// 게시판 종류 가져오기
+		String board_type = request.getParameter("type");
 		
 		BoardDAO dao = BoardDAO.getInstance();
 		
-		int count = dao.thumbscount(board_no);
+		int count = dao.thumbscount(board_no, board_type);
 		
 		PrintWriter out = response.getWriter();
 		

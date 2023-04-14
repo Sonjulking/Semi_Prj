@@ -74,7 +74,7 @@
 
 					<tr>
 						<th>추천수</th>
-						<td> <img src="img/thumbup.png" width="30" height="30" id="thumbs"><span class="thumbs_count"></span></td>
+						<td> <img src="img/thumbup.png" width="30" height="30" id="thumbs">${dto.getBoard_thumbs() }</td>
 					</tr>
 					
 					<tr>
@@ -106,22 +106,25 @@
 				data : {
 					no : ${dto.getBoard_index() },
 					id : "${member_id}",
-					board_id : "${dto.getBoard_writer_id() }"
+					board_id : "${dto.getBoard_writer_id() }",
+					type : "${dto.getBoard_type() }"
 				},
 				success : function(data) {
-					$("#thumbs").html(data);
 					thumbsCount();
+					$("#thumbs").html(data);
 				},
 				error : function() {
 					alert('데이터 통신 오류입니다.');
 				}
 			});
 		}); // thumbsUp() end
+		
 		function thumbsCount() {
 			$.ajax({
 				url: "board_thumbs_count.do",
 				data: {
-					no : ${dto.getBoard_index()}
+					no : ${dto.getBoard_index()},
+				    type : "${dto.getBoard_type() }"
 				},
 				success: function(count) {
 					$(".thumbs_count").html(count);

@@ -543,7 +543,7 @@ public class BoardDAO {
 	}  // replyInsert() 메서드 end
 	
 	
-	public int checkThumbs(String loginMem, int board_no) {
+	public int checkThumbs(String loginMem, int board_no, String type) {
 		int res = 0;
 		
 		try {
@@ -555,7 +555,7 @@ public class BoardDAO {
 			
 			pstmt.setString(1, loginMem);
 			pstmt.setInt(2, board_no);
-			pstmt.setString(3, "free");
+			pstmt.setString(3, type);
 			
 			
 			rs = pstmt.executeQuery();
@@ -574,7 +574,7 @@ public class BoardDAO {
 	}
 	
 	
-    public void thumbsUpdate(String loginMem, int board_no) {
+    public void thumbsUpdate(String loginMem, int board_no, String type) {
     	try {
     		openConn();
     		
@@ -583,7 +583,7 @@ public class BoardDAO {
 			pstmt = con.prepareStatement(sql);
 			
 			pstmt.setString(1, loginMem);
-			pstmt.setString(2, "free");
+			pstmt.setString(2, type);
 			pstmt.setInt(3, board_no);
 			
 			pstmt.executeUpdate();
@@ -596,7 +596,7 @@ public class BoardDAO {
 		}
     }
     
-    public void thumbsDelete(String loginMem, int board_no) {
+    public void thumbsDelete(String loginMem, int board_no, String type) {
     	
     	try {
     		openConn();
@@ -607,7 +607,7 @@ public class BoardDAO {
 			
 			pstmt.setString(1, loginMem);
 			pstmt.setInt(2, board_no);
-			pstmt.setString(3, "free");
+			pstmt.setString(3, type);
 			
 			pstmt.executeUpdate();
 			
@@ -642,7 +642,7 @@ public class BoardDAO {
 		}
     }
     
-    public int thumbscount(int board_no) {
+    public int thumbscount(int board_no, String type) {
     	int res = 0;
     	try {
     		openConn();
@@ -652,9 +652,9 @@ public class BoardDAO {
 			pstmt = con.prepareStatement(sql);
 			
 			pstmt.setInt(1, board_no);
-			pstmt.setString(2, "free");
+			pstmt.setString(2, type);
 			pstmt.setInt(3, board_no);
-			pstmt.setString(4, "free");
+			pstmt.setString(4, type);
 			
 			res = pstmt.executeUpdate();
 			
