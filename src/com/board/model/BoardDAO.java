@@ -543,6 +543,47 @@ public class BoardDAO {
 	}  // replyInsert() 메서드 end
 	
 	
+	public int replyModify(int no, String member_id, String comment_cont) {
+		
+		String writer_id = null;
+		int result = 0;
+		
+		try {
+			openConn();
+			
+			sql = "select comment_writer_id from free_comment where comment_index = ?";
+			
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setInt(1, no);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				writer_id = rs.getString("comment_writer_id");
+			}
+			
+			if(writer_id.equals(member_id)) {
+				sql = "update free_comment set comment_cont = ?, comment_update = now()";
+				
+				pstmt.setString(1, comment_cont);
+				
+				result = pstmt.executeUpdate();
+				
+			}else {
+				result = -1;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			closeConn(rs, pstmt, con);
+		}
+		return result;
+	}// replyModify() end
+	
+	
+	
 	public int checkThumbs(String loginMem, int board_no) {
 		int res = 0;
 		
