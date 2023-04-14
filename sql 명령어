@@ -378,8 +378,7 @@ member_regdate timestamp not null,
 member_phone varchar(50) not null,
 prefer_game1 varchar(50) default null,
 prefer_game2 varchar(50) default null,
-prefer_game3 varchar(50) default null,
-is_Activation boolean default 0
+prefer_game3 varchar(50) default null
 );
 
 create table free_board(
@@ -482,8 +481,8 @@ comment_hit int default 0
 );
 
 create table matching(
-matched boolean default 0,
-accept boolean default 0,
+matched varchar(20) default 0,
+accept varchar(20) default 0,
 game_name varchar(50) not null,
 tier varchar(50) not null,
 matching_user_id varchar(50) primary key,
@@ -551,6 +550,17 @@ commemt_date timestamp not null,
 commemt_update timestamp,
 comment_hit int default 0
 );
+
+create table board_thumbs(
+
+member_id varchar(50) not null,
+FOREIGN KEY (member_id) REFERENCES
+member(member_id) ON UPDATE CASCADE ON DELETE CASCADE,
+board_type varchar(50) not null,
+board_index int not null
+
+);
+
 
 commit;
 
