@@ -93,52 +93,52 @@ public class MemberDAO {
 	}
 	// closeConn() end
 
-	// view에서 회원가입 시 db에 회원정보 삽입
-	public int memberInsert(MemberDTO dto) {
+	   // view에서 회원가입 시 db에 회원정보 삽입
+	   public int memberInsert(MemberDTO dto) {
 
-		int res = 0, count = 0;
+	      int res = 0, count = 0;
 
-		try {
-			openConn();
+	      try {
+	         openConn();
 
-			sql = "select max(member_index) from member";
+	         sql = "select max(member_index) from member";
 
-			pstmt = con.prepareStatement(sql);
+	         pstmt = con.prepareStatement(sql);
 
-			rs = pstmt.executeQuery();
+	         rs = pstmt.executeQuery();
 
-			if (rs.next()) {
-				count = rs.getInt(1) + 1;
-			}
+	         if (rs.next()) {
+	            count = rs.getInt(1) + 1;
+	         }
 
-			sql = "insert ignore into member values(?, ?, ?, ?, ?, default, now() ,? ,? ,? ,? ,?)";
+	         sql = "insert ignore into member values(?, ?, ?, ?, ?, default, now() ,? ,? ,? ,? ,?)";
 
-			pstmt = con.prepareStatement(sql);
+	         pstmt = con.prepareStatement(sql);
 
-			pstmt.setInt(1, count);
-			pstmt.setString(2, dto.getMember_id());
-			pstmt.setString(3, dto.getMember_pwd());
-			pstmt.setString(4, dto.getMember_nickname());
-			pstmt.setString(5, dto.getMember_email());
-			pstmt.setString(6, dto.getPhone());
-			pstmt.setString(7, dto.getPrefer_lol());
-			pstmt.setString(8, dto.getPrefer_battle_ground());
-			pstmt.setString(9, dto.getPrefer_overwatch());
-			pstmt.setString(10, dto.getMember_profile());
+	         pstmt.setInt(1, count);
+	         pstmt.setString(2, dto.getMember_id());
+	         pstmt.setString(3, dto.getMember_pwd());
+	         pstmt.setString(4, dto.getMember_nickname());
+	         pstmt.setString(5, dto.getMember_email());
+	         pstmt.setString(6, dto.getPhone());
+	         pstmt.setString(7, dto.getPrefer_lol());
+	         pstmt.setString(8, dto.getPrefer_battle_ground());
+	         pstmt.setString(9, dto.getPrefer_overwatch());
+	         pstmt.setString(10, dto.getMember_profile());
 
-			res = pstmt.executeUpdate();
+	         res = pstmt.executeUpdate();
 
-			System.out.println("dao" + res);
+	         System.out.println("dao" + res);
 
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			closeConn(rs, pstmt, con);
-		}
-		return res;
-	}
-	// memberInsert() end
+	      } catch (Exception e) {
+	         // TODO Auto-generated catch block
+	         e.printStackTrace();
+	      } finally {
+	         closeConn(rs, pstmt, con);
+	      }
+	      return res;
+	   }
+	   // memberInsert() end
 
 	public int loginMember(String userID, String userPassword) {
 
