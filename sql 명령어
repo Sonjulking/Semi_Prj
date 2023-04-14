@@ -551,6 +551,17 @@ commemt_update timestamp,
 comment_hit int default 0
 );
 
+create table board_thumbs(
+
+member_id varchar(50) not null,
+FOREIGN KEY (member_id) REFERENCES
+member(member_id) ON UPDATE CASCADE ON DELETE CASCADE,
+board_type varchar(50) not null,
+board_index int not null
+
+);
+
+
 commit;
 
 alter table member  add is_Activation boolean default 0; 
