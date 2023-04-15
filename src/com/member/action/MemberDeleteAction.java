@@ -20,7 +20,7 @@ public class MemberDeleteAction implements Action {
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, MessagingException, Exception {
 		//
-		int member_index = Integer.parseInt(request.getParameter("index"));
+		int member_index = Integer.parseInt(request.getParameter("no"));
 		String member_id = request.getParameter("loginId");
 		MemberDAO dao = MemberDAO.getInstance();
 //		dao.updateIndex(member_index);

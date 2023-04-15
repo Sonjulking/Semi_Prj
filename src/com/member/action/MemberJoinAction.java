@@ -4,9 +4,17 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Properties;
+import java.util.Random;
 
+import javax.mail.Message;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.member.model.MemberDAO;
 import com.member.model.MemberDTO;
@@ -47,6 +55,19 @@ public class MemberJoinAction implements Action {
 		// "UTF-8" 문자 인코딩 방식
 		// new DefaultFileRenamePolicy() : 첨부 파일의 이름이 같은 경우 중복이 안되게 설정
 
+		String input_temp_key = multi.getParameter("temp_key");
+		String email_temp_key = multi.getParameter("email_key");
+		System.out.println(input_temp_key);
+		System.out.println(email_temp_key);
+		PrintWriter out = response.getWriter();
+		System.out.println(input_temp_key.equals(email_temp_key));
+		if(!input_temp_key.equals(email_temp_key)) {
+			out.println("<script>");
+			out.println("alert('인증키 틀림! 다시 입력해 주세요~')");
+			out.println("history.back()");
+			out.println("</script>");
+		}
+		
 		String member_id = multi.getParameter("id");
 		String member_pwd = multi.getParameter("pwd");
 		String member_nickname = multi.getParameter("name");
@@ -71,11 +92,12 @@ public class MemberJoinAction implements Action {
 		dto.setMember_profile(member_profile);
 
 		MemberDAO dao = MemberDAO.getInstance();
+		
 
+		
 		// ActionForward forward = new ActionForward();
 		int check = dao.memberInsert(dto);
-
-		PrintWriter out = response.getWriter();
+		
 
 		System.out.println("action" + check);
 		if (check > 0) {

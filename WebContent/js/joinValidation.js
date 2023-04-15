@@ -73,7 +73,7 @@ $(".joinForm").validate({
 
 	messages: {
 		pwd: {
-			required: "이름은 필수 입니다.",
+			required: "비밀번호 입력은 필수 입니다.",
 			minlength: "최소 6글자 이상 입력해주세요.",
 			maxlength: "12글자를 넘지 말아주세요.",
 			capitalLetters: "대문자 하나 입력해주세요",
@@ -94,6 +94,7 @@ $(".joinForm").validate({
 		},
 
 		email: {
+			required: "이메일 입력은 필수 입니다.",
 			emailCheck: "이메일 형식에 맞게 입력해 주세요."
 		},
 		check_info: {
