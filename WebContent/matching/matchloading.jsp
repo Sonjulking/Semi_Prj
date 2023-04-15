@@ -85,16 +85,24 @@
 
 </head>
 <body>
-	<form method="post" name="f" action="<%=request.getContextPath() %>/matchingdelete_ok.do">
+	<form method="post" name="f" id="check">
 		<c:set var="dto" value="${Cont }" />
 		<input type="hidden" name="id" value="${dto.getMember_id() }">
+		
+		<%-- 새로운 세션 만들어야함 --%>
+		<c:set var="mdto" value = "${Match }" />
+		<input type="hidden" name="gamename" value="${mdto.getGame_name() }">
+		<input type="hidden" name="tier" value="${mdto.getTier() }">
+		<input type="hidden" name="matched" value="${mdto.getMatched() }">
+		
 		
 		<div class="loading-wrapper">
 		  <div class="loading-text">Loading...</div>
 		  <div class="arrow-wrapper">
 		    <div class="arrow"></div>
 		  </div>
-		  <button class="cancel-btn"> 매칭 취소</button>
+		  <!-- <button class="cancel-btn"> 매칭 취소</button> -->
+		  <input type="submit" class = "cancel-btn" value="매칭취소" formaction="<%=request.getContextPath() %>/matchingdelete_ok.do">
 		</div>
 	</form>
 	
@@ -121,6 +129,39 @@
 	// 취소 버튼에 이벤트 핸들러 추가
 	var cancelBtn = document.querySelector('.cancel-btn');
 	cancelBtn.addEventListener('click', onCancel);
+	
+	
+	// 5초마다 매칭 조건 검색하여 매칭 돌리기
+	let playmatching = setInterval(function() {
+		
+		$.ajax({
+			type : "post",
+			url : "./matching/matchingCheck.jsp",
+			data : $('#check').serialize(),
+			datatype : "jsp",
+			success : function(data) {
+				if(data == 1){	// DB가 겹치면 실행되는 곳
+					alert("매칭잡힘!" + data);
+					location.href = "./matching/matchingYesOrNo.jsp";
+				}else{
+					alert("매칭안잡힘!" + data);
+				}
+			},
+			
+			error : function(data) {
+				alert("데이터 통신 오류 입니다.")
+			}
+		});
+		
+	}, 5000);
+	
+	
+	
+	// 30초 후에 () 함수를 호출하여 setInterval() 함수를 종료시킴.
+	setTimeout(function() {
+			clearInterval(playmatching);
+	}, 20000);
+		
 
 	</script>
 	

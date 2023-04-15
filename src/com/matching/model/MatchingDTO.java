@@ -2,8 +2,8 @@ package com.matching.model;
 
 public class MatchingDTO {
 	
-	private boolean matched;
-	private boolean accept;
+	private String matched;
+	private String accept;
 	private String game_name;
 	private String tier;
 	private String matching_user_id;
@@ -12,16 +12,17 @@ public class MatchingDTO {
 	private String kakao_id;
 	private String matching_regdate;
 	
-	public boolean isMatched() {
+	
+	public String getMatched() {
 		return matched;
 	}
-	public void setMatched(boolean matched) {
+	public void setMatched(String matched) {
 		this.matched = matched;
 	}
-	public boolean isAccept() {
+	public String getAccept() {
 		return accept;
 	}
-	public void setAccept(boolean accept) {
+	public void setAccept(String accept) {
 		this.accept = accept;
 	}
 	public String getGame_name() {
@@ -66,6 +67,9 @@ public class MatchingDTO {
 	public void setMatching_regdate(String matching_regdate) {
 		this.matching_regdate = matching_regdate;
 	}
+	
+	
+	
 	
 
 }

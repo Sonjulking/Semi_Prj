@@ -11,8 +11,9 @@
 
 <script src="https://code.jquery.com/jquery-3.6.3.js"></script>
 
-<link rel="stylesheet" href="matching.css" />
-
+<!-- <link rel="stylesheet" href="matching.css" /> -->
+<!-- 동적으로 CSS 적용하는 방법  -->
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/matching/matching.css" /> 
 </head>
 <body>
 
@@ -22,7 +23,7 @@
       <c:set var = "dto" value = "${Cont }"/>
       <input type = "hidden" name="id" value = "${dto.getMember_id() }">
       <input type = "hidden" name="nickname" value = "${dto.getMember_nickname() }">
-      
+	
         <label for="gamename"><b>게임명</b></label>
         <input type="text" placeholder="이용할 게임을 입력하세요" name="gamename" required>
         
@@ -31,7 +32,7 @@
         
         <label for="DiscordID"><b>디스코드 아이디</b></label>
         <input type="text" placeholder="디스코드 아이디를 입력하세요" name="DiscordID" required>
-       
+       	
         <label for="KakaoID"><b>카카오 아이디</b></label>
         <input type="text" placeholder="카카오 아이디를 입력하세요" name="KakaoID" required>
         
