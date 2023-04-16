@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,65 +11,99 @@
 
 <style type="text/css">
 
-/* 전체적인 스타일 */
-body {
-  font-family: 'Helvetica', sans-serif;
-}
-
-/* 버튼 컨테이너 스타일 */
-.button-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
-
-/* 버튼 스타일 */
-.button {
-  display: inline-block;
-  padding: 10px 20px;
-  background-color: #3d5afe;
-  color: #fff;
-  text-align: center;
-  border-radius: 5px;
-  text-decoration: none;
-}
-
-.button:hover {
-  background-color: #1e40af;
-}
-
-/* 수락 버튼 스타일 */
-.accept-button {
-  background-color: #4caf50;
-}
-
-.accept-button:hover {
-  background-color: #087f23;
-}
-
-/* 취소 버튼 스타일 */
-.cancel-button {
-  background-color: #f44336;
-}
-
-.cancel-button:hover {
-  background-color: #a6211b;
-}
+.YesNo {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          position: fixed;
+          z-index: 9999;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-color: rgba(0,0,0,0.5);
+        }
+        
+#Yesbutton {
+          padding: 10px 20px;
+          margin-right: 50px;
+          border: none;
+          border-radius: 5px;
+          background-color: #ffffff;
+          color: #000000;
+          font-size: 16px;
+          cursor: pointer;
+          transition: background-color 0.3s ease;
+        }
+        
+#Yesbutton:hover {
+          background-color: #cccccc;
+        }
+        
+.Nobutton {
+          padding: 10px 20px;
+          border: none;
+          border-radius: 5px;
+          background-color: #ffffff;
+          color: #000000;
+          font-size: 16px;
+          cursor: pointer;
+          transition: background-color 0.3s ease;
+        }
+        
+.Nobutton:hover {
+          background-color: #cccccc;
+        }
 
 </style>
 </head>
 <body>
 
+	<div class="YesNo">
 
-	<div class="button-container">
+    <form method="post" id="YesOrNO">
+    
+    <c:set var="mdto" value = "${Match }" />
+	<input type="hidden" name="id" value="${mdto.getMatching_user_id() }">
 
-		<a href="#" class="button accept-button">수락</a>
+	  <input type="submit" id="Yesbutton" value="수락" formaction="<%=request.getContextPath() %>/matchingAccept.do">
+	
+	  <input type="submit" class="Nobutton" value="취소" formaction="<%=request.getContextPath() %>/matchingdelete_ok.do">
+        
+    </form>
+</div>
+
+<script type="text/javascript">
+	
+	/* function handleClick(event) {
+		event.preventDefault(); // submit 기본 동작 방지
+		alert("매칭 수락하셨습니다!");
 		
-		<a href="#" class="button cancel-button">취소</a>
+		$.ajax({
+			type : "post",
+			url : "./matching/matchingAccept.jsp",
+			data : $('#YesOrNO').serialize(),
+			datatype : "jsp",
+			success : function(data) {
+				if(data == 1){	// DB가 겹치면 실행되는 곳
+					alert("상대방이 수락!" + data);
+					location.href = "./matching/userprofile.jsp";
+				}else{
+					alert("상대방이 취소함!" + data);
+				}
+			},
+			
+			error : function(data) {
+				alert("데이터 통신 오류 입니다.")
+			}
+		});
 		
-  	</div>
+	}
+	 */
 
+</script>
+		
 
 </body>
 </html> 

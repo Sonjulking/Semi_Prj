@@ -9,16 +9,15 @@
 <meta charset="UTF-8">
 <title>매칭 데이터 입력</title>
 
-<<<<<<< HEAD
 <script src="https://code.jquery.com/jquery-3.6.3.js"></script>
 
-=======
->>>>>>> 6c00742b3b567261e6748136ec00d8d192514034
 <!-- <link rel="stylesheet" href="matching.css" /> -->
 <!-- 동적으로 CSS 적용하는 방법  -->
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/matching/matching.css" /> 
 </head>
 <body>
+	<br>
+	<br>
 
 	<form method="post" name="f" action="<%=request.getContextPath() %>/matching_ok.do">
       <h2 align="center">매칭 데이터 입력</h2>

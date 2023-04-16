@@ -316,5 +316,74 @@ public class MatchingDAO {
 		}
 		return dto;
 	} // contentMatching() 메서드 end
+	
+	
+	
+	// 매칭 수락을 누른 유저의 	accept를 0에서 1로 수정하며
+	// accept가 둘다 1로 같은지 확인해 값을 반환하는 메서드
+	public int MachingAccept(String matching_user_id) {
+
+		int result = 0;
+		int accept = 0;
+		
+		String eqAccept1 = "";
+		String eqAccept2 = "";
+
+		try {
+			openConn();
+			// accept 1로 변환
+			sql = "update matching set accept = '1' where matching_user_id = ?";
+
+			pstmt = con.prepareStatement(sql);
+
+			pstmt.setString(1, matching_user_id);
+			
+			result = pstmt.executeUpdate();
+			
+			
+			// 11111111111111111 첫번째 매칭 조건 game_name
+			// matching 테이블에서 팝업창에 입력된 아이디에 해당하는 열의 Accept
+			openConn();
+			
+			sql = "select accept from matching where matching_user_id in (?)";
+
+			pstmt = con.prepareStatement(sql);
+
+			pstmt.setString(1, matching_user_id);
+
+			rs = pstmt.executeQuery();
+
+			rs.next();
+
+			eqAccept1 = rs.getString("game_name"); // 현재 배틀그라운드 저장
+			
+			System.out.println("eqAccept1 >>> " + eqAccept1);
+
+			// matching 테이블에서 로그인한 아이디를 제외한 나머지 
+			sql = "select Accept from matching where matching_user_id not in (?)";
+
+			pstmt = con.prepareStatement(sql);
+
+			pstmt.setString(1, matching_user_id);
+
+			rs = pstmt.executeQuery();
+			rs.next();
+			eqAccept2 = rs.getString("game_name"); // DB에 저장된 배틀그라운드 저장
+			
+			System.out.println("eqAccept2 >>> " + eqAccept2);
+
+			if (eqAccept1.equals(eqAccept2)) {
+				accept = 1;
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			closeConn(rs, pstmt, con);
+		}
+		return accept;
+	} // MachingAccept() 메서드 end
+	
 
 }
