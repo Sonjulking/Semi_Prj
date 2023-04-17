@@ -355,7 +355,7 @@ public class MatchingDAO {
 
 			rs.next();
 
-			eqAccept1 = rs.getString("game_name"); // 현재 배틀그라운드 저장
+			eqAccept1 = rs.getString("game_name"); // 현재 수락상태
 			
 			System.out.println("eqAccept1 >>> " + eqAccept1);
 
@@ -368,7 +368,7 @@ public class MatchingDAO {
 
 			rs = pstmt.executeQuery();
 			rs.next();
-			eqAccept2 = rs.getString("game_name"); // DB에 저장된 배틀그라운드 저장
+			eqAccept2 = rs.getString("game_name"); // 현재 수락 상태
 			
 			System.out.println("eqAccept2 >>> " + eqAccept2);
 

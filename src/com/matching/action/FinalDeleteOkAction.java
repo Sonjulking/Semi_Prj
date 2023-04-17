@@ -1,7 +1,6 @@
 package com.matching.action;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
@@ -12,7 +11,7 @@ import com.member.model.MemberDTO;
 import com.project.controller.Action;
 import com.project.controller.ActionForward;
 
-public class MatchingDeleteOkAction implements Action {
+public class FinalDeleteOkAction implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response)
@@ -29,16 +28,15 @@ public class MatchingDeleteOkAction implements Action {
 		
 		int check = dao.deleteMatching(mdto);
 		
-		// PrintWriter out = response.getWriter();
-		
 		ActionForward forward = new ActionForward();
 		
 		forward.setRedirect(false);
 		
-		forward.setPath("matching/matching.jsp");
+		forward.setPath("matching/userprofile2.jsp");
 		
 		return forward;
-
+		
+		
 	}
 
 }
