@@ -110,20 +110,21 @@
 				<option value="free">자유게시판</option>
 				<option value="legend">레전드게시판</option>
 				<option value="etc">ETC</option>
-			</select> <select name="board_heading">
+			</select> 
+			<select name="board_heading">
 				<option value="">말머리선택</option>
 
 				<option class="board_heading1" value="humor">유머</option>
 				<option class="board_heading1" value="life">일상</option>
 				<option class="board_heading1" value="info">정보</option>
-				<option class="board_heading1" value="etc">기타</option>
+				<option class="board_heading1" value="etc1">기타</option>
 
 				<option class="board_heading2" value="league">리그오브레전드</option>
 				<option class="board_heading2" value="battle">배틀그라운드</option>
 				<option class="board_heading2" value="over">오버워치2</option>
 
 				<option class="board_heading3" value="police">신고</option>
-				<option class="board_heading3" value="etc">기타</option>
+				<option class="board_heading3" value="etc2">기타</option>
 			</select> <input type="text" name="board_title" placeholder="제목을 입력해주세요">
 			<br>
 

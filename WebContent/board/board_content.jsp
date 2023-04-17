@@ -49,11 +49,33 @@
 				<table border="1" cellspacing="0" width="450">
 					<tr>
 						<th>게사판</th>
-						<td>${dto.getBoard_type() }</td>
+						<td>
+							<c:if test="${dto.getBoard_type() == 'free' }">자유게시판</c:if>
+							<c:if test="${dto.getBoard_type() == 'legend' }">레전드게시판</c:if>
+							<c:if test="${dto.getBoard_type() == 'etc' }">ETC</c:if>
+						</td>
 					</tr>
 					<tr>
 						<th>머리말</th>
-						<td>${dto.getBoard_heading() }</td>
+						<td>
+							<c:if test="${dto.getBoard_type() == 'free' }">
+								<c:if test="${dto.getBoard_heading() == 'humor' }">유머</c:if>
+								<c:if test="${dto.getBoard_heading() == 'life' }">일상</c:if>
+								<c:if test="${dto.getBoard_heading() == 'info' }">정보</c:if>
+								<c:if test="${dto.getBoard_heading() == 'etc1' }">기타</c:if>
+							</c:if>
+							
+							<c:if test="${dto.getBoard_type() == 'legend' }">
+								<c:if test="${dto.getBoard_heading() == 'league' }">리그오브레전드</c:if>
+								<c:if test="${dto.getBoard_heading() == 'battle' }">배틀그라운드</c:if>
+								<c:if test="${dto.getBoard_heading() == 'over' }">오버워치</c:if>
+							</c:if>
+							
+							<c:if test="${dto.getBoard_type() == 'etc' }">
+								<c:if test="${dto.getBoard_heading() == 'police' }">신고</c:if>
+								<c:if test="${dto.getBoard_heading() == 'etc2' }">기타</c:if>
+							</c:if>
+						</td>
 					</tr>
 					<tr>
 						<c:if test="${empty dto.getBoard_update() }">
@@ -75,7 +97,7 @@
 					<tr>
 						<th>추천수</th>
 
-						<td> <img src="img/thumbup.png" width="30" height="30" id="thumbs" onclick="thumbsClick()"><span class="thumbs_count"></span></td>
+						<td> <img src="img/thumbup.png" width="30" height="30" id="thumbs" onclick="thumbsClick()">${dto.getBoard_thumbs() }</td>
 
 					</tr>
 					
@@ -144,20 +166,16 @@
 
 	$(async function() {
 		
-		// ajax에서 동일하게 사용되는 속성 설정
-		$.ajaxSetup({
-			// ajax에서 한글 깨짐 문제 해결
-			contentType : "application/x-www-form-urlencoded;charset=UTF-8",
-			type : "post"
-		});
-		
-		
+			
 		// BOARD 테이블의 전체 데이터를 가져오는 함수.
 		async function getList() {
 			
 			await $.ajax({
+				type : "post",
 				url : "reply_list.do",
-				data : {no : ${dto.getBoard_index() } },
+				data : {
+					no : ${dto.getBoard_index() }
+				},
 				datatype : "xml", 
 				success : function(data) {
 					
@@ -169,19 +187,28 @@
 						
 						table += "<table border='1' cellspacing='0'>";
 						table += "<tr>";
-						table += "<td>"+$(this).find("comment_date").text()+"</td>"
+						table += "<td>"+$(this).find("comment_index").text()+"</td>"
+						// table += "<td>";
+						
+						if($(this).find("comment_update").text() == "") {
+						    table += "<td>" + $(this).find("comment_date").text() + "</td>";
+						} else {
+						    table += "<td>" + $(this).find("comment_update").text() + "</td>";
+						}
+									
+						// table += "</td>";
 						table += "<td>"+$(this).find("comment_writer_nickname").text()+"</td>";
 						table += "<td> <input class='cont' value='"+$(this).find("comment_cont").text()+"'> </td>";
-						table += "<td> <input type='button' class='modify' value='수정완료' onclick='modi("+$(this).find("comment_index").text()+")'> </td>";
-						table += "<td> <input type='button' class='delete' value='삭제' onclick='del("+$(this).find("comment_index").text()+","+$(this).find("comment_writer_id").text()+")'> </td>";
+						table += "<td> <input type='button' class='modify' value='수정완료' index='"+$(this).find("comment_index").text()+"'> </td>";
+						table += "<td> <input type='button' class='delete' value='삭제' index='"+$(this).find("comment_index").text()+"'> </td>";
 						table += "</tr>";
 						table += "</table>";
 						
 					});
 					
 					$(".list").append(table);
+					
 				},
-				
 				error : function() {
 					alert("데이터 통신 오류입니다!!!.~~~");
 				}
@@ -189,11 +216,35 @@
 			
 		}  // getList() 함수 end
 		
+				
+		function thumbsClick() {
+			$.ajax({
+				type : "post",
+				url : "board_thumbs.do",
+				datatype: "text",
+				data : {
+					no : ${dto.getBoard_index() },
+					id : "${member_id}",
+					board_id : "${dto.getBoard_writer_id() }",
+					type : "${dto.getBoard_type() }"
+				},
+				success : function(data) {
+					$("#thumbs").html(data);
+					thumbsCount();
+				},
+				error : function() {
+					alert('데이터 통신 오류입니다.');
+				}
+			});
+		}
+		
 		async function thumbsCount() {
 			await $.ajax({
+				type : "post",
 				url: "board_thumbs_count.do",
 				data: {
-					no : ${dto.getBoard_index()}
+					no : ${dto.getBoard_index()},
+					type : "${dto.getBoard_type() }"
 				},
 				success: function(count) {
 					$(".thumbs_count").html(count);
@@ -204,96 +255,100 @@
 			});
 		}
 		
+		
+		$(".list").on("click", ".modify", function() {
+			$.ajax({
+				type : "post",
+				url : "reply_modify.do",
+				data : {
+					reply_index : $(this).attr("index"),
+					member_id : "${member_id }",
+					comment_cont : $(".cont").val()
+				},
+				datatype : "text",
+				success : function(data) {
+					if(data > 0) {
+						alert("댓글 수정 완료");
+						getList();
+					}else {
+						alert("본인이 작성한 댓글이 아닙니다");
+					}
+				},
+				error : function() {
+					alert("데이터 통신 오류입니다!!!.~~~");
+				}
+			});
+		});
+		
+		
+		$(".list").on("click", ".delete", function() {
+			$.ajax({
+				type : "post",
+				url : "reply_delete.do",
+				data : {
+					reply_index : $(this).attr("index"),
+					member_id : "${member_id }",
+				},
+				datatype : "text",
+				success : function(data) {
+					if(data > 0) {
+						alert("댓글 삭제 완료");
+						getList();
+					}else {
+						alert("삭제 권한이 없습니다.");
+					}
+				},
+				error : function() {
+					alert("데이터 통신 오류입니다!!!.~~~");
+				}
+			});
+		});
+		
+		
+		
+		// 댓글 작성 버튼을 눌렀을 때 DB에 댓글이 저장.
+		$("#replyBtn").on("click", function() {
+			
+			$.ajax({
+				type : "post",
+				url : "reply_insert_ok.do",
+				data : {	
+						  writer_id : "${m_dto.getMember_id() }",
+						  writer_nickname : "${m_dto.getMember_nickname() }",
+					      cont : $("#re_content").val(),
+					      bno : ${dto.getBoard_index() }
+						},
+				datatype : "text",
+				success : function(data) {
+					if(data > 0) {
+						alert("댓글 작성 완료!!!");
+						
+						getList();
+						
+						$("#re_content").val("");  
+						
+					}else {
+						alert("댓글 작성이 실패 하였습니다.~~~");
+					}
+				},
+				
+				error : function() {
+					alert("데이터 통신 오류입니다.~~~");
+				}
+			});
+		});
+		
+		
 		await getList();
 		await thumbsCount();
 		
-	}); // onload end //////////////////////////////////////////////////
-	
-	function thumbsClick() {
-		$.ajax({
-			url : "board_thumbs.do",
-			datatype: "text",
-			data : {
-				no : ${dto.getBoard_index() },
-				id : "${member_id}",
-				board_id : "${dto.getBoard_writer_id() }"
-			},
-			success : function(data) {
-				$("#thumbs").html(data);
-				thumbsCount();
-			},
-			error : function() {
-				alert('데이터 통신 오류입니다.');
-			}
-		});
-	}
+	}); // onload end
 	
 	
-	
-	function modi(index) {
-		$.ajax({
-			type : "post",
-			url : "reply_modify.do",
-			data : {
-				reply_index : index,
-				member_id : "${member_id }",
-				comment_cont : $(".modify").val()
-			},
-			datatype : "text",
-			success : function(data) {
-				if(data > 0) {
-					alert("댓글 수정 완료");
-					getlist();
-				}else {
-					alert("댓글수정 실패");
-				}
-			},
-			error : function() {
-				alert("데이터 통신 오류입니다!!!.~~~");
-			}
-		});
-	}
-	
-	
-	// 댓글 작성 버튼을 눌렀을 때 DB에 댓글이 저장.
-	$("#replyBtn").on("click", function() {
-		
-		$.ajax({
-			type : "post",
-			url : "reply_insert_ok.do",
-			data : {	
-					  writer_id : "${m_dto.getMember_id() }",
-					  writer_nickname : "${m_dto.getMember_nickname() }",
-				      cont : $("#re_content").val(),
-				      bno : ${dto.getBoard_index() }
-					},
-			datatype : "text",
-			success : function(data) {
-				if(data > 0) {
-					alert("댓글 작성 완료!!!");
-					
-					getList();
-					
-					$("#re_content").val("");  
-					
-				}else {
-					alert("댓글 작성이 실패 하였습니다.~~~");
-				}
-			},
-			
-			error : function() {
-				alert("데이터 통신 오류입니다.~~~");
-			}
-		});
-	});
 	
 	
 	
 </script>  
-
-
-
-
 
 </body>
 </html>

@@ -193,11 +193,8 @@ public class BoardDAO {
 			pstmt.setInt(2, count);
 			pstmt.setString(3, dto.getBoard_title());
 			pstmt.setString(4, dto.getBoard_cont());
-			System.out.println("내용 >>>"+dto.getBoard_cont());
 			pstmt.setString(5, dto.getBoard_writer_id());
-			System.out.println("아이디 >>>"+dto.getBoard_writer_id());
 			pstmt.setString(6, dto.getBoard_writer_nickname());
-			System.out.println("닉네임 >>" +dto.getBoard_writer_nickname());
 			pstmt.setString(7, dto.getUpload_file());
 			pstmt.setString(8, dto.getBoard_heading());
 			
@@ -564,9 +561,14 @@ public class BoardDAO {
 			}
 			
 			if(writer_id.equals(member_id)) {
-				sql = "update free_comment set comment_cont = ?, comment_update = now()";
+				
+				sql = "update free_comment set comment_cont = ?, comment_update = now() where comment_index = ?";
+				
+				pstmt = con.prepareStatement(sql);
 				
 				pstmt.setString(1, comment_cont);
+				
+				pstmt.setInt(2, no);
 				
 				result = pstmt.executeUpdate();
 				
@@ -581,6 +583,58 @@ public class BoardDAO {
 		}
 		return result;
 	}// replyModify() end
+	
+	
+	
+	public int replyDelete(int no, String member_id) {
+		
+		String writer_id = null;
+		int result = 0;
+		
+		try {
+			openConn();
+			
+			sql = "select comment_writer_id from free_comment where comment_index = ?";
+			
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setInt(1, no);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				writer_id = rs.getString("comment_writer_id");
+			}
+			
+			if(writer_id.equals(member_id)) {
+				
+				sql = "delete from free_comment where comment_index = ?";
+				
+				pstmt = con.prepareStatement(sql);
+				
+				pstmt.setInt(1, no);
+				
+				result = pstmt.executeUpdate();
+				
+				sql = "update free_comment set comment_index = comment_index -1 where comment_index > ?";
+
+				pstmt = con.prepareStatement(sql);
+				
+				pstmt.setInt(1, no);
+				
+				pstmt.executeUpdate();
+				
+			}else {
+				result = -1;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			closeConn(rs, pstmt, con);
+		}
+		return result;
+	}// replyDelete() end
 	
 	
 	
