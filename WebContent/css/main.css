@@ -4,43 +4,51 @@
   src: url("./font/neodgm.woff") format("opentype"); /* 폰트파일 불러오기 */
 }
 body {
-  background-color: antiquewhite;
+  /* background-color: #f5dcaa; */
+
+  /* background-image: url("../img/869ps2.png"); */
+
+  height: 1080px;
+
+  background-color: #212529;
+  /* background-color: #0b7efb; */
 }
 
-
+.title {
+  font-size: 30px !important;
+  position: relative;
+  top: -15px;
+}
 .box_text {
-  font-family: 'pixel', sans-serif;
+  font-size: 100px;
+  font-family: "pixel", sans-serif;
   text-align: center;
 }
 /* 로그인 회원가입 */
 .login_wrap .Login {
-  color:  #911f29;;
+  color: aliceblue;
 }
 
 /* 메뉴바 설정 */
 .navcolor {
-  background-color: rgb(236, 218, 194);
+  box-sizing: content-box !important;
+  padding: 0px !important;
 }
-
 
 .main_box1 {
   position: absolute;
   width: 400px;
-  height: 600px;
-  border: 5px dashed #966f6f;
-  border-radius: 5px;
-  background-color: rgb(206, 169, 121);
+  height: 675px;
+
   margin-right: 625px;
 }
 
 .main_box2 {
   position: absolute;
   width: 400px;
-  height: 600px;
-  border: 5px dotted #966f6f;
+  height: 675px;
   border-radius: 5px;
   margin-left: 625px;
-  background-color: rgb(206, 169, 121);
 }
 
 .main_wrap {
@@ -57,7 +65,7 @@ body {
 }
 
 .item {
-  border: 2px solid white;
+  border: 2px dashed aliceblue;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -121,44 +129,38 @@ body {
   height: 225px;
 }
 
-
 #match-btn1 {
-  color: white;
+  color: aliceblue;
+  margin-top: 100px;
+  box-sizing: border-box;
   position: relative;
-  top: 30%;
-  left: 50%;
-  transform: translate(-50%);
   width: 150px;
   height: 50px;
-  background-color: rgba(0, 0, 0, 0);
-  border: 2px solid white;
-  border-radius: 3px;
+  text-align: center !important;
+  padding-bottom: 40px !important;
 }
-
-#match-btn2 {
-  color: white;
-  position: relative;
-  top: 30%;
-  left: 50%;
-  transform: translate(-50%);
-  width: 150px;
-  height: 50px;
-  background-color: rgba(0, 0, 0, 0);
-  border: 2px solid white;
-  border-radius: 3px;
-}
-
-
-.matching-btn:hover {
+#match-btn1:hover {
   background-color: rgb(172, 172, 172);
+}
+#match-btn2 {
+  color: aliceblue;
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%);
+  width: 150px;
+  height: 50px;
+  background-color: rgba(0, 0, 0, 0);
+  border: 2px solid aliceblue;
+  border-radius: 3px;
 }
 
 #foot {
   padding-top: 5px;
-  margin-top: 700px;
-  border-top: 1px solid #000000;
-  
-  color: salmon;
+  margin-top: 150px;
+  border-top: 1px solid aliceblue;
+
+  color: aliceblue;
   text-align: center;
   font-size: 15px;
 }
@@ -178,7 +180,7 @@ body {
   left: +48%;
   width: 200px;
   height: 200px;
-} 
+}
 
 .nar {
   display: inline-block;
@@ -187,7 +189,7 @@ body {
   transform: translate(-50%, +160%);
   width: 200px;
   height: 200px;
-} 
+}
 
 .youme {
   display: inline-block;
@@ -196,4 +198,4 @@ body {
   transform: translate(-45%, +155%);
   width: 200px;
   height: 200px;
-} 
+}
