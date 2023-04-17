@@ -20,10 +20,11 @@ public class BoardReplyModifyAction implements Action {
 		int no = Integer.parseInt(request.getParameter("reply_index").trim());
 		String member_id = request.getParameter("member_id").trim();
 		String comment_cont = request.getParameter("comment_cont").trim();
+		String board_type = request.getParameter("type").trim();
 		
 		BoardDAO dao = BoardDAO.getInstance();
 		
-		int res = dao.replyModify(no, member_id, comment_cont);
+		int res = dao.replyModify(no, member_id, comment_cont, board_type);
 		
 		PrintWriter out = response.getWriter();
 		

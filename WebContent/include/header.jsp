@@ -30,11 +30,11 @@
 
 	<nav>
 		<ul class="navcolor nes-container">
-			<li><a href="<%=request.getContextPath()%>/board_list.do"
+			<li><a href="<%=request.getContextPath()%>/board_list.do?type=free"
 				class="nes-text is-primary">FreeBoard</a></li>
-			<li><a href="" class="nes-text is-success">Legend</a></li>
-			<li><a href="" class="nes-text is-warning">Notice </a></li>
-			<li><a href="" class="nes-text is-error">ETC </a></li>
+			<li><a href="<%=request.getContextPath()%>/board_list.do?type=legend" class="nes-text is-success">Legend</a></li>
+			<li><a href="<%=request.getContextPath()%>/board_list.do?type=notice" class="nes-text is-warning">Notice </a></li>
+			<li><a href="<%=request.getContextPath()%>/board_list.do?type=etc" class="nes-text is-error">ETC </a></li>
 		</ul>
 	</nav>
 </body>
