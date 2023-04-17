@@ -1,44 +1,41 @@
 package com.matching.action;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.matching.model.MatchingDAO;
-import com.member.model.MemberDTO;
+import com.matching.model.MatchingDTO;
 import com.project.controller.Action;
 import com.project.controller.ActionForward;
 
-public class MatchingDeleteOkAction implements Action {
+public class MatchingAcceptOkAction implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, MessagingException, Exception {
-		// 세션으로 저장된 로그인 아이디로 DB 삭제
-
-		String member_id = request.getParameter("id").trim();
+		// TODO Auto-generated method stub
+		
+		String matching_user_id = request.getParameter("id").trim();
 		
 		MatchingDAO dao = MatchingDAO.getInstance();
 		
-		MemberDTO mdto = new MemberDTO();
+		MatchingDTO dto = new MatchingDTO();
 		
-		mdto.setMember_id(member_id);
+		dto.setMatching_user_id(matching_user_id);
 		
-		int check = dao.deleteMatching(mdto);
-		
-		// PrintWriter out = response.getWriter();
+		int res = dao.MachingAccept(matching_user_id);
 		
 		ActionForward forward = new ActionForward();
 		
 		forward.setRedirect(false);
 		
-		forward.setPath("matching/matching.jsp");
+		forward.setPath("matching/userprofile.jsp");
 		
 		return forward;
-
+		
 	}
 
 }
