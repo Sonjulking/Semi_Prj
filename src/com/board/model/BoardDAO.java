@@ -516,6 +516,7 @@ public class BoardDAO {
 			if(rs.next()) {
 				count = rs.getInt(1) + 1;
 			}
+			openConn();
 			
 			sql = "insert into "+type+"_comment values(?, ?, ?, ?, ?, now(), default, default)";	
 			
@@ -526,7 +527,8 @@ public class BoardDAO {
 			pstmt.setInt(2, dto.getComment_index());
 			
 			pstmt.setString(3, dto.getComment_cont());
-			
+			System.out.println("댓글 작성자 아이디" +dto.getComment_writer_id());
+			System.out.println("댓글 작성자 닉네임"+dto.getComment_writer_nickname());
 			pstmt.setString(4, dto.getComment_writer_id());
 			pstmt.setString(5, dto.getComment_writer_nickname());
 			

@@ -3,6 +3,7 @@ package com.board.action;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.Calendar;
 import java.util.Properties;
@@ -32,7 +33,7 @@ public class BoardWriteOkAction implements Action {
 		Properties prop = new Properties();
 		FileInputStream fis = new FileInputStream(request.getServletContext()
 				.getRealPath("\\WEB-INF\\classes\\com\\project\\controller\\mapping.properties"));
-		prop.load(fis);
+		prop.load(new InputStreamReader(fis));
 		fis.close();
 		String saveFolder = prop.getProperty(System.getenv("USERPROFILE").substring(3));
 	// String saveFolder =

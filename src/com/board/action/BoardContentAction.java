@@ -28,7 +28,7 @@ public class BoardContentAction implements Action {
 		// 글번호에 해당하는 게시글의 상세내역을 조회하는 메서드 호출
 		BoardDTO cont = dao.boardContent(board_no, board_type);
 		
-		request.setAttribute("Cont", cont);
+		request.setAttribute("content", cont);
 		request.setAttribute("Page", page);
 		
 		ActionForward forward = new ActionForward();

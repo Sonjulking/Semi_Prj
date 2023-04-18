@@ -56,7 +56,9 @@ public class BoardListAction implements Action {
 		
 		BoardDAO dao = BoardDAO.getInstance();
 		String board_type = request.getParameter("type");
+		System.out.println(board_type);
 		StringTokenizer st = new StringTokenizer(board_type, "'");
+		System.out.println(board_type);
 
 		totalRecord = dao.getBoardCount(board_type);
 		// 전체 게시물의 수를 한 페이지당 보여질 게시물의 수로 나누어 주어야 함

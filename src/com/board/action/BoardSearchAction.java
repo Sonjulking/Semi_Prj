@@ -67,7 +67,7 @@ public class BoardSearchAction implements Action {
 		ActionForward forward = new ActionForward();
 		
 		forward.setRedirect(false);
-		forward.setPath("board/free_board.jsp");
+		forward.setPath("board/"+board_type+"_board.jsp");
 		return forward;
 	}
 

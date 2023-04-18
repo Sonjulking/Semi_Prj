@@ -18,8 +18,10 @@ public class BoardReplyInsertAction implements Action {
 		
 		// 답변글 폼에서 넘어온 데이터들을 가지고 DB에 저장하는 비지니스 로직.
 		String reply_writer_id = request.getParameter("writer_id").trim();
+		System.out.println("댓글 action 작성자"+reply_writer_id);
 
 		String reply_writer_nickname = request.getParameter("writer_nickname").trim();
+		System.out.println("댓글  action 닉네임"+reply_writer_nickname);
 		
 		String reply_cont = request.getParameter("cont").trim();
 		String board_type = request.getParameter("type").trim();

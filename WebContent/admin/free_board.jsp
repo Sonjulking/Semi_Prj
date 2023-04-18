@@ -49,6 +49,7 @@
 			<c:set var="list" value="${List }"/>
 			<c:if test="${!empty list }" >
 				<c:forEach items="${list }" var="dto">
+				<c:if test="${dto.getBoard_type().equals('free') }">
 					<tr>
 						<td> ${dto.getBoard_index() } </td>
 						<td> 
@@ -59,6 +60,7 @@
 						<td> ${dto.getBoard_thumbs() } </td>
 						<td> ${dto.getBoard_date().substring(0, 10) } </td>
 					</tr>
+					</c:if>
 				</c:forEach>
 			</c:if>
 			<c:if test="${empty list }">
