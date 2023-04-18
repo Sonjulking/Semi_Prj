@@ -85,14 +85,14 @@ public class BoardDAO {
 	
 	
 	// board 테이블의 전체 게시물의 수를 확인하는 메서드
-		public int getBoardCount() {
+		public int getBoardCount(String type) {
 			
 			int count = 0;
 			
 			try {
 				openConn();
 				
-				sql = "select count(*) from free_board"; // max는 게시물 수가 아니라 수를 가져오는거기 때문에 나중에 문제가 생길 수 있음
+				sql = "select count(*) from "+type+"_board"; // max는 게시물 수가 아니라 수를 가져오는거기 때문에 나중에 문제가 생길 수 있음
 				
 				pstmt = con.prepareStatement(sql);
 				
@@ -114,7 +114,7 @@ public class BoardDAO {
 		
 		
 	
-	public List<BoardDTO> getBoardList(int page, int rowsize) {
+	public List<BoardDTO> getBoardList(int page, int rowsize, String type) {
 		
 		List<BoardDTO> list = new ArrayList<BoardDTO>();
 		
@@ -127,7 +127,7 @@ public class BoardDAO {
 		try {
 			openConn();
 			
-			sql = "select * from (select row_number() over(order by board_index desc) rnum, b.* from free_board b) b_rownum where rnum >= ? and rnum <= ?";
+			sql = "select * from (select row_number() over(order by board_index desc) rnum, b.* from "+type+"_board b) b_rownum where rnum >= ? and rnum <= ?";
 			
 			pstmt = con.prepareStatement(sql);
 			
@@ -168,14 +168,14 @@ public class BoardDAO {
 	} // getBoardList() end
 	
 	
-	public int insertBoard(BoardDTO dto) {
+	public int insertBoard(BoardDTO dto, String type) {
 		
 		int result = 0, count = 0;
 		
 		try {
 			openConn();
 			
-			sql = "select max(board_index) from free_board";
+			sql = "select max(board_index) from "+type+"_board";
 			
 			pstmt = con.prepareStatement(sql);
 			
@@ -185,7 +185,7 @@ public class BoardDAO {
 				count = rs.getInt(1) + 1;
 			}
 			
-			sql = "insert into free_board values (?, ?, ?, ?, ?, ?, ?, default, ?, default, default, now(), default)";
+			sql = "insert into "+type+"_board values (?, ?, ?, ?, ?, ?, ?, default, ?, default, default, now(), default)";
 			
 			pstmt = con.prepareStatement(sql);
 			
@@ -216,7 +216,7 @@ public class BoardDAO {
 	
 	
 	// board 테이블의 게시물 번호에 해당하는 게시글을 수정하는 메서드
-	public int updateBoard(BoardDTO dto) {
+	public int updateBoard(BoardDTO dto, String type) {
 		
 		int result = 0;
 		
@@ -224,7 +224,7 @@ public class BoardDAO {
 			openConn();
 			
 			if(dto.getUpload_file() != null) {
-				sql = "update free_board set board_type = ?, board_heading = ?, board_title = ?, board_cont = ?, board_update = now(), upload_file = ? where board_index = ?";
+				sql = "update "+type+"_board set board_type = ?, board_heading = ?, board_title = ?, board_cont = ?, board_update = now(), upload_file = ? where board_index = ?";
 				
 				pstmt = con.prepareStatement(sql);
 				
@@ -235,7 +235,7 @@ public class BoardDAO {
 				pstmt.setString(5, dto.getUpload_file());
 				pstmt.setInt(6, dto.getBoard_index());
 			}else {
-				sql = "update free_board set board_type = ?, board_heading = ?, board_title = ?, board_cont = ?, board_update = now() where board_index = ?";
+				sql = "update "+type+"_board set board_type = ?, board_heading = ?, board_title = ?, board_cont = ?, board_update = now() where board_index = ?";
 				
 				pstmt = con.prepareStatement(sql);
 				
@@ -260,12 +260,12 @@ public class BoardDAO {
 	
 	
 	
-	public void boardHit(int no) {
+	public void boardHit(int no, String type) {
 		
 		try {
 			openConn();
 			
-			sql = "update free_board set board_hit = board_hit + 1 where board_index = ?";
+			sql = "update "+type+"_board set board_hit = board_hit + 1 where board_index = ?";
 			
 			pstmt = con.prepareStatement(sql);
 			
@@ -284,14 +284,14 @@ public class BoardDAO {
 	
 	
 	
-	public BoardDTO boardContent(int no) {
+	public BoardDTO boardContent(int no, String type) {
 		
 		BoardDTO dto = null;
 		
 		try {
 			openConn();
 			
-			sql = "select * from free_board where board_index = ?";
+			sql = "select * from "+type+"_board where board_index = ?";
 			
 			pstmt = con.prepareStatement(sql);
 			
@@ -327,13 +327,13 @@ public class BoardDAO {
 	} // boardContent() end
 	
 	
-	public int deleteBoard(int no) {
+	public int deleteBoard(int no, String type) {
 		int result = 0;
 		
 		try {
 			openConn();
 			
-			sql = "delete from free_board where board_index = ?";
+			sql = "delete from "+type+"_board where board_index = ?";
 			
 			pstmt = con.prepareStatement(sql);
 			
@@ -350,12 +350,12 @@ public class BoardDAO {
 	} // deleteBoard() end
 	
 	
-	public void updateSequence(int no) {
+	public void updateSequence(int no, String type) {
 		
 		try {
 			openConn();
 			
-			sql = "update free_board set board_index = board_index -1 where board_index > ?";
+			sql = "update "+type+"_board set board_index = board_index -1 where board_index > ?";
 			
 			pstmt = con.prepareStatement(sql);
 			
@@ -373,7 +373,7 @@ public class BoardDAO {
 	
 	
 	
-	public List<BoardDTO> searchBoardList(String field, String keyword, int start, int end) {
+	public List<BoardDTO> searchBoardList(String field, String keyword, int start, int end, String type) {
 		
 		List<BoardDTO> list = new ArrayList<BoardDTO>();
 		
@@ -381,9 +381,9 @@ public class BoardDAO {
 			openConn();
 			
 			if(field.equals("board_title_cont")) {
-				sql = "select * from (select row_number() over(order by board_index desc) rnum, b.* from free_board b where board_title like '%"+keyword+"%' or board_cont like '%"+keyword+"%') b_rownum where rnum >= ? and rnum <= ?";
+				sql = "select * from (select row_number() over(order by board_index desc) rnum, b.* from "+type+"_board b where board_title like '%"+keyword+"%' or board_cont like '%"+keyword+"%') b_rownum where rnum >= ? and rnum <= ?";
 			}else {
-				sql = "select * from (select row_number() over(order by board_index desc) rnum, b.* from free_board b where "+field+" like '%"+keyword+"%') b_rownum where rnum >= ? and rnum <= ?";
+				sql = "select * from (select row_number() over(order by board_index desc) rnum, b.* from "+type+"_board b where "+field+" like '%"+keyword+"%') b_rownum where rnum >= ? and rnum <= ?";
 			}
 			
 			pstmt = con.prepareStatement(sql);
@@ -424,7 +424,7 @@ public class BoardDAO {
 	
 	
 	
-	public int getTotalRecord(String field, String keyword) {
+	public int getTotalRecord(String field, String keyword, String type) {
 		
 		int result = 0;
 		
@@ -432,9 +432,9 @@ public class BoardDAO {
 		
 		try {
 			if(field.equals("board_title_cont")) {
-				sql = "select count(*) from free_board where board_title like '%"+keyword+"%'or board_cont like '%"+keyword+"%'";
+				sql = "select count(*) from "+type+"_board where board_title like '%"+keyword+"%'or board_cont like '%"+keyword+"%'";
 			}else {
-				sql = "select count(*) from free_board where "+field+" like '%"+keyword+"%'";
+				sql = "select count(*) from "+type+"_board where "+field+" like '%"+keyword+"%'";
 			}
 			pstmt = con.prepareStatement(sql);
 			
@@ -455,14 +455,14 @@ public class BoardDAO {
 	
 	
 	
-	public String getReplyList(int no) {
+	public String getReplyList(int no, String type) {
 		
 		String res = "";
 		
 		try {
 			openConn();
 			
-			sql = "select * from free_comment where board_comment_index = ? order by comment_date desc";
+			sql = "select * from "+type+"_comment where board_comment_index = ? order by comment_date desc";
 			
 			pstmt = con.prepareStatement(sql);
 			
@@ -500,14 +500,14 @@ public class BoardDAO {
 	
 	
 	// 답변 내용을 tbl_reply 테이블에 저장하는 메서드.
-	public int replyInsert(CommentDTO dto) {
+	public int replyInsert(CommentDTO dto, String type) {
 		
 		int result = 0, count = 0;
 		
 		try {
 			openConn();
 			
-			sql = "select max(comment_index) from free_comment";
+			sql = "select max(comment_index) from "+type+"_comment";
 			
 			pstmt = con.prepareStatement(sql);
 			
@@ -516,8 +516,9 @@ public class BoardDAO {
 			if(rs.next()) {
 				count = rs.getInt(1) + 1;
 			}
+			openConn();
 			
-			sql = "insert into free_comment values(?, ?, ?, ?, ?, now(), default, default)";	
+			sql = "insert into "+type+"_comment values(?, ?, ?, ?, ?, now(), default, default)";	
 			
 			pstmt = con.prepareStatement(sql);
 			
@@ -526,7 +527,8 @@ public class BoardDAO {
 			pstmt.setInt(2, dto.getComment_index());
 			
 			pstmt.setString(3, dto.getComment_cont());
-			
+			System.out.println("댓글 작성자 아이디" +dto.getComment_writer_id());
+			System.out.println("댓글 작성자 닉네임"+dto.getComment_writer_nickname());
 			pstmt.setString(4, dto.getComment_writer_id());
 			pstmt.setString(5, dto.getComment_writer_nickname());
 			
@@ -543,7 +545,7 @@ public class BoardDAO {
 	}  // replyInsert() 메서드 end
 	
 	
-	public int replyModify(int no, String member_id, String comment_cont) {
+	public int replyModify(int no, String member_id, String comment_cont, String type) {
 		
 		String writer_id = null;
 		int result = 0;
@@ -551,7 +553,7 @@ public class BoardDAO {
 		try {
 			openConn();
 			
-			sql = "select comment_writer_id from free_comment where comment_index = ?";
+			sql = "select comment_writer_id from "+type+"_comment where comment_index = ?";
 			
 			pstmt = con.prepareStatement(sql);
 			
@@ -564,7 +566,7 @@ public class BoardDAO {
 			}
 			
 			if(writer_id.equals(member_id)) {
-				sql = "update free_comment set comment_cont = ?, comment_update = now()";
+				sql = "update "+type+"_comment set comment_cont = ?, comment_update = now()";
 				
 				pstmt.setString(1, comment_cont);
 				
@@ -688,7 +690,7 @@ public class BoardDAO {
     	try {
     		openConn();
     		
-    		sql = "update free_board set board_thumbs = (select count(*) from board_thumbs where board_index = ? and board_type = ?) where board_index = ? and board_type = ?";
+    		sql = "update "+type+"_board set board_thumbs = (select count(*) from board_thumbs where board_index = ? and board_type = ?) where board_index = ? and board_type = ?";
 			
 			pstmt = con.prepareStatement(sql);
 			

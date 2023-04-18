@@ -16,29 +16,43 @@
 </head>
 <body>
 
-	 <header>
-		<div class="free_board_wrap">
-			<span id="main_logo_text"><a href="free_board.jsp">자유게시판</a></span>
+		<header>
+		<div class="main_header_wrap">
+			<span id="main_logo_text"><a id="logo_link" href="main.jsp">겜만추</a><i class="snes-jp-logo"></i></span>
+		
 			<!-- <img id="logo" src="../WebContent/img/thumbup.png" alt=""> -->
 			<div class="login_wrap">
+
 				<c:if test="${loginCheck == 0 }">
-					<span class="Login"><a href="member/login.jsp">Login</a></span> 
-					<span class="Join"> / <a href="member/join.jsp">회원가입</a></span>
+					<span class="Login"><a href="member/login.jsp" class="nes-text is-primary">Login</a></span>
+					<span class="Join"> / <a href="member/join.jsp" class="nes-text is-success">Join</a></span>
+ 					<i class="fa fa-envelope" aria-hidden="true"></i>
 				</c:if>
-				
+ 
 				<c:if test="${loginCheck > 0 }">
-					<span class="Login"><a href="member/login.jsp">Logout</a></span> 
-					<span class="Join"> / <a href="member/join.jsp">MyPage</a></span>
-					
-					<c:set var="m_dto" value="${sessionScope.Cont }"/>
+				   <c:set var="m_dto" value="${Cont }"/>
+					<span class="Login"><a href="member/logout.jsp" class="nes-text is-warning">Logout</a></span>
+					<span class="Join"> / <a
+						href="<%=request.getContextPath()%>/myPage.do?loginId=${member_id}" class="nes-text is-error">MyPage</a></span>
+				    <a href="<%=request.getContextPath()%>/chat.do"><i class="fa fa-envelope" aria-hidden="true"></i></a>
 				</c:if>
 			</div>
 		</div>
 	</header>
-	
+
+	<nav>
+		<ul class="navcolor nes-container">
+			<li><a href="<%=request.getContextPath()%>/board_list.do?type=free"
+				class="nes-text is-primary">FreeBoard</a></li>
+			<li><a href="<%=request.getContextPath()%>/board_list.do?type=legend" class="nes-text is-success">Legend</a></li>
+			<li><a href="<%=request.getContextPath()%>/board_list.do?type=notice" class="nes-text is-warning">Notice </a></li>
+			<li><a href="<%=request.getContextPath()%>/board_list.do?type=etc" class="nes-text is-error">ETC </a></li>
+		</ul>
+	</nav>
 	
 	<div align="center">
-		<c:set var="dto" value="${Cont }"/>
+		<c:set var="dto" value="${content }"/>
+		
 		<hr width="50%" color="gray">
 			<h3>${dto.getBoard_title() }</h3>
 		<hr width="50%" color="gray">
@@ -75,7 +89,7 @@
 					<tr>
 						<th>추천수</th>
 
-						<td> <img src="img/thumbup.png" width="30" height="30" id="thumbs" onclick="thumbsClick()"><span class="thumbs_count"></span></td>
+						<td> <img src="img/thumbup.png" width="30" height="30" id="thumbs" onclick="thumbsClick()"><span class="return thumbsCount()"></span></td>
 
 					</tr>
 					
@@ -106,11 +120,11 @@
 		</c:if>
 		<br>
 		
-		<input type="button" value="글 수정" onclick="location.href='board_modify.do?no=${dto.getBoard_index() }&page=${Page }'">&nbsp;&nbsp;
+		<input type="button" value="글 수정" onclick="location.href='board_modify.do?no=${dto.getBoard_index() }&page=${Page }&type=${dto.getBoard_type() }'">&nbsp;&nbsp;
 		<input type="button" value="글 삭제" onclick="if(confirm('정말로 삭제하시겠습니까?')) {
-														location.href='board_delete.do?no=${dto.getBoard_index() }&page=${Page }'
+														location.href='board_delete.do?no=${dto.getBoard_index() }&page=${Page }&type=${dto.getBoard_type() }'
 													}else { retrun; }">&nbsp;&nbsp;
-		<input type="button" value="전체목록" onclick="location.href='board_list.do'">
+		<input type="button" value="전체목록" onclick="location.href='board_list.do?type=${dto.getBoard_type() }'">
 		<br>
 		<br>
 		
@@ -157,7 +171,9 @@
 			
 			await $.ajax({
 				url : "reply_list.do",
-				data : {no : ${dto.getBoard_index() } },
+				data : {no : ${dto.getBoard_index() },
+					type : "${dto.getBoard_type()}"
+					},
 				datatype : "xml", 
 				success : function(data) {
 					
@@ -193,7 +209,8 @@
 			await $.ajax({
 				url: "board_thumbs_count.do",
 				data: {
-					no : ${dto.getBoard_index()}
+					no : ${dto.getBoard_index()},
+					type : "${dto.getBoard_type()}"
 				},
 				success: function(count) {
 					$(".thumbs_count").html(count);
@@ -216,7 +233,8 @@
 			data : {
 				no : ${dto.getBoard_index() },
 				id : "${member_id}",
-				board_id : "${dto.getBoard_writer_id() }"
+				board_id : "${dto.getBoard_writer_id() }",
+				type : "${dto.getBoard_type()}"
 			},
 			success : function(data) {
 				$("#thumbs").html(data);
@@ -237,7 +255,8 @@
 			data : {
 				reply_index : index,
 				member_id : "${member_id }",
-				comment_cont : $(".modify").val()
+				comment_cont : $(".modify").val(),
+				type : "${dto.getBoard_type()}"
 			},
 			datatype : "text",
 			success : function(data) {
@@ -265,7 +284,8 @@
 					  writer_id : "${m_dto.getMember_id() }",
 					  writer_nickname : "${m_dto.getMember_nickname() }",
 				      cont : $("#re_content").val(),
-				      bno : ${dto.getBoard_index() }
+				      bno : ${dto.getBoard_index() },
+				      type : "${dto.getBoard_type()}"
 					},
 			datatype : "text",
 			success : function(data) {
@@ -292,6 +312,7 @@
 </script>  
 
 
+	 <jsp:include page="../include/footer.jsp"></jsp:include>
 
 
 

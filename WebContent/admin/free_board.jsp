@@ -26,21 +26,8 @@
 </head>
 <body>
 
-    <header>
-		<div class="free_board_wrap">
-			<span id="main_logo_text"><a href="free_board.jsp">자유게시판</a></span>
-			<!-- <img id="logo" src="../WebContent/img/thumbup.png" alt=""> -->
-			<div class="login_wrap">
-				<c:if test="${loginCheck == 0 }">
-					<span class="Login"><a href="member/login.jsp">Login</a></span> 
-				</c:if>
-				
-				<c:if test="${loginCheck > 0 }">
-					<span class="Login"><a href="member/login.jsp">Logout</a></span> 
-				</c:if>
-			</div>
-		</div>
-	</header>
+  	    <%@ include file="../include/header.jsp"%>
+
 
 	<div align="center">
 		<hr width="50%" color="red">
@@ -62,6 +49,7 @@
 			<c:set var="list" value="${List }"/>
 			<c:if test="${!empty list }" >
 				<c:forEach items="${list }" var="dto">
+				<c:if test="${dto.getBoard_type().equals('free') }">
 					<tr>
 						<td> ${dto.getBoard_index() } </td>
 						<td> 
@@ -72,6 +60,7 @@
 						<td> ${dto.getBoard_thumbs() } </td>
 						<td> ${dto.getBoard_date().substring(0, 10) } </td>
 					</tr>
+					</c:if>
 				</c:forEach>
 			</c:if>
 			<c:if test="${empty list }">
@@ -138,5 +127,7 @@
 			</ul>
 		</nav>
 	</div>
+		    <%@ include file="../include/footer.jsp"%>
+	
 </body>
 </html>

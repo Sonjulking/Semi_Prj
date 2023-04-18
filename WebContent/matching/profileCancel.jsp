@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>유저 프로필</title>
 
 <style type="text/css">
 #YesOrNO {
@@ -54,30 +54,31 @@
 .Nobutton:hover {
 	background-color: #cccccc;
 }
+
+#home-btn {
+	visibility: hidden;
+}
 </style>
- </head>
+</head>
 <body>
+	<h1>유저 프로필!</h1>
+
 
 	<form method="post" name="f" id="YesOrNO">
 
 		<c:set var="mdto" value="${Match }" />
 		<input type="hidden" name="id" value="${mdto.getMatching_user_id() }">
-		<input type="hidden" name="matched" value="${mdto.getMatched() }">
-		<input type="hidden" name="gamename" value="${mdto.getGame_name() }">
-		<input type="hidden" name="tier" value="${mdto.getTier() }">
-		
-		
-
-		<input type="submit" id="Yesbutton" value="수락"
-			formaction="<%=request.getContextPath()%>/matchingAccept.do">
-
-		<input type="submit" class="Nobutton" value="취소"
-			formaction="<%=request.getContextPath()%>/matchingdelete_ok.do">
-
+		<input type="submit" id="home-btn" class="Nobutton" value="홈 화면으로"
+			formaction="<%=request.getContextPath()%>/justdelete_ok.do">
 	</form>
 
 
 	<script src="https://code.jquery.com/jquery-3.6.3.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('#home-btn').trigger('click');
+		});
+	</script>
 	<!-- <script type="text/javascript" src ="/js/yesOrNo.js"></script> -->
 
 </body>
