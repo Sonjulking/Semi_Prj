@@ -1,8 +1,9 @@
 /* 바디 전체 */
 @font-face {
-  font-family: "pixel"; /* 사용하고 싶은 font-family명을 지정 */
-  src: url("./font/neodgm.woff") format("opentype"); /* 폰트파일 불러오기 */
+	font-family: "pixel"; /* 사용하고 싶은 font-family명을 지정 */
+	src: url("./font/neodgm.woff") format("opentype"); /* 폰트파일 불러오기 */
 }
+
 body {
   /* background-color: #f5dcaa; */
 
@@ -52,16 +53,17 @@ body {
 }
 
 .main_wrap {
-  padding-top: 50px;
-  padding-left: 350px;
-  padding-right: 350px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
+	padding-top: 50px;
+	padding-left: 350px;
+	padding-right: 350px;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-evenly;
 }
+
 .main_wrap a {
-  color: aliceblue;
-  text-decoration: none;
+	color: aliceblue;
+	text-decoration: none;
 }
 
 .item {
@@ -77,56 +79,56 @@ body {
 }
 
 .item:hover {
-  background-color: rgb(172, 172, 172);
+	background-color: rgb(172, 172, 172);
 }
 
 .ranking {
-  font-weight: 999;
-  font-size: 15pt;
-  font-style: italic;
-  text-decoration: underline;
-  color: aliceblue;
-
-  margin-right: 5px;
+	font-weight: 999;
+	font-size: 15pt;
+	font-style: italic;
+	text-decoration: underline;
+	color: aliceblue;
+	margin-right: 5px;
 }
+
 .sumimg {
-  width: 75px;
-  height: 75px;
+	width: 75px;
+	height: 75px;
 }
 
 .date_writer_con {
-  margin-top: 5px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+	margin-top: 5px;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
 }
+
 .date {
-  font-size: 10pt;
+	font-size: 10pt;
 }
+
 .writer {
-  margin-top: 2px;
-  margin-left: 10px;
-  margin-right: 10px;
-  font-size: 7pt;
-  color: antiquewhite;
-  font-weight: bold;
+	margin-top: 2px;
+	margin-left: 10px;
+	margin-right: 10px;
+	font-size: 7pt;
+	color: antiquewhite;
+	font-weight: bold;
 }
 
 .comment {
-  font-size: 5pt;
+	font-size: 5pt;
 }
 
 .matching-img {
-  position: relative;
-  top: 75px;
-  left: 250px;
-
-  transform: translate(-50%);
-
-  display: block;
-  margin: auto;
-  width: 450px;
-  height: 225px;
+	position: relative;
+	top: 75px;
+	left: 250px;
+	transform: translate(-50%);
+	display: block;
+	margin: auto;
+	width: 450px;
+	height: 225px;
 }
 
 #match-btn1 {
@@ -167,11 +169,11 @@ body {
 
 /* 캐릭터 이미지 */
 .ruru {
-  display: inline-block;
-  position: relative;
-  left: -25%;
-  width: 200px;
-  height: 200px;
+	display: inline-block;
+	position: relative;
+	left: -25%;
+	width: 200px;
+	height: 200px;
 }
 
 .timo {

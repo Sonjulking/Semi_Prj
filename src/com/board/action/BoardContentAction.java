@@ -19,16 +19,16 @@ public class BoardContentAction implements Action {
 		
 		int board_no = Integer.parseInt(request.getParameter("no").trim());
 		int page = Integer.parseInt(request.getParameter("page").trim());
-		
+		String  board_type = request.getParameter("type");
 		BoardDAO dao = BoardDAO.getInstance();
 		
 		// 조회수를 증가시켜주는 메서드 호출
-		dao.boardHit(board_no);
+		dao.boardHit(board_no, board_type);
 		
 		// 글번호에 해당하는 게시글의 상세내역을 조회하는 메서드 호출
-		BoardDTO cont = dao.boardContent(board_no);
+		BoardDTO cont = dao.boardContent(board_no, board_type);
 		
-		request.setAttribute("Cont", cont);
+		request.setAttribute("content", cont);
 		request.setAttribute("Page", page);
 		
 		ActionForward forward = new ActionForward();

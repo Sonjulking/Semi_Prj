@@ -48,7 +48,7 @@ public class FrontController extends HttpServlet {
 			
 			String path2 = FrontController.class.getResource("").getPath();
 			FileInputStream fis = new FileInputStream(path2 + "mapping.properties");
-			
+			System.out.println(command);
 			prop.load(fis);
 			String value = prop.getProperty(command);
 			

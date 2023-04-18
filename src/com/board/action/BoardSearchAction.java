@@ -2,6 +2,7 @@ package com.board.action;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,7 +20,9 @@ public class BoardSearchAction implements Action {
 
 		String field = request.getParameter("field").trim();
 		String keyword = request.getParameter("keyword").trim();
-		
+		String board_type = request.getParameter("type").trim();
+		StringTokenizer st = new StringTokenizer(board_type, "'");
+
 		BoardDAO dao = BoardDAO.getInstance();
 		
 		int rowsize = 10;
@@ -39,9 +42,9 @@ public class BoardSearchAction implements Action {
 		int endBlock = (((page - 1) / block) * block) + block;
 
 		
-		List<BoardDTO> searchList = dao.searchBoardList(field, keyword, startNo, endNo);
+		List<BoardDTO> searchList = dao.searchBoardList(field, keyword, startNo, endNo, board_type);
 		
-		totalRecord = dao.getTotalRecord(field, keyword);
+		totalRecord = dao.getTotalRecord(field, keyword, board_type);
 		
 		allPage = (int)Math.ceil((totalRecord / (double)rowsize)); 
 		
@@ -64,7 +67,7 @@ public class BoardSearchAction implements Action {
 		ActionForward forward = new ActionForward();
 		
 		forward.setRedirect(false);
-		forward.setPath("board/free_board.jsp");
+		forward.setPath("board/"+board_type+"_board.jsp");
 		return forward;
 	}
 

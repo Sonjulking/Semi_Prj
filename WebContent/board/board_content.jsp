@@ -16,29 +16,43 @@
 </head>
 <body>
 
-	 <header>
-		<div class="free_board_wrap">
-			<span id="main_logo_text"><a href="free_board.jsp">자유게시판</a></span>
+		<header>
+		<div class="main_header_wrap">
+			<span id="main_logo_text"><a id="logo_link" href="main.jsp">겜만추</a><i class="snes-jp-logo"></i></span>
+		
 			<!-- <img id="logo" src="../WebContent/img/thumbup.png" alt=""> -->
 			<div class="login_wrap">
+
 				<c:if test="${loginCheck == 0 }">
-					<span class="Login"><a href="member/login.jsp">Login</a></span> 
-					<span class="Join"> / <a href="member/join.jsp">회원가입</a></span>
+					<span class="Login"><a href="member/login.jsp" class="nes-text is-primary">Login</a></span>
+					<span class="Join"> / <a href="member/join.jsp" class="nes-text is-success">Join</a></span>
+ 					<i class="fa fa-envelope" aria-hidden="true"></i>
 				</c:if>
-				
+ 
 				<c:if test="${loginCheck > 0 }">
-					<span class="Login"><a href="member/login.jsp">Logout</a></span> 
-					<span class="Join"> / <a href="member/join.jsp">MyPage</a></span>
-					
-					<c:set var="m_dto" value="${sessionScope.Cont }"/>
+				   <c:set var="m_dto" value="${Cont }"/>
+					<span class="Login"><a href="member/logout.jsp" class="nes-text is-warning">Logout</a></span>
+					<span class="Join"> / <a
+						href="<%=request.getContextPath()%>/myPage.do?loginId=${member_id}" class="nes-text is-error">MyPage</a></span>
+				    <a href="<%=request.getContextPath()%>/chat.do"><i class="fa fa-envelope" aria-hidden="true"></i></a>
 				</c:if>
 			</div>
 		</div>
 	</header>
-	
+
+	<nav>
+		<ul class="navcolor nes-container">
+			<li><a href="<%=request.getContextPath()%>/board_list.do?type=free"
+				class="nes-text is-primary">FreeBoard</a></li>
+			<li><a href="<%=request.getContextPath()%>/board_list.do?type=legend" class="nes-text is-success">Legend</a></li>
+			<li><a href="<%=request.getContextPath()%>/board_list.do?type=notice" class="nes-text is-warning">Notice </a></li>
+			<li><a href="<%=request.getContextPath()%>/board_list.do?type=etc" class="nes-text is-error">ETC </a></li>
+		</ul>
+	</nav>
 	
 	<div align="center">
-		<c:set var="dto" value="${Cont }"/>
+		<c:set var="dto" value="${content }"/>
+		
 		<hr width="50%" color="gray">
 			<h3>${dto.getBoard_title() }</h3>
 		<hr width="50%" color="gray">
@@ -74,7 +88,9 @@
 
 					<tr>
 						<th>추천수</th>
-						<td> <img src="img/thumbup.png" width="30" height="30" id="thumbs"><span class="thumbs_count"></span></td>
+
+						<td> <img src="img/thumbup.png" width="30" height="30" id="thumbs" onclick="thumbsClick()"><span class="return thumbsCount()"></span></td>
+
 					</tr>
 					
 					<tr>
@@ -97,56 +113,18 @@
 			</div>
 		</c:if>
 		
-<script type="text/javascript">
-	$(function () {
-		$("#thumbs").click(function() {
-			$.ajax({
-				url : "board_thumbs.do",
-				datatype: "text",
-				data : {
-					no : ${dto.getBoard_index() },
-					id : "${member_id}",
-					board_id : "${dto.getBoard_writer_id() }"
-				},
-				success : function(data) {
-					$("#thumbs").html(data);
-					thumbsCount();
-				},
-				error : function() {
-					alert('데이터 통신 오류입니다.');
-				}
-			});
-		}); // thumbsUp() end
-		function thumbsCount() {
-			$.ajax({
-				url: "board_thumbs_count.do",
-				data: {
-					no : ${dto.getBoard_index()}
-				},
-				success: function(count) {
-					$(".thumbs_count").html(count);
-				},
-				error: function() {
-					alert("데이터 통신 오류입니다!");
-				}
-			});
-		}
-		thumbsCount();
-	});
-</script>
 
-		
 		<%-- 데이터가 없는 경우 --%>
 		<c:if test="${empty dto }">
 			<span>삭제된 게시물입니다</span>
 		</c:if>
 		<br>
 		
-		<input type="button" value="글 수정" onclick="location.href='board_modify.do?no=${dto.getBoard_index() }&page=${Page }'">&nbsp;&nbsp;
+		<input type="button" value="글 수정" onclick="location.href='board_modify.do?no=${dto.getBoard_index() }&page=${Page }&type=${dto.getBoard_type() }'">&nbsp;&nbsp;
 		<input type="button" value="글 삭제" onclick="if(confirm('정말로 삭제하시겠습니까?')) {
-														location.href='board_delete.do?no=${dto.getBoard_index() }&page=${Page }'
+														location.href='board_delete.do?no=${dto.getBoard_index() }&page=${Page }&type=${dto.getBoard_type() }'
 													}else { retrun; }">&nbsp;&nbsp;
-		<input type="button" value="전체목록" onclick="location.href='board_list.do'">
+		<input type="button" value="전체목록" onclick="location.href='board_list.do?type=${dto.getBoard_type() }'">
 		<br>
 		<br>
 		
@@ -178,7 +156,7 @@
 
 <script type="text/javascript">
 
-	$(function() {
+	$(async function() {
 		
 		// ajax에서 동일하게 사용되는 속성 설정
 		$.ajaxSetup({
@@ -189,11 +167,13 @@
 		
 		
 		// BOARD 테이블의 전체 데이터를 가져오는 함수.
-		function getList() {
+		async function getList() {
 			
-			$.ajax({
+			await $.ajax({
 				url : "reply_list.do",
-				data : {no : ${dto.getBoard_index() } },
+				data : {no : ${dto.getBoard_index() },
+					type : "${dto.getBoard_type()}"
+					},
 				datatype : "xml", 
 				success : function(data) {
 					
@@ -203,11 +183,13 @@
 					
 					$(data).find("reply").each(function() {
 						
-						table += "<table border='1' cellspacing='0' width='500'>";
+						table += "<table border='1' cellspacing='0'>";
 						table += "<tr>";
-						table += "<td width='100'>"+$(this).find("comment_writer_nickname").text()+"</td>";
-						table += "<td width='300'>"+$(this).find("comment_cont").text()+"</td>";
-						table += "<td width='100'>"+$(this).find("comment_date").text()+"</td>";
+						table += "<td>"+$(this).find("comment_date").text()+"</td>"
+						table += "<td>"+$(this).find("comment_writer_nickname").text()+"</td>";
+						table += "<td> <input class='cont' value='"+$(this).find("comment_cont").text()+"'> </td>";
+						table += "<td> <input type='button' class='modify' value='수정완료' onclick='modi("+$(this).find("comment_index").text()+")'> </td>";
+						table += "<td> <input type='button' class='delete' value='삭제' onclick='del("+$(this).find("comment_index").text()+","+$(this).find("comment_writer_id").text()+")'> </td>";
 						table += "</tr>";
 						table += "</table>";
 						
@@ -223,43 +205,115 @@
 			
 		}  // getList() 함수 end
 		
-		
-		// 댓글 작성 버튼을 눌렀을 때 DB에 댓글이 저장.
-		$("#replyBtn").on("click", function() {
-			
-			$.ajax({
-				url : "reply_insert_ok.do",
-				data : {	
-						  writer_id : "${m_dto.getMember_id() }",
-						  writer_nickname : "${m_dto.getMember_nickname() }",
-					      cont : $("#re_content").val(),
-					      bno : ${dto.getBoard_index() }
-						},
-				datatype : "text",
-				success : function(data) {
-					if(data > 0) {
-						alert("댓글 작성 완료!!!");
-						
-						getList();
-						
-						$("#re_content").val("");  
-						
-					}else {
-						alert("댓글 작성이 실패 하였습니다.~~~");
-					}
+		async function thumbsCount() {
+			await $.ajax({
+				url: "board_thumbs_count.do",
+				data: {
+					no : ${dto.getBoard_index()},
+					type : "${dto.getBoard_type()}"
 				},
-				
-				error : function() {
-					alert("데이터 통신 오류입니다.~~~");
+				success: function(count) {
+					$(".thumbs_count").html(count);
+				},
+				error: function() {
+					alert("데이터 통신 오류입니다!");
 				}
 			});
+		}
+		
+		await getList();
+		await thumbsCount();
+		
+	}); // onload end //////////////////////////////////////////////////
+	
+	function thumbsClick() {
+		$.ajax({
+			url : "board_thumbs.do",
+			datatype: "text",
+			data : {
+				no : ${dto.getBoard_index() },
+				id : "${member_id}",
+				board_id : "${dto.getBoard_writer_id() }",
+				type : "${dto.getBoard_type()}"
+			},
+			success : function(data) {
+				$("#thumbs").html(data);
+				thumbsCount();
+			},
+			error : function() {
+				alert('데이터 통신 오류입니다.');
+			}
 		});
+	}
+	
+	
+	
+	function modi(index) {
+		$.ajax({
+			type : "post",
+			url : "reply_modify.do",
+			data : {
+				reply_index : index,
+				member_id : "${member_id }",
+				comment_cont : $(".modify").val(),
+				type : "${dto.getBoard_type()}"
+			},
+			datatype : "text",
+			success : function(data) {
+				if(data > 0) {
+					alert("댓글 수정 완료");
+					getlist();
+				}else {
+					alert("댓글수정 실패");
+				}
+			},
+			error : function() {
+				alert("데이터 통신 오류입니다!!!.~~~");
+			}
+		});
+	}
+	
+	
+	// 댓글 작성 버튼을 눌렀을 때 DB에 댓글이 저장.
+	$("#replyBtn").on("click", function() {
 		
-		getList();
-		
+		$.ajax({
+			type : "post",
+			url : "reply_insert_ok.do",
+			data : {	
+					  writer_id : "${m_dto.getMember_id() }",
+					  writer_nickname : "${m_dto.getMember_nickname() }",
+				      cont : $("#re_content").val(),
+				      bno : ${dto.getBoard_index() },
+				      type : "${dto.getBoard_type()}"
+					},
+			datatype : "text",
+			success : function(data) {
+				if(data > 0) {
+					alert("댓글 작성 완료!!!");
+					
+					getList();
+					
+					$("#re_content").val("");  
+					
+				}else {
+					alert("댓글 작성이 실패 하였습니다.~~~");
+				}
+			},
+			
+			error : function() {
+				alert("데이터 통신 오류입니다.~~~");
+			}
+		});
 	});
 	
+	
+	
 </script>  
+
+
+	 <jsp:include page="../include/footer.jsp"></jsp:include>
+
 
 
 </body>

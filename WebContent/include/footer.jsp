@@ -9,7 +9,7 @@
 <body>
 	<footer id="foot">
 		<p>제작 : 석하림</p>
-		<address>E-Mail : GMC@gmail.com</address>
+		<address>E-Mail : gamemanchoo@gmail.com</address>
 		<p>Copyright &copy; All right reserved</p>
 	</footer>
 

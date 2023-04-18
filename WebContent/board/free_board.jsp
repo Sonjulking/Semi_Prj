@@ -26,23 +26,7 @@
 </head>
 <body>
 
-    <header>
-		<div class="free_board_wrap">
-			<span id="main_logo_text"><a href="free_board.jsp">자유게시판</a></span>
-			<!-- <img id="logo" src="../WebContent/img/thumbup.png" alt=""> -->
-			<div class="login_wrap">
-				<c:if test="${loginCheck == 0 }">
-					<span class="Login"><a href="member/login.jsp">Login</a></span> 
-					<span class="Join"> / <a href="member/join.jsp">회원가입</a></span>
-				</c:if>
-				
-				<c:if test="${loginCheck > 0 }">
-					<span class="Login"><a href="member/login.jsp">Logout</a></span> 
-					<span class="Join"> / <a href="member/mypage.jsp">MyPage</a></span>
-				</c:if>
-			</div>
-		</div>
-	</header>
+    	    <%@ include file="../include/header.jsp"%>
 
 	<div align="center">
 		<hr width="50%" color="red">
@@ -64,16 +48,19 @@
 			<c:set var="list" value="${List }"/>
 			<c:if test="${!empty list }" >
 				<c:forEach items="${list }" var="dto">
+				<c:if test="${dto.getBoard_type().equals('free') }">
+				
 					<tr>
 						<td> ${dto.getBoard_index() } </td>
 						<td> 
-							<a href="<%=request.getContextPath()%>/board_content.do?no=${dto.getBoard_index() }&page=${page }">${dto.getBoard_title() }</a> 
+							<a href="<%=request.getContextPath()%>/board_content.do?no=${dto.getBoard_index() }&page=${page }&type=${dto.getBoard_type()}">${dto.getBoard_title() }</a> 
 						</td>
 						<td> ${dto.getBoard_writer_nickname() } </td>
 						<td> ${dto.getBoard_hit() } </td>
 						<td> ${dto.getBoard_thumbs() } </td>
 						<td> ${dto.getBoard_date().substring(0, 10) } </td>
 					</tr>
+				</c:if>
 				</c:forEach>
 			</c:if>
 			<c:if test="${empty list }">
@@ -86,7 +73,7 @@
 		</table>
 		<br>
 		
-		<form method="post" action="<%=request.getContextPath() %>/board_search.do">
+		<form method="post" action="<%=request.getContextPath() %>/board_search.do?type=free">
 		<input type="hidden" name="page" value="${page }">
 			<select name="field">
 				<option value="board_title">제목</option>
@@ -140,5 +127,7 @@
 			</ul>
 		</nav>
 	</div>
+		    <%@ include file="../include/footer.jsp"%>
+	
 </body>
 </html>

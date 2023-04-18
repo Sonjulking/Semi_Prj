@@ -1,9 +1,12 @@
 package com.board.action;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.Calendar;
+import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,8 +29,14 @@ public class BoardWriteOkAction implements Action {
 		// 파일 업로드 시에는 설정해야 할 내용이 있음.
 		// 1. 첨부파일 저장 경로 지정(보통은 서버에 지정함)
 		
-		String saveFolder = "C:\\NCS\\workspace(jsp2)\\Semi_Prj\\WebContent\\fileUpload";
-		// String saveFolder =
+		//String saveFolder = "C:\\NCS\\workspace(jsp)\\project\\WebContent\\fileUpload";
+		Properties prop = new Properties();
+		FileInputStream fis = new FileInputStream(request.getServletContext()
+				.getRealPath("\\WEB-INF\\classes\\com\\project\\controller\\mapping.properties"));
+		prop.load(new InputStreamReader(fis));
+		fis.close();
+		String saveFolder = prop.getProperty(System.getenv("USERPROFILE").substring(3));
+	// String saveFolder =
 		// prop.getProperty(System.getenv("USERPROFILE").substring(3))+"\\review";
 		// 2. 첨부 파일 크기 지정(20MB)
 		int fileSize = 20 * 1024 * 1024;
@@ -103,14 +112,14 @@ public class BoardWriteOkAction implements Action {
 
 		BoardDAO dao = BoardDAO.getInstance();
 
-		int check = dao.insertBoard(dto);
+		int check = dao.insertBoard(dto, board_type);
 
 		PrintWriter out = response.getWriter();
 
 		if (check > 0) {
 			out.println("<script>");
 			out.println("alert('게시글 추가 성공')");
-			out.println("location.href='board_list.do'");
+			out.println("location.href='board_list.do?type="+board_type+"'");
 			out.println("</script>");
 		} else {
 			out.println("<script>");

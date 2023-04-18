@@ -25,7 +25,7 @@ public class MatchingOkAction implements Action {
 			request.getParameter("gamename").trim();
 		String match_tier = 
 			request.getParameter("tier").trim();
-		String match_DiscortID = 
+		String match_DiscordID = 
 			request.getParameter("DiscordID").trim();
 		String match_KakaoID = 
 				request.getParameter("KakaoID").trim();
@@ -34,13 +34,14 @@ public class MatchingOkAction implements Action {
 		
 		dto.setGame_name(match_gamename);
 		dto.setTier(match_tier);
-		dto.setDiscord_nikname(match_DiscortID);
+		dto.setDiscord_nikname(match_DiscordID);
 		dto.setKakao_id(match_KakaoID);
 		
 		MatchingDAO dao = MatchingDAO.getInstance();
 		
-		//  회원 아이디, 닉네임
 		
+
+		//  회원 아이디, 닉네임
 		String member_id = request.getParameter("id").trim();
 		String nickname = request.getParameter("nickname").trim();
 		
@@ -49,10 +50,20 @@ public class MatchingOkAction implements Action {
 		mdto.setMember_id(member_id);
 		mdto.setMember_nickname(nickname);
 		
-		
 		int check = dao.insertMatching(dto, mdto);
 		
-		PrintWriter out = response.getWriter();
+		
+		
+		// matching 세션
+		MatchingDTO match = dao.contentMatching(member_id);
+		
+		HttpSession session = request.getSession();
+		session.setAttribute("match_gamename", match_gamename);
+		session.setAttribute("match_tier", match_tier);
+		
+		session.setAttribute("Match", match);
+		
+		// PrintWriter out = response.getWriter();
 		
 		ActionForward forward = new ActionForward();
 		

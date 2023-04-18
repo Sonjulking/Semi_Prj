@@ -17,10 +17,10 @@ public class BoardModifyAction implements Action {
 		// get방식으로 넘어온 게시 글번호에 해당하는 상세내역을 DB에서 조회하여 수정 폼 페이지로 이동시키는 비지니스
 		int board_index = Integer.parseInt(request.getParameter("no").trim());
 		int nowPage = Integer.parseInt(request.getParameter("page").trim());
-		
+		String board_type = request.getParameter("type");
 		BoardDAO dao = BoardDAO.getInstance();
 		
-		BoardDTO cont = dao.boardContent(board_index);
+		BoardDTO cont = dao.boardContent(board_index, board_type);
 		
 		request.setAttribute("Modify", cont);
 		request.setAttribute("Page", nowPage);

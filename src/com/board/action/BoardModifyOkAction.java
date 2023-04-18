@@ -1,9 +1,11 @@
 package com.board.action;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Calendar;
+import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,8 +26,14 @@ public class BoardModifyOkAction implements Action {
 		BoardDTO dto = new BoardDTO();
 		
 		// 첨부파일이 저장될 위치(경로) 설정.
-		String saveFolder = "C:\\NCS\\workspace(jsp)\\project\\WebContent\\fileUpload";
-		
+		//String saveFolder = "C:\\NCS\\workspace(jsp)\\project\\WebContent\\fileUpload";
+		Properties prop = new Properties();
+		FileInputStream fis = new FileInputStream(request.getServletContext()
+				.getRealPath("\\WEB-INF\\classes\\com\\project\\controller\\mapping.properties"));
+		prop.load(fis);
+		fis.close();
+		String saveFolder = prop.getProperty(System.getenv("USERPROFILE").substring(3));
+
 		// 첨부파일 용량(크기) 제한 - 파일 업로드 최대 크기
 		int fileSize = 10 * 1024 * 1024;  // 10MB
 		
@@ -91,14 +99,14 @@ public class BoardModifyOkAction implements Action {
 		
 		BoardDAO dao = BoardDAO.getInstance();
 		
-		int check = dao.updateBoard(dto);
+		int check = dao.updateBoard(dto, board_type);
 		
 		PrintWriter out = response.getWriter();
 		
 		if(check > 0) {
 			out.println("<script>");
 			out.println("alert('게시물 수정 성공')");
-			out.println("location.href='board_content.do?no="+board_index+"&page="+nowPage+"'");
+			out.println("location.href='board_content.do?no="+board_index+"&page="+nowPage+"&type="+board_type+"'");
 			out.println("</script>");
 		}else {
 			out.println("<script>");
