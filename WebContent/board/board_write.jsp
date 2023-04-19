@@ -88,7 +88,8 @@
 				<option value="free">자유게시판</option>
 				<option value="legend">레전드게시판</option>
 				<option value="etc">ETC</option>
-			</select> <select name="board_heading">
+			</select> 
+			<select name="board_heading">
 				<option value="">말머리선택</option>
 
 				<option class="board_heading1" value="humor">유머</option>
