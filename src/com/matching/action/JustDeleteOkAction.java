@@ -11,13 +11,12 @@ import com.member.model.MemberDTO;
 import com.project.controller.Action;
 import com.project.controller.ActionForward;
 
-public class FinalDeleteOkAction implements Action {
+public class JustDeleteOkAction implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, MessagingException, Exception {
-		// 세션으로 저장된 로그인 아이디로 DB 삭제
-
+		// 마지막 유저 프로필에서 matching DB만 삭제
 		String member_id = request.getParameter("id").trim();
 		
 		MatchingDAO dao = MatchingDAO.getInstance();
@@ -28,14 +27,15 @@ public class FinalDeleteOkAction implements Action {
 		
 		int check = dao.deleteMatching(mdto);
 		
+		// PrintWriter out = response.getWriter();
+		
 		ActionForward forward = new ActionForward();
 		
 		forward.setRedirect(false);
 		
-		forward.setPath("matching/userprofile2.jsp");
+		forward.setPath("matching/userprofile.jsp");
 		
 		return forward;
-		
 		
 	}
 
