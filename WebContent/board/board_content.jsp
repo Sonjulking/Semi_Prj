@@ -89,7 +89,7 @@
 					<tr>
 						<th>추천수</th>
 
-						<td> <img src="img/thumbup.png" width="30" height="30" id="thumbs" onclick="thumbsClick()"><span class="return thumbsCount()"></span></td>
+						<td> <img src="img/thumbup.png" width="30" height="30" id="thumbs" onclick="thumbsClick()">${dto.getBoard_thumbs() }</td>
 
 					</tr>
 					
@@ -315,6 +315,6 @@
 	 <jsp:include page="../include/footer.jsp"></jsp:include>
 
 
-
+ 
 </body>
 </html>

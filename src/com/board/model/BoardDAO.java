@@ -710,4 +710,170 @@ public class BoardDAO {
     	return res;
     }
 	
+    public BoardDTO boardFree1Content() {
+    	BoardDTO dto = null;
+    	
+    	try {
+    		openConn();
+    		
+    		sql = "select max(board_thumbs) free_board";
+    		
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				if(rs.getInt(1) == 0) {
+					break;
+				} else if(rs.getInt(1) > 0) {
+					dto = new BoardDTO();
+					
+					dto.setBoard_type(rs.getString("board_type"));
+					dto.setBoard_index(rs.getInt("board_index"));
+					dto.setBoard_title(rs.getString("board_title"));
+					dto.setBoard_cont(rs.getString("board_cont"));
+					dto.setBoard_writer_id(rs.getString("board_writer_id"));
+					dto.setBoard_writer_nickname(rs.getString("board_writer_nickname"));
+					dto.setUpload_file(rs.getString("upload_file"));
+					dto.setUpload_fileImg(rs.getString("upload_fileImg"));
+					dto.setBoard_heading(rs.getString("board_heading"));
+					dto.setBoard_hit(rs.getInt("board_hit"));
+					dto.setBoard_thumbs(rs.getInt("board_thumbs"));
+					dto.setBoard_date(rs.getString("board_date"));
+					dto.setBoard_update(rs.getString("board_update"));
+					
+					
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    	return dto;
+    }
+    
+    public BoardDTO boardFree2Content() {
+    	BoardDTO dto = null;
+    	
+    	try {
+    		openConn();
+    		
+    		sql = "select max(board_thumbs) - 1 free_board";
+    		
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				if(rs.getInt(1) == 0) {
+					break;
+				} else if(rs.getInt(1) > 0) {
+					dto = new BoardDTO();
+					
+					dto.setBoard_type(rs.getString("board_type"));
+					dto.setBoard_index(rs.getInt("board_index"));
+					dto.setBoard_title(rs.getString("board_title"));
+					dto.setBoard_cont(rs.getString("board_cont"));
+					dto.setBoard_writer_id(rs.getString("board_writer_id"));
+					dto.setBoard_writer_nickname(rs.getString("board_writer_nickname"));
+					dto.setUpload_file(rs.getString("upload_file"));
+					dto.setUpload_fileImg(rs.getString("upload_fileImg"));
+					dto.setBoard_heading(rs.getString("board_heading"));
+					dto.setBoard_hit(rs.getInt("board_hit"));
+					dto.setBoard_thumbs(rs.getInt("board_thumbs"));
+					dto.setBoard_date(rs.getString("board_date"));
+					dto.setBoard_update(rs.getString("board_update"));
+					
+					
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    	return dto;
+    }
+    
+    public BoardDTO boardLegend1Content() {
+    	BoardDTO dto = null;
+    	
+    	try {
+    		openConn();
+    		
+    		sql = "select max(board_thumbs) legend_board";
+    		
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				if(rs.getInt(1) == 0) {
+					break;
+				} else if(rs.getInt(1) > 0) {
+					dto = new BoardDTO();
+					
+					dto.setBoard_type(rs.getString("board_type"));
+					dto.setBoard_index(rs.getInt("board_index"));
+					dto.setBoard_title(rs.getString("board_title"));
+					dto.setBoard_cont(rs.getString("board_cont"));
+					dto.setBoard_writer_id(rs.getString("board_writer_id"));
+					dto.setBoard_writer_nickname(rs.getString("board_writer_nickname"));
+					dto.setUpload_file(rs.getString("upload_file"));
+					dto.setUpload_fileImg(rs.getString("upload_fileImg"));
+					dto.setBoard_heading(rs.getString("board_heading"));
+					dto.setBoard_hit(rs.getInt("board_hit"));
+					dto.setBoard_thumbs(rs.getInt("board_thumbs"));
+					dto.setBoard_date(rs.getString("board_date"));
+					dto.setBoard_update(rs.getString("board_update"));
+					
+					
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    	return dto;
+    }
+    
+    public BoardDTO boardLegend2Content() {
+    	BoardDTO dto = null;
+    	
+    	try {
+    		openConn();
+    		
+    		sql = "select max(board_thumbs) legend_board";
+    		
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				if(rs.getInt(1) == 0) {
+					break;
+				} else if(rs.getInt(1) > 0) {
+					dto = new BoardDTO();
+					
+					dto.setBoard_type(rs.getString("board_type"));
+					dto.setBoard_index(rs.getInt("board_index"));
+					dto.setBoard_title(rs.getString("board_title"));
+					dto.setBoard_cont(rs.getString("board_cont"));
+					dto.setBoard_writer_id(rs.getString("board_writer_id"));
+					dto.setBoard_writer_nickname(rs.getString("board_writer_nickname"));
+					dto.setUpload_file(rs.getString("upload_file"));
+					dto.setUpload_fileImg(rs.getString("upload_fileImg"));
+					dto.setBoard_heading(rs.getString("board_heading"));
+					dto.setBoard_hit(rs.getInt("board_hit"));
+					dto.setBoard_thumbs(rs.getInt("board_thumbs"));
+					dto.setBoard_date(rs.getString("board_date"));
+					dto.setBoard_update(rs.getString("board_update"));
+					
+					
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    	return dto;
+    }
+    
+    
+    
 }
