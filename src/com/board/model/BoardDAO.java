@@ -189,6 +189,7 @@ public class BoardDAO {
 			
 			pstmt = con.prepareStatement(sql);
 			
+<<<<<<< HEAD
 			pstmt.setInt(1, count);
 			pstmt.setString(2, dto.getBoard_title());
 			pstmt.setString(3, dto.getBoard_cont());
@@ -200,6 +201,16 @@ public class BoardDAO {
 			pstmt.setString(6, dto.getUpload_file());
 			pstmt.setString(7, dto.getBoard_heading());
 			System.out.println("헤딩 >>" +dto.getBoard_heading());
+=======
+			pstmt.setString(1, dto.getBoard_type()); 
+			pstmt.setInt(2, count);
+			pstmt.setString(3, dto.getBoard_title());
+			pstmt.setString(4, dto.getBoard_cont());
+			pstmt.setString(5, dto.getBoard_writer_id());
+			pstmt.setString(6, dto.getBoard_writer_nickname());
+			pstmt.setString(7, dto.getUpload_file());
+			pstmt.setString(8, dto.getBoard_heading());
+>>>>>>> 70db3d911498d76e15123c009f27ebe08dd7c6f8
 			
 			result = pstmt.executeUpdate();
 			
@@ -283,7 +294,33 @@ public class BoardDAO {
 	} // boardHit() end 
 	
 	
-	
+	public int maxCount(String type) {
+		int maxCount = 0;
+		
+		try {
+			openConn();
+			
+			sql = "select max(board_index) from "+type+"_board";
+			
+			pstmt = con.prepareStatement(sql);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				maxCount = rs.getInt(1);
+			}
+			
+			System.out.println("맥스카운트"+maxCount);
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			closeConn(rs, pstmt, con);
+		}
+		
+		return maxCount;
+	}
 	
 	public BoardDTO boardContent(int no, String type) {
 		
@@ -568,12 +605,18 @@ public class BoardDAO {
 			
 			if(writer_id.equals(member_id)) {
 				
+<<<<<<< HEAD
 				sql = "update "+type+"_comment set comment_cont = ?, comment_update = now() where comment_index = ?";
+=======
+				sql = "update free_comment set comment_cont = ?, comment_update = now() where comment_index = ?";
+>>>>>>> 70db3d911498d76e15123c009f27ebe08dd7c6f8
 				
 				pstmt = con.prepareStatement(sql);
 				
 				pstmt.setString(1, comment_cont);
 
+				pstmt.setInt(2, no);
+				
 				pstmt.setInt(2, no);
 				
 				result = pstmt.executeUpdate();
@@ -592,7 +635,11 @@ public class BoardDAO {
 	
 	
 	
+<<<<<<< HEAD
 	public int replyDelete(int no, String member_id, String type) {
+=======
+	public int replyDelete(int no, String member_id) {
+>>>>>>> 70db3d911498d76e15123c009f27ebe08dd7c6f8
 		
 		String writer_id = null;
 		int result = 0;
@@ -600,7 +647,11 @@ public class BoardDAO {
 		try {
 			openConn();
 			
+<<<<<<< HEAD
 			sql = "select comment_writer_id from "+type+"_comment where comment_index = ?";
+=======
+			sql = "select comment_writer_id from free_comment where comment_index = ?";
+>>>>>>> 70db3d911498d76e15123c009f27ebe08dd7c6f8
 			
 			pstmt = con.prepareStatement(sql);
 			
@@ -614,7 +665,11 @@ public class BoardDAO {
 			
 			if(writer_id.equals(member_id)) {
 				
+<<<<<<< HEAD
 				sql = "delete from "+type+"_comment where comment_index = ?";
+=======
+				sql = "delete from free_comment where comment_index = ?";
+>>>>>>> 70db3d911498d76e15123c009f27ebe08dd7c6f8
 				
 				pstmt = con.prepareStatement(sql);
 				
@@ -622,7 +677,11 @@ public class BoardDAO {
 				
 				result = pstmt.executeUpdate();
 				
+<<<<<<< HEAD
 				sql = "update "+type+"_comment set comment_index = comment_index -1 where comment_index > ?";
+=======
+				sql = "update free_comment set comment_index = comment_index -1 where comment_index > ?";
+>>>>>>> 70db3d911498d76e15123c009f27ebe08dd7c6f8
 
 				pstmt = con.prepareStatement(sql);
 				
