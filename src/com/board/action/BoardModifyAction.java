@@ -24,6 +24,7 @@ public class BoardModifyAction implements Action {
 		
 		request.setAttribute("Modify", cont);
 		request.setAttribute("Page", nowPage);
+		request.setAttribute("old_type", board_type);
 		
 		ActionForward forward = new ActionForward();
 		

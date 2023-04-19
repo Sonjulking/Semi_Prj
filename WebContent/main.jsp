@@ -38,7 +38,6 @@ uri="http://java.sun.com/jsp/jstl/core"%>
 
     <div class="main_wrap">
       <!-- <img class="ruru" src="img/rurupixel.png" alt="" title="귀여운 루루">
-
 		<img class="nar" src="img/nar.png" alt="" title="포악한 나르"> <img
 			class="timo" src="img/timo.png" alt="" title="혐모"> <img
 			class="youme" src="img/youme.png" alt="" title="버스충 유미"> -->
@@ -46,10 +45,8 @@ uri="http://java.sun.com/jsp/jstl/core"%>
       <div
         class="pop_post_wrap main_box1 nes-container is-rounded is-dark with-title is-centered"
       >
-        
-        
         <p class="box_text title">실시간 인기글</p>
-        <a href="<%=request.getContextPath() %>/hot_free1.do">
+        <a href="">
           <div class="item nes-container is-rounded is-dark">
             <div class="ranking">1</div>
             <img src="" class="sumimg" />
@@ -63,7 +60,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
             <div class="comment">[65]</div>
           </div>
         </a>
-        <a href="<%=request.getContextPath() %>/hot_free2.do">
+        <a href="">
           <div class="item nes-container is-rounded is-dark">
             <div class="ranking">2</div>
             <img src="" class="sumimg" />
@@ -77,7 +74,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
             <div class="comment">[65]</div>
           </div>
         </a>
-        <a href="<%=request.getContextPath() %>/hot_legend1.do">
+        <a href="">
           <div class="item nes-container is-rounded is-dark">
             <div class="ranking">3</div>
             <img src="" class="sumimg" />
@@ -91,7 +88,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
             <div class="comment">[65]</div>
           </div>
         </a>
-        <a href="<%=request.getContextPath() %>/hot_legend2.do">
+        <a href="">
           <div class="item nes-container is-rounded is-dark">
             <div class="ranking">4</div>
             <img src="" class="sumimg" />
@@ -105,12 +102,25 @@ uri="http://java.sun.com/jsp/jstl/core"%>
             <div class="comment">[65]</div>
           </div>
         </a>
-       
+        <a href="">
+          <div class="item nes-container is-rounded is-dark">
+            <div class="ranking">5</div>
+            <img src="" class="sumimg" />
+            <div class="title_con">
+              <div class="item-title">야스오 강의</div>
+              <div class="date_writer_con">
+                <div class="date">2023-09-16</div>
+                <div class="writer">실버 판테온</div>
+              </div>
+            </div>
+            <div class="comment">[65]</div>
+          </div>
+        </a>
       </div>
+
       <div
         class="pop_post_wrap main_box1 nes-container is-rounded is-dark with-title is-centered"
       >
-       
         <p class="box_text title">실시간 매칭</p>
         <div>
           <!-- <img class="matching-img" src="../WebContent/img/1.png" /> -->

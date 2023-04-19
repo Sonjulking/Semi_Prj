@@ -68,24 +68,21 @@
 <body>
 
 	    <%@ include file="../include/header.jsp"%>
-	
 
 	<div align="center">
 		<hr width="50%" color="gray">
 		<h3>board 테이블 게시판 글쓰기</h3>
 		<hr width="50%" color="gray">
 		<br>
-		<c:set var="m_dto" value="${Cont }" />
 	
 		<%-- enctype : 파일을 업로드하기 위한 속성, 값: --%>
 		<form method="post" enctype="multipart/form-data" name="f"
 			action="<%=request.getContextPath()%>/board_write_ok.do"
 			onsubmit="return check()">
-			<input type="hidden" name="board_writer_id"value="${m_dto.getMember_id() }"> 
+			<input type="hidden" name="board_writer_id" value="${member_id }"> 
 			<input type="hidden"
-				name="board_writer_nickname" value="${m_dto.getMember_nickname() }">
-
-
+				name="board_writer_nickname" value="${nickname }">
+			
 			<select name="board_type" id="board_type">
 				<option value="">게시판선택</option>
 				<option value="free">자유게시판</option>
@@ -97,14 +94,14 @@
 				<option class="board_heading1" value="humor">유머</option>
 				<option class="board_heading1" value="life">일상</option>
 				<option class="board_heading1" value="info">정보</option>
-				<option class="board_heading1" value="etc">기타</option>
+				<option class="board_heading1" value="etc1">기타</option>
 
 				<option class="board_heading2" value="league">리그오브레전드</option>
 				<option class="board_heading2" value="battle">배틀그라운드</option>
 				<option class="board_heading2" value="over">오버워치2</option>
 
 				<option class="board_heading3" value="police">신고</option>
-				<option class="board_heading3" value="etc">기타</option>
+				<option class="board_heading3" value="etc2">기타</option>
 			</select> <input type="text" name="board_title" placeholder="제목을 입력해주세요">
 			<br>
 

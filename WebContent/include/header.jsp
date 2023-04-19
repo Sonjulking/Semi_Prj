@@ -24,7 +24,6 @@
 				</c:if>
  
 				<c:if test="${loginCheck > 0 }">
-				   <c:set var="m_dto" value="${Cont }"/>
 					<span class="Login"><a href="member/logout.jsp" class="nes-text is-warning">Logout</a></span>
 					<span class="Join"> / <a
 						href="<%=request.getContextPath()%>/myPage.do?loginId=${member_id}" class="nes-text is-error">MyPage</a></span>
@@ -33,7 +32,7 @@
 			</div>
 		</div>
 	</header>
-
+	
 	<nav>
 		<ul class="navcolor nes-container">
 			<li><a href="<%=request.getContextPath()%>/board_list.do?type=free"

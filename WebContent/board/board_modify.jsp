@@ -12,6 +12,26 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-3.6.3.js"></script>
+<script type="text/javascript">
+	$(function() {
+		
+		$("#board_type").on("change", function() {
+			
+			$(".board_heading1, .board_heading2, .board_heading3").hide();
+			
+			let state = $("#board_type option:selected").val();
+			
+			if (state == 'free') {
+				$(".board_heading1").show();
+			} else if (state == 'legend') {
+				$(".board_heading2").show();
+			} else if (state == 'etc') {
+				$(".board_heading3").show();
+			}
+		});
+	});
+</script>
 </head>
 <body>
 		<header>
@@ -54,19 +74,51 @@
 			<h3>${dto.getBoard_writer_nickname() }의 수정페이지</h3>
 		<hr width="50%" color="lightgray">
 		
-		<form method="post" enctype="multipart/form-data" action="<%=request.getContextPath() %>/board_modify_ok.do?no=${dto.getBoard_index() }">
+		<form method="post" enctype="multipart/form-data" action="<%=request.getContextPath() %>/board_modify_ok.do?no=${dto.getBoard_index() }&old_type=${old_type }">
 		<input type="hidden" name="num" value="${dto.getBoard_index() }">
 		<input type="hidden" name="page" value="${Page }">
 		
 			<table border="1" cellspacing="0" width="300">
 				<tr>
 					<th>게시판종류</th>
-					<td><input type="text" name="type" value="${dto.getBoard_type() }"></td>
+					<td>
+						<select name="type" id="board_type">
+						  	<c:if test="${dto.getBoard_type() == 'free'}">
+						   	 	<option value="free">자유게시판</option>
+						    	<option value="legend">레전드게시판</option>
+						    	<option value="etc">ETC</option>
+						  	</c:if>
+						 	<c:if test="${dto.getBoard_type() == 'legend'}">
+						 		<option value="legend">레전드게시판</option>
+						    	<option value="free">자유게시판</option>
+						    	<option value="etc">ETC</option>
+						  </c:if>
+						  	<c:if test="${dto.getBoard_type() == 'etc'}">
+						  		<option value="etc">ETC</option>
+						    	<option value="free">자유게시판</option>
+						    	<option value="legend">레전드게시판</option>
+						  	</c:if>
+						</select>
+					</td>
 				</tr>
 				
 				<tr>
 					<th>머릿말</th>
-					<td><input type="text" name="heading" value="${dto.getBoard_heading() } "></td>
+					<td>
+						<select name="heading">
+							<option class="board_heading1" value="humor" ${dto.getBoard_heading() == 'humor' ? 'selected' : ''}>유머</option>
+							<option class="board_heading1" value="life" ${dto.getBoard_heading() == 'life' ? 'selected' : ''}>일상</option>
+							<option class="board_heading1" value="info" ${dto.getBoard_heading() == 'info' ? 'selected' : ''}>정보</option>
+							<option class="board_heading1" value="etc1" ${dto.getBoard_heading() == 'etc1' ? 'selected' : ''}>기타</option>
+							
+							<option class="board_heading2" value="league" ${dto.getBoard_heading() == 'league' ? 'selected' : ''}>리그오브레전드</option>
+							<option class="board_heading2" value="battle" ${dto.getBoard_heading() == 'battle' ? 'selected' : ''}>배틀그라운드</option>
+							<option class="board_heading2" value="over" ${dto.getBoard_heading() == 'over' ? 'selected' : ''}>오버워치2</option>
+							
+							<option class="board_heading3" value="police" ${dto.getBoard_heading() == 'police' ? 'selected' : ''}>신고</option>
+							<option class="board_heading3" value="etc2" ${dto.getBoard_heading() == 'etc2' ? 'selected' : ''}>기타</option>
+						</select>
+					</td>
 				</tr>
 				
 				<tr>

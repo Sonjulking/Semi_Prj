@@ -37,13 +37,13 @@
 		<table border="1" cellspacing="0" width="1000">
 		
 			<tr>
-				<td colspan="6" align="right">
+				<td colspan="7" align="right">
 					전체 게시물 수 : ${totalRecord } 개
 				</td>
 			</tr>
 			
 			<tr>
-				<th>No.</th> <th>제목</th> <th>글쓴이</th>
+				<th>No.</th> <th>머릿말</th> <th>제목</th> <th>글쓴이</th>
 				<th>조회수</th> <th>추천수</th> <th>작성일자</th> 
 			</tr>
 			<c:set var="list" value="${List }"/>
@@ -52,6 +52,11 @@
 				<c:if test="${dto.getBoard_type().equals('legend') }">
 					<tr>
 						<td> ${dto.getBoard_index() } </td>
+						<td> 
+							<c:if test="${dto.getBoard_heading() == 'league' }">롤</c:if>
+							<c:if test="${dto.getBoard_heading() == 'battle' }">배그</c:if>
+							<c:if test="${dto.getBoard_heading() == 'over' }">오버워치2</c:if>
+						</td>
 						<td> 
 							<a href="<%=request.getContextPath()%>/board_content.do?no=${dto.getBoard_index() }&page=${page }&type=${dto.getBoard_type()}">${dto.getBoard_title() }</a> 
 						</td>

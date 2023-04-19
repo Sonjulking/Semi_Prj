@@ -213,6 +213,8 @@ public class MemberDAO {
 		return dto;
 	} // contentMember() end
 
+	
+
 	// checkMemberId() start
 	public String checkMemberId(String id) {
 		String res = "사용 가능";

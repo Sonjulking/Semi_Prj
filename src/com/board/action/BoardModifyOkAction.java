@@ -3,6 +3,7 @@ package com.board.action;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.Calendar;
 import java.util.Properties;
@@ -30,7 +31,7 @@ public class BoardModifyOkAction implements Action {
 		Properties prop = new Properties();
 		FileInputStream fis = new FileInputStream(request.getServletContext()
 				.getRealPath("\\WEB-INF\\classes\\com\\project\\controller\\mapping.properties"));
-		prop.load(fis);
+		prop.load(new InputStreamReader(fis));
 		fis.close();
 		String saveFolder = prop.getProperty(System.getenv("USERPROFILE").substring(3));
 
@@ -50,6 +51,9 @@ public class BoardModifyOkAction implements Action {
 		String board_heading = multi.getParameter("heading").trim();
 		String board_title = multi.getParameter("title").trim();
 		String board_cont = multi.getParameter("cont").trim();
+		
+		String old_type = multi.getParameter("old_type");
+		System.out.println("old타입" + old_type);
 		
 		// type ="hidden"으로 넘어온 데이터들도 받아주어야 한다.
 		int board_index = Integer.parseInt(multi.getParameter("num").trim());
@@ -91,26 +95,35 @@ public class BoardModifyOkAction implements Action {
 			dto.setUpload_file(fileDBName);
 		}
 		
+		BoardDAO dao = BoardDAO.getInstance();
+		
 		dto.setBoard_type(board_type);
 		dto.setBoard_heading(board_heading);
 		dto.setBoard_title(board_title);
 		dto.setBoard_cont(board_cont);
 		dto.setBoard_index(board_index);
 		
-		BoardDAO dao = BoardDAO.getInstance();
+		int check = dao.updateBoard(dto, old_type);
 		
-		int check = dao.updateBoard(dto, board_type);
+		System.out.println("new타입2" + dto.getBoard_type());
 		
 		PrintWriter out = response.getWriter();
 		
 		if(check > 0) {
+			if(!dto.getBoard_type().equals(old_type)) {
+				BoardDTO cont = dao.boardContent(board_index, old_type);
+				dao.deleteBoard(board_index, old_type);
+				dao.updateSequence(board_index, old_type);
+				dao.insertBoard(cont, board_type);
+				System.out.println("board_type" + board_type);
+			}
 			out.println("<script>");
 			out.println("alert('게시물 수정 성공')");
 			out.println("location.href='board_content.do?no="+board_index+"&page="+nowPage+"&type="+board_type+"'");
 			out.println("</script>");
 		}else {
 			out.println("<script>");
-			out.println("alert('게시물 수정 성공')");
+			out.println("alert('게시물 수정 실패')");
 			out.println("history.back()");
 			out.println("</script>");
 		}

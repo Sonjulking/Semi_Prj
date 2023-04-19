@@ -17,7 +17,7 @@ public class MatchingDeleteOkAction implements Action {
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, MessagingException, Exception {
-		// 세션으로 저장된 로그인 아이디로 DB 삭제 후 매칭 팝업창으로 돌아감
+		// 세션으로 저장된 로그인 아이디로 DB 삭제
 
 		String member_id = request.getParameter("id").trim();
 		

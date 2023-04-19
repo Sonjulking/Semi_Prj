@@ -22,13 +22,11 @@
 	dto.setTier(tier);
 	dto.setMatching_user_id(matching_user_id);
 	
-	int res = dao.matchingcondition(matched, game_name, tier, matching_user_id, dto);
+	int res = dao.matchingcondition(matched, game_name, tier, matching_user_id);
 	
 	PrintWriter out1 = response.getWriter();
 	// ajax에게 응답
 	out1.println(res);
-
-
 
 
 %>

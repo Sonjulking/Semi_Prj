@@ -151,7 +151,7 @@
 			},
 			
 			error : function(data) {
-				console.log("데이터 오류");
+				alert("데이터 통신 오류 입니다.")
 			}
 		});
 		
@@ -162,7 +162,7 @@
 	// 30초 후에 () 함수를 호출하여 setInterval() 함수를 종료시킴.
 	setTimeout(function() {
 			clearInterval(playmatching);
-	}, 20000);
+	}, 30000);
 	
 	function autoClick() {
 	      setTimeout(function() {

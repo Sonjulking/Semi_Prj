@@ -142,7 +142,7 @@ public class MatchingDAO {
 	} // deleteMatching() 메서드 end
 
 	// matchloading 에서 매칭조건을 비교해서 서로 조건이 같으면 1을 반환, 조건이 없으면 0반환
-	public int matchingcondition(String matched, String gamename, String tier, String matching_user_id, MatchingDTO dto) {
+	public int matchingcondition(String matched, String gamename, String tier, String matching_user_id) {
 
 		int result = 0;
 
@@ -156,7 +156,6 @@ public class MatchingDAO {
 		String eqTier2 = "";
 
 		try {
-
 			openConn();
 
 			// 11111111111111111 첫번째 매칭 조건 game_name
@@ -172,32 +171,25 @@ public class MatchingDAO {
 			rs.next();
 
 			eqGame1 = rs.getString("game_name"); // 현재 배틀그라운드 저장
-
+			
 			System.out.println("eqGame1 >>> " + eqGame1);
 
-//			openConn();
-//			// matching 테이블에서 로그인한 아이디를 제외한 나머지 열
-//			sql = "select game_name from matching where matching_user_id not in (?)";
-
-			openConn();
-
-			sql = "select * from matching where game_name in (?) and tier in (?) and matching_user_id not in(?)";
+			// matching 테이블에서 로그인한 아이디를 제외한 나머지 열
+			sql = "select game_name from matching where matching_user_id not in (?)";
 
 			pstmt = con.prepareStatement(sql);
 
-			pstmt.setString(1, gamename);
-			pstmt.setString(2, tier);
-			pstmt.setString(3, matching_user_id);
+			pstmt.setString(1, matching_user_id);
 
 			rs = pstmt.executeQuery();
 			rs.next();
 			eqGame2 = rs.getString("game_name"); // DB에 저장된 배틀그라운드 저장
-
+			
 			System.out.println("eqGame2 >>> " + eqGame2);
-
+			
 			// 22222222222222222 두번째 매칭 조건 matched
 			// matching 테이블에서 팝업창에 입력된 아이디에 해당하는 열의 matched
-
+			
 			openConn();
 
 			sql = "select matched from matching where matching_user_id in (?)";
@@ -209,23 +201,17 @@ public class MatchingDAO {
 			rs = pstmt.executeQuery();
 
 			rs.next();
-			
 			eqMatched1 = rs.getString("matched");
 			System.out.println("eqMatched1 >>> " + eqMatched1);
 			// matching 테이블에서 로그인한 입력된 아이디를 제외한 나머지 열
-
-//			openConn();
-//
-//			sql = "select matched from matching where matching_user_id not in (?)";
-
+			
 			openConn();
 
-			sql = "select matched from matching where game_name in (?) and tier in (?) and matching_user_id not in(?)";
+			sql = "select matched from matching where matching_user_id not in (?)";
+
 			pstmt = con.prepareStatement(sql);
 
-			pstmt.setString(1, gamename);
-			pstmt.setString(2, tier);
-			pstmt.setString(3, matching_user_id);
+			pstmt.setString(1, matching_user_id);
 
 			rs = pstmt.executeQuery();
 			rs.next();
@@ -233,7 +219,7 @@ public class MatchingDAO {
 			System.out.println("eqMatched2 >>> " + eqMatched2);
 			// 3333333333333333 세번째 매칭 조건 tier
 			// matching 테이블에서 팝업창에 입력된 아이디에 해당하는 tier
-
+			
 			openConn();
 
 			sql = "select tier from matching where matching_user_id in (?)";
@@ -248,44 +234,18 @@ public class MatchingDAO {
 
 			eqTier1 = rs.getString("tier");
 			System.out.println("eqTier1 >>> " + eqTier1);
-//			openConn();
-//			// matching 테이블에서 로그인한 입력된 아이디를 제외한 나머지 열
-//			sql = "select tier from matching where matching_user_id not in (?)";
+			// matching 테이블에서 로그인한 입력된 아이디를 제외한 나머지 열
+			sql = "select tier from matching where matching_user_id not in (?)";
 
-			openConn();
-
-			sql = "select tier from matching where game_name in (?) and tier in (?) and matching_user_id not in(?)";
 			pstmt = con.prepareStatement(sql);
 
-			pstmt.setString(1, gamename);
-			pstmt.setString(2, tier);
-			pstmt.setString(3, matching_user_id);
+			pstmt.setString(1, matching_user_id);
 
 			rs = pstmt.executeQuery();
-
 			rs.next();
-
 			eqTier2 = rs.getString("tier"); // DB에 저장된 tier
 			System.out.println("eqTier2 >>> " + eqTier2);
-			
-			//정민님을 위한 주석 : 매칭한 상대의 회원의 정보를 뽑아서 dto 객체에 저장해주는 작업입니다.
-			openConn();
-			
-			sql ="select * from matching where game_name in (?) and tier in (?) and matching_user_id not in (?)";
-			pstmt = con.prepareStatement(sql);
 
-			pstmt.setString(1, gamename);
-			pstmt.setString(2, tier);
-			pstmt.setString(3, matching_user_id);
-			
-			rs = pstmt.executeQuery();
-			
-			rs.next();
-			
-			dto.setMatching_user_id(rs.getString("matching_user_id"));
-			dto.setDiscord_nikname(rs.getString("discord_nickname"));
-			dto.setKakao_id(rs.getString("kakao_id"));
-			
 			// 매칭 조건이 서로 같은지 확인하는 최종 절차
 			if (eqGame1.equals(eqGame2)) {
 				if (eqMatched1.equals(eqMatched2)) {
@@ -301,8 +261,8 @@ public class MatchingDAO {
 					System.out.println("matched가 다른 리턴 >>> " + result);
 				}
 			} else {
-				result = 0;
-				System.out.println("게임명이 다른 리턴 >>> " + result);
+				 result = 0;
+				 System.out.println("게임명이 다른 리턴 >>> " + result);
 			}
 
 		} catch (
@@ -356,13 +316,16 @@ public class MatchingDAO {
 		}
 		return dto;
 	} // contentMatching() 메서드 end
-
-	// 매칭 수락을 누른 유저의 accept를 0에서 1로 수정하며
+	
+	
+	
+	// 매칭 수락을 누른 유저의 	accept를 0에서 1로 수정하며
 	// accept가 둘다 1로 같은지 확인해 값을 반환하는 메서드
-	public int MachingAccept(String matching_user_id, String matched, String game_name, String tier) {
+	public int MachingAccept(String matching_user_id) {
 
+		int result = 0;
 		int accept = 0;
-
+		
 		String eqAccept1 = "";
 		String eqAccept2 = "";
 
@@ -374,13 +337,14 @@ public class MatchingDAO {
 			pstmt = con.prepareStatement(sql);
 
 			pstmt.setString(1, matching_user_id);
-
-			pstmt.executeUpdate();
-
+			
+			result = pstmt.executeUpdate();
+			
+			
 			// 11111111111111111 첫번째 매칭 조건 game_name
 			// matching 테이블에서 팝업창에 입력된 아이디에 해당하는 열의 Accept
 			openConn();
-
+			
 			sql = "select accept from matching where matching_user_id in (?)";
 
 			pstmt = con.prepareStatement(sql);
@@ -391,24 +355,21 @@ public class MatchingDAO {
 
 			rs.next();
 
-			eqAccept1 = rs.getString("accept"); // 현재 수락상태
-
+			eqAccept1 = rs.getString("game_name"); // 현재 수락상태
+			
 			System.out.println("eqAccept1 >>> " + eqAccept1);
 
-			openConn();
-			// matching 테이블에서 로그인한 아이디를 제외한 나머지
-			sql = "select accept from matching where game_name in (?) and tier in (?) and matching_user_id not in(?)";
+			// matching 테이블에서 로그인한 아이디를 제외한 나머지 
+			sql = "select Accept from matching where matching_user_id not in (?)";
 
 			pstmt = con.prepareStatement(sql);
 
-			pstmt.setString(1, game_name);
-			pstmt.setString(2, tier);
-			pstmt.setString(3, matching_user_id);
-			
+			pstmt.setString(1, matching_user_id);
+
 			rs = pstmt.executeQuery();
 			rs.next();
-			eqAccept2 = rs.getString("accept"); // 현재 수락 상태
-
+			eqAccept2 = rs.getString("game_name"); // 현재 수락 상태
+			
 			System.out.println("eqAccept2 >>> " + eqAccept2);
 
 			if (eqAccept1.equals(eqAccept2)) {
@@ -421,43 +382,8 @@ public class MatchingDAO {
 		} finally {
 			closeConn(rs, pstmt, con);
 		}
-		System.out.println("Accept rtn >>> " + accept);
 		return accept;
 	} // MachingAccept() 메서드 end
-
-	public MatchingDTO opponentContent(String matching_user_id, String matched, String game_name, String tier) {
-		
-		MatchingDTO dto = null;
 	
-		try {
-			
-			openConn();
-			sql = "select * from matching where game_name in (?) and tier in (?) and matching_user_id not in(?)";
-			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, game_name);
-			pstmt.setString(2, tier);
-			pstmt.setString(3, matching_user_id);
-			
-			rs = pstmt.executeQuery();
-			
-			rs.next();
-			
-			dto = new MatchingDTO();
-			
-			dto.setMatching_user_id(rs.getString("matching_user_id"));
-			dto.setMatching_user_nikname(rs.getString("matching_user_nickname"));
-			dto.setDiscord_nikname(rs.getString("discord_nickname"));
-			dto.setKakao_id(rs.getString("kakao_id"));
-			
-		
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-		
-		return dto;
-	}//opponetContent() 메서드 end
 
 }

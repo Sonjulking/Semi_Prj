@@ -24,6 +24,8 @@ public class MemberLoginAction implements Action {
 //		ActionForward forward = new ActionForward();
 		int check = dao.loginMember(member_id, member_pwd);
 		MemberDTO cont = dao.contentMember(member_id);
+		
+		String nickname = cont.getMember_nickname();
 
 		PrintWriter out = response.getWriter();
 
@@ -34,6 +36,7 @@ public class MemberLoginAction implements Action {
 			session.setAttribute("member_id", member_id);
 			session.setAttribute("member_pwd", member_pwd);
 			session.setAttribute("Cont", cont);
+			session.setAttribute("nickname", nickname);
 
 			out.println("<script>");
 			out.println("alert('로그인 성공!')");

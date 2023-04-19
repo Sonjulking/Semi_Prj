@@ -26,7 +26,9 @@
 </head>
 <body>
 
-    	    <%@ include file="../include/header.jsp"%>
+	세션 살아있나 확인 : " ${Cont } // (닉네임)${nickname } //${LoginCheck } /// (아이디)${member_id }
+
+   	<%@ include file="../include/header.jsp"%>
 
 	<div align="center">
 		<hr width="50%" color="red">
@@ -36,13 +38,13 @@
 		<table border="1" cellspacing="0" width="1000">
 		
 			<tr>
-				<td colspan="6" align="right">
+				<td colspan="7" align="right">
 					전체 게시물 수 : ${totalRecord } 개
 				</td>
 			</tr>
 			
 			<tr>
-				<th>No.</th> <th>제목</th> <th>글쓴이</th>
+				<th>No.</th> <th>머릿말</th> <th>제목</th> <th>글쓴이</th>
 				<th>조회수</th> <th>추천수</th> <th>작성일자</th> 
 			</tr>
 			<c:set var="list" value="${List }"/>
@@ -52,6 +54,12 @@
 				
 					<tr>
 						<td> ${dto.getBoard_index() } </td>
+						<td> 
+							<c:if test="${dto.getBoard_heading() == 'humor' }">유머</c:if>
+							<c:if test="${dto.getBoard_heading() == 'life' }">일상</c:if>
+							<c:if test="${dto.getBoard_heading() == 'info' }">정보</c:if>
+							<c:if test="${dto.getBoard_heading() == 'etc1' }">기타</c:if>
+						</td>
 						<td> 
 							<a href="<%=request.getContextPath()%>/board_content.do?no=${dto.getBoard_index() }&page=${page }&type=${dto.getBoard_type()}">${dto.getBoard_title() }</a> 
 						</td>

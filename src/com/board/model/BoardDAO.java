@@ -185,21 +185,21 @@ public class BoardDAO {
 				count = rs.getInt(1) + 1;
 			}
 			
-			sql = "insert into "+type+"_board values (?, ?, ?, ?, ?, ?, ?, default, ?, default, default, now(), default)";
+			sql = "insert into "+type+"_board values ('"+type+"', ?, ?, ?, ?, ?, ?, default, ?, default, default, now(), default)";
 			
 			pstmt = con.prepareStatement(sql);
 			
-			pstmt.setString(1, dto.getBoard_type()); 
-			pstmt.setInt(2, count);
-			pstmt.setString(3, dto.getBoard_title());
-			pstmt.setString(4, dto.getBoard_cont());
+			pstmt.setInt(1, count);
+			pstmt.setString(2, dto.getBoard_title());
+			pstmt.setString(3, dto.getBoard_cont());
 			System.out.println("내용 >>>"+dto.getBoard_cont());
-			pstmt.setString(5, dto.getBoard_writer_id());
+			pstmt.setString(4, dto.getBoard_writer_id());
 			System.out.println("아이디 >>>"+dto.getBoard_writer_id());
-			pstmt.setString(6, dto.getBoard_writer_nickname());
+			pstmt.setString(5, dto.getBoard_writer_nickname());
 			System.out.println("닉네임 >>" +dto.getBoard_writer_nickname());
-			pstmt.setString(7, dto.getUpload_file());
-			pstmt.setString(8, dto.getBoard_heading());
+			pstmt.setString(6, dto.getUpload_file());
+			pstmt.setString(7, dto.getBoard_heading());
+			System.out.println("헤딩 >>" +dto.getBoard_heading());
 			
 			result = pstmt.executeUpdate();
 			
@@ -234,6 +234,7 @@ public class BoardDAO {
 				pstmt.setString(4, dto.getBoard_cont());
 				pstmt.setString(5, dto.getUpload_file());
 				pstmt.setInt(6, dto.getBoard_index());
+				
 			}else {
 				sql = "update "+type+"_board set board_type = ?, board_heading = ?, board_title = ?, board_cont = ?, board_update = now() where board_index = ?";
 				
@@ -528,7 +529,7 @@ public class BoardDAO {
 			
 			pstmt.setString(3, dto.getComment_cont());
 			System.out.println("댓글 작성자 아이디" +dto.getComment_writer_id());
-			System.out.println("댓글 작성자 닉네임"+dto.getComment_writer_nickname());
+			System.out.println("댓글 작성자 닉네임" +dto.getComment_writer_nickname());
 			pstmt.setString(4, dto.getComment_writer_id());
 			pstmt.setString(5, dto.getComment_writer_nickname());
 			
@@ -566,9 +567,14 @@ public class BoardDAO {
 			}
 			
 			if(writer_id.equals(member_id)) {
-				sql = "update "+type+"_comment set comment_cont = ?, comment_update = now()";
+				
+				sql = "update "+type+"_comment set comment_cont = ?, comment_update = now() where comment_index = ?";
+				
+				pstmt = con.prepareStatement(sql);
 				
 				pstmt.setString(1, comment_cont);
+
+				pstmt.setInt(2, no);
 				
 				result = pstmt.executeUpdate();
 				
@@ -583,6 +589,58 @@ public class BoardDAO {
 		}
 		return result;
 	}// replyModify() end
+	
+	
+	
+	public int replyDelete(int no, String member_id, String type) {
+		
+		String writer_id = null;
+		int result = 0;
+		
+		try {
+			openConn();
+			
+			sql = "select comment_writer_id from "+type+"_comment where comment_index = ?";
+			
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setInt(1, no);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				writer_id = rs.getString("comment_writer_id");
+			}
+			
+			if(writer_id.equals(member_id)) {
+				
+				sql = "delete from "+type+"_comment where comment_index = ?";
+				
+				pstmt = con.prepareStatement(sql);
+				
+				pstmt.setInt(1, no);
+				
+				result = pstmt.executeUpdate();
+				
+				sql = "update "+type+"_comment set comment_index = comment_index -1 where comment_index > ?";
+
+				pstmt = con.prepareStatement(sql);
+				
+				pstmt.setInt(1, no);
+				
+				pstmt.executeUpdate();
+				
+			}else {
+				result = -1;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			closeConn(rs, pstmt, con);
+		}
+		return result;
+	}// replyDelete() end
 	
 	
 	
@@ -709,171 +767,11 @@ public class BoardDAO {
 		}
     	return res;
     }
-	
-    public BoardDTO boardFree1Content() {
-    	BoardDTO dto = null;
-    	
-    	try {
-    		openConn();
-    		
-    		sql = "select max(board_thumbs) free_board";
-    		
-			rs = pstmt.executeQuery();
-			
-			while(rs.next()) {
-				if(rs.getInt(1) == 0) {
-					break;
-				} else if(rs.getInt(1) > 0) {
-					dto = new BoardDTO();
-					
-					dto.setBoard_type(rs.getString("board_type"));
-					dto.setBoard_index(rs.getInt("board_index"));
-					dto.setBoard_title(rs.getString("board_title"));
-					dto.setBoard_cont(rs.getString("board_cont"));
-					dto.setBoard_writer_id(rs.getString("board_writer_id"));
-					dto.setBoard_writer_nickname(rs.getString("board_writer_nickname"));
-					dto.setUpload_file(rs.getString("upload_file"));
-					dto.setUpload_fileImg(rs.getString("upload_fileImg"));
-					dto.setBoard_heading(rs.getString("board_heading"));
-					dto.setBoard_hit(rs.getInt("board_hit"));
-					dto.setBoard_thumbs(rs.getInt("board_thumbs"));
-					dto.setBoard_date(rs.getString("board_date"));
-					dto.setBoard_update(rs.getString("board_update"));
-					
-					
-				}
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    	
-    	return dto;
-    }
     
-    public BoardDTO boardFree2Content() {
-    	BoardDTO dto = null;
-    	
-    	try {
-    		openConn();
-    		
-    		sql = "select max(board_thumbs) - 1 free_board";
-    		
-			rs = pstmt.executeQuery();
-			
-			while(rs.next()) {
-				if(rs.getInt(1) == 0) {
-					break;
-				} else if(rs.getInt(1) > 0) {
-					dto = new BoardDTO();
-					
-					dto.setBoard_type(rs.getString("board_type"));
-					dto.setBoard_index(rs.getInt("board_index"));
-					dto.setBoard_title(rs.getString("board_title"));
-					dto.setBoard_cont(rs.getString("board_cont"));
-					dto.setBoard_writer_id(rs.getString("board_writer_id"));
-					dto.setBoard_writer_nickname(rs.getString("board_writer_nickname"));
-					dto.setUpload_file(rs.getString("upload_file"));
-					dto.setUpload_fileImg(rs.getString("upload_fileImg"));
-					dto.setBoard_heading(rs.getString("board_heading"));
-					dto.setBoard_hit(rs.getInt("board_hit"));
-					dto.setBoard_thumbs(rs.getInt("board_thumbs"));
-					dto.setBoard_date(rs.getString("board_date"));
-					dto.setBoard_update(rs.getString("board_update"));
-					
-					
-				}
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    	
-    	return dto;
-    }
-    
-    public BoardDTO boardLegend1Content() {
-    	BoardDTO dto = null;
-    	
-    	try {
-    		openConn();
-    		
-    		sql = "select max(board_thumbs) legend_board";
-    		
-			rs = pstmt.executeQuery();
-			
-			while(rs.next()) {
-				if(rs.getInt(1) == 0) {
-					break;
-				} else if(rs.getInt(1) > 0) {
-					dto = new BoardDTO();
-					
-					dto.setBoard_type(rs.getString("board_type"));
-					dto.setBoard_index(rs.getInt("board_index"));
-					dto.setBoard_title(rs.getString("board_title"));
-					dto.setBoard_cont(rs.getString("board_cont"));
-					dto.setBoard_writer_id(rs.getString("board_writer_id"));
-					dto.setBoard_writer_nickname(rs.getString("board_writer_nickname"));
-					dto.setUpload_file(rs.getString("upload_file"));
-					dto.setUpload_fileImg(rs.getString("upload_fileImg"));
-					dto.setBoard_heading(rs.getString("board_heading"));
-					dto.setBoard_hit(rs.getInt("board_hit"));
-					dto.setBoard_thumbs(rs.getInt("board_thumbs"));
-					dto.setBoard_date(rs.getString("board_date"));
-					dto.setBoard_update(rs.getString("board_update"));
-					
-					
-				}
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    	
-    	return dto;
-    }
-    
-    public BoardDTO boardLegend2Content() {
-    	BoardDTO dto = null;
-    	
-    	try {
-    		openConn();
-    		
-    		sql = "select max(board_thumbs) legend_board";
-    		
-			rs = pstmt.executeQuery();
-			
-			while(rs.next()) {
-				if(rs.getInt(1) == 0) {
-					break;
-				} else if(rs.getInt(1) > 0) {
-					dto = new BoardDTO();
-					
-					dto.setBoard_type(rs.getString("board_type"));
-					dto.setBoard_index(rs.getInt("board_index"));
-					dto.setBoard_title(rs.getString("board_title"));
-					dto.setBoard_cont(rs.getString("board_cont"));
-					dto.setBoard_writer_id(rs.getString("board_writer_id"));
-					dto.setBoard_writer_nickname(rs.getString("board_writer_nickname"));
-					dto.setUpload_file(rs.getString("upload_file"));
-					dto.setUpload_fileImg(rs.getString("upload_fileImg"));
-					dto.setBoard_heading(rs.getString("board_heading"));
-					dto.setBoard_hit(rs.getInt("board_hit"));
-					dto.setBoard_thumbs(rs.getInt("board_thumbs"));
-					dto.setBoard_date(rs.getString("board_date"));
-					dto.setBoard_update(rs.getString("board_update"));
-					
-					
-				}
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    	
-    	return dto;
-    }
+}   
     
     
     
-}
+    
+    
+    
