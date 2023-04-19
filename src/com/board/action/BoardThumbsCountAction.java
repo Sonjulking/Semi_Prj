@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.board.model.BoardDAO;
+import com.board.model.BoardDTO;
 import com.project.controller.Action;
 import com.project.controller.ActionForward;
 
@@ -23,11 +24,13 @@ public class BoardThumbsCountAction implements Action {
 		
 		BoardDAO dao = BoardDAO.getInstance();
 		
-		int count = dao.thumbscount(board_no, board_type);
+		BoardDTO cont = dao.boardContent(board_no, board_type);
+		
+		int thumbs = cont.getBoard_thumbs();
 		
 		PrintWriter out = response.getWriter();
 		
-		out.println(count);
+		out.println(thumbs);
 		
 		out.close();
 		

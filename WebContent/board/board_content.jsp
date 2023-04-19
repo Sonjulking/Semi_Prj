@@ -111,7 +111,7 @@
 					<tr>
 						<th>추천수</th>
 
-						<td> <img src="img/thumbup.png" width="30" height="30" id="thumbs" onclick="thumbsClick()"><span class="return thumbsCount()"></span></td>
+						<td> <img src="img/thumbup.png" width="30" height="30" id="thumbs" onclick="thumbsClick()"> <span class="thumbs"></span> </td>
 
 					</tr>
 					
@@ -227,41 +227,9 @@
 			
 		}  // getList() 함수 end
 		
-		async function thumbsCount() {
-			await $.ajax({
-				url: "board_thumbs_count.do",
-				data: {
-					no : ${dto.getBoard_index()},
-					type : "${dto.getBoard_type()}"
-				},
-				success: function(count) {
-					$(".thumbs_count").html(count);
-				},
-				error: function() {
-					alert("데이터 통신 오류입니다!");
-				}
-			});
-		}
 		
-		function thumbsClick() {
-			$.ajax({
-				url : "board_thumbs.do",
-				datatype: "text",
-				data : {
-					no : ${dto.getBoard_index() },
-					id : "${member_id}",
-					board_id : "${dto.getBoard_writer_id() }",
-					type : "${dto.getBoard_type()}"
-				},
-				success : function(data) {
-					$("#thumbs").html(data);
-					thumbsCount();
-				},
-				error : function() {
-					alert('데이터 통신 오류입니다.');
-				}
-			});
-		}
+		
+		//<td> <img src="img/thumbup.png" width="30" height="30" id="thumbs" onclick="thumbsClick()"><span class="return thumbsCount()"></span></td>
 		
 		
 		$(".list").on("click", ".modify", function() {
@@ -353,6 +321,47 @@
 		await thumbsCount();
 		
 	}); // onload end //////////////////////////////////////////////////
+	
+	function thumbsCount() {
+		$.ajax({
+			url: "board_thumbs_count.do",
+			data: {
+				no : ${dto.getBoard_index()},
+				type : "${dto.getBoard_type()}"
+			},
+			success: function(count) {
+				$(".thumbs").html(count);
+			},
+			error: function() {
+				alert("데이터 통신 오류입니다!");
+			}
+		});
+	}
+	
+	function thumbsClick() {
+		$.ajax({
+			url : "board_thumbs.do",
+			datatype: "text",
+			data : {
+				no : ${dto.getBoard_index() },
+				id : "${member_id}",
+				board_id : "${dto.getBoard_writer_id() }",
+				type : "${dto.getBoard_type()}"
+			},
+			success : function(data) {
+				if(data == 'success') {
+					alert('좋아요 성공!');
+					thumbsCount();
+				}else {
+					alert('좋아요 취소 완료!');
+					thumbsCount();
+				}
+			},
+			error : function() {
+				alert('데이터 통신 오류입니다.');
+			}
+		});
+	}
 	
 	
 	window.onload = function() {

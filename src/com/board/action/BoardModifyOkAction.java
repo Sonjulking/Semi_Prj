@@ -112,15 +112,24 @@ public class BoardModifyOkAction implements Action {
 		if(check > 0) {
 			if(!dto.getBoard_type().equals(old_type)) {
 				BoardDTO cont = dao.boardContent(board_index, old_type);
+				int maxCount = dao.maxCount(board_type) + 1;
 				dao.deleteBoard(board_index, old_type);
 				dao.updateSequence(board_index, old_type);
 				dao.insertBoard(cont, board_type);
-				System.out.println("board_type" + board_type);
+				
+				System.out.println(maxCount);
+				
+				out.println("<script>");
+				out.println("alert('게시물 수정 성공')");
+				out.println("location.href='board_content.do?no="+maxCount+"&page="+nowPage+"&type="+board_type+"'");
+				out.println("</script>");
+			}else {
+				out.println("<script>");
+				out.println("alert('게시물 수정 성공')");
+				out.println("location.href='board_content.do?no="+board_index+"&page="+nowPage+"&type="+board_type+"'");
+				out.println("</script>");
 			}
-			out.println("<script>");
-			out.println("alert('게시물 수정 성공')");
-			out.println("location.href='board_content.do?no="+board_index+"&page="+nowPage+"&type="+board_type+"'");
-			out.println("</script>");
+			
 		}else {
 			out.println("<script>");
 			out.println("alert('게시물 수정 실패')");

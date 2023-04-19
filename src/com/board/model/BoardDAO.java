@@ -283,7 +283,33 @@ public class BoardDAO {
 	} // boardHit() end 
 	
 	
-	
+	public int maxCount(String type) {
+		int maxCount = 0;
+		
+		try {
+			openConn();
+			
+			sql = "select max(board_index) from "+type+"_board";
+			
+			pstmt = con.prepareStatement(sql);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				maxCount = rs.getInt(1);
+			}
+			
+			System.out.println("맥스카운트"+maxCount);
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			closeConn(rs, pstmt, con);
+		}
+		
+		return maxCount;
+	}
 	
 	public BoardDTO boardContent(int no, String type) {
 		
