@@ -1,0 +1,571 @@
+DB
+매칭DB : 게임명, 티어, 유저아이디, 유저닉네임, 디코닉네임,카톡 닉네임, 가입시간
+
+
+create table matching(
+game_name varchar2(30) check (game_name == 1),
+tier varchar2(20) not null,
+user_id varchar2(10) primary key,
+user_nickname varchar2(20) unique not null,
+discord_nickname varchar2(20) unique,
+kakao_id varchar2(10) unique,
+matching_regdate date not null enable
+);
+
+회원DB : 아이디, 비번, 닉네임, 선호게임(속성, 3개로 등록), 메일주소, 포인트, 가입일, 폰 번호
+
+create table member(
+member_index number(50) not null,
+member_id varchar2(10) primary key,
+member_pwd varchar2(12) not null,
+member_nickname varchar2(10) unique not null,
+member_pro_game varchar2(10),
+member_email varchar2(20),
+member_point numebr(100) not null,
+member_regdate date not null enable,
+member_phone varchar2(20) not null
+);
+
+게시판 DB : 제목, 내용, 글쓴이, 게시판 종류, 말머리, 조회수, 추천수, 등록시간
+create table board(
+board_index number primary key,
+board_title varchar2(100) not null,
+board_cont varchar2(10000),
+board_writer varchar2(30) not null,
+board_type varchar2(30) not null,
+board_heading varchar2(20) not null,
+board_hit number(5000) default 0,
+board_thumbs number(1000) default 0,
+board_date date not null enable
+);
+
+댓글 DB : 내용, 글쓴이, 등록시간, 추천수
+create table comment(
+comment_index number primary_key,
+comment_cont varchar2(10000),
+comment_writer varchar2(30) not null,
+commemt_regdate date not null enable,
+comment_hit number(5000) default 0
+);
+
+
+------------my sql --------------
+
+create table semiProject.member(
+member_index int not null unique,
+member_id varchar(50) primary key unique,
+member_pwd varchar(50) not null,
+member_nickname varchar(50) not null unique,
+member_email varchar(50) not null unique,
+member_point int default 0,
+member_regdate timestamp not null,
+member_phone varchar(50) not null,
+prefer_game1 varchar(50) default null,
+prefer_game2 varchar(50) default null,
+prefer_game3 varchar(50) default null 
+);
+
+create table free_board(
+board_type varchar(50) not null,
+board_index int primary key,
+board_title varchar(100) not null,
+board_cont varchar(10000),
+board_writer_id varchar(50) not null,
+ FOREIGN KEY (board_writer_id) REFERENCES
+ member(member_id) ON UPDATE CASCADE,
+board_writer_nickname varchar(50) not null,
+ FOREIGN KEY (board_writer_nickname) REFERENCES
+ member(member_nickname) ON UPDATE CASCADE,
+upload_file varchar(2000),
+upload_fileImg varchar(2000),
+board_heading varchar(20) not null,
+board_hit int default 0,
+board_thumbs int default 0,
+board_date timestamp not null,
+board_update timestamp
+);
+
+
+create table legend_board(
+board_type varchar(50) not null,
+board_index int primary key,
+board_title varchar(100) not null,
+board_cont varchar(10000),
+board_writer_id varchar(50) not null,
+ FOREIGN KEY (board_writer_id) REFERENCES
+ member(member_id) ON UPDATE CASCADE,
+board_writer_nickname varchar(50) not null,
+ FOREIGN KEY (board_writer_nickname) REFERENCES
+ member(member_nickname) ON UPDATE CASCADE,
+upload_file varchar(2000),
+upload_fileImg varchar(2000),
+board_heading varchar(20) not null,
+board_hit int default 0,
+board_thumbs int default 0,
+board_date timestamp not null,
+board_update timestamp
+);
+
+create table notice_board(
+board_type varchar(50) not null,
+board_index int primary key,
+board_title varchar(100) not null,
+board_cont varchar(10000),
+board_writer_id varchar(50) not null,
+ FOREIGN KEY (board_writer_id) REFERENCES
+ member(member_id) ON UPDATE CASCADE,
+board_writer_nickname varchar(50) not null,
+ FOREIGN KEY (board_writer_nickname) REFERENCES
+ member(member_nickname) ON UPDATE CASCADE,
+upload_file varchar(2000),
+upload_fileImg varchar(2000),
+board_heading varchar(20) not null,
+board_hit int default 0,
+board_thumbs int default 0,
+board_date timestamp not null,
+board_update timestamp
+);
+
+create table etc_board(
+board_type varchar(50) not null,
+board_index int primary key,
+board_title varchar(100) not null,
+board_cont varchar(10000),
+board_writer_id varchar(50) not null,
+ FOREIGN KEY (board_writer_id) REFERENCES
+ member(member_id) ON UPDATE CASCADE,
+board_writer_nickname varchar(50) not null,
+ FOREIGN KEY (board_writer_nickname) REFERENCES
+ member(member_nickname) ON UPDATE CASCADE,
+upload_file varchar(2000),
+upload_fileImg varchar(2000),
+board_heading varchar(20) not null,
+board_hit int default 0,
+board_thumbs int default 0,
+board_date timestamp not null,
+board_update timestamp
+);
+
+
+create table comment(
+comment_index int primary key,
+comment_cont varchar(5000),
+comment_writer_id varchar(50) not null,
+FOREIGN KEY (comment_writer_id) REFERENCES
+member(member_id) ON UPDATE CASCADE,
+comment_writer_nickname varchar(50) not null,
+FOREIGN KEY (comment_writer_nickname) REFERENCES
+ member(member_nickname) ON UPDATE CASCADE,
+commemt_date timestamp not null,
+commemt_update timestamp,
+comment_hit int default 0
+);
+
+create table matching(
+matched boolean default 0,
+accept boolean default 0,
+game_name varchar(50) not null,
+tier varchar(50) not null,
+matching_user_id varchar(50) primary key,
+FOREIGN KEY (matching_user_id) REFERENCES
+ member(member_id) ON UPDATE CASCADE,
+matching_user_nickname varchar(50) unique not null,
+FOREIGN KEY (matching_user_nickname) REFERENCES
+ member(member_nickname) ON UPDATE CASCADE,
+discord_nickname varchar(50) unique,
+kakao_id varchar(50) unique,
+matching_regdate timestamp
+);
+
+
+commit;
+
+----------------------------------------------------------------------------------------------------------------
+create table semiProject.member(
+member_index int not null unique,
+member_id varchar(50) primary key unique,
+member_pwd varchar(50) not null,
+member_nickname varchar(50) not null unique,
+member_email varchar(50) not null unique,
+member_point int default 0,
+member_regdate timestamp not null,
+member_phone varchar(50) not null,
+prefer_game1 varchar(50) default null,
+prefer_game2 varchar(50) default null,
+prefer_game3 varchar(50) default null 
+);
+
+create table free_board(
+board_type varchar(50) not null,
+board_index int primary key,
+board_title varchar(100) not null,
+board_cont varchar(10000),
+board_writer_id varchar(50) not null,
+ FOREIGN KEY (board_writer_id) REFERENCES
+ member(member_id) ON UPDATE CASCADE,
+board_writer_nickname varchar(50) not null,
+ FOREIGN KEY (board_writer_nickname) REFERENCES
+ member(member_nickname) ON UPDATE CASCADE,
+upload_file varchar(2000),
+upload_fileImg varchar(2000),
+board_heading varchar(20) not null,
+board_hit int default 0,
+board_thumbs int default 0,
+board_date timestamp not null,
+board_update timestamp
+);
+
+
+create table legend_board(
+board_type varchar(50) not null,
+board_index int primary key,
+board_title varchar(100) not null,
+board_cont varchar(10000),
+board_writer_id varchar(50) not null,
+ FOREIGN KEY (board_writer_id) REFERENCES
+ member(member_id) ON UPDATE CASCADE,
+board_writer_nickname varchar(50) not null,
+ FOREIGN KEY (board_writer_nickname) REFERENCES
+ member(member_nickname) ON UPDATE CASCADE,
+upload_file varchar(2000),
+upload_fileImg varchar(2000),
+board_heading varchar(20) not null,
+board_hit int default 0,
+board_thumbs int default 0,
+board_date timestamp not null,
+board_update timestamp
+);
+
+create table notice_board(
+board_type varchar(50) not null,
+board_index int primary key,
+board_title varchar(100) not null,
+board_cont varchar(10000),
+board_writer_id varchar(50) not null,
+ FOREIGN KEY (board_writer_id) REFERENCES
+ member(member_id) ON UPDATE CASCADE,
+board_writer_nickname varchar(50) not null,
+ FOREIGN KEY (board_writer_nickname) REFERENCES
+ member(member_nickname) ON UPDATE CASCADE,
+upload_file varchar(2000),
+upload_fileImg varchar(2000),
+board_heading varchar(20) not null,
+board_hit int default 0,
+board_thumbs int default 0,
+board_date timestamp not null,
+board_update timestamp
+);
+
+create table etc_board(
+board_type varchar(50) not null,
+board_index int primary key,
+board_title varchar(100) not null,
+board_cont varchar(10000),
+board_writer_id varchar(50) not null,
+ FOREIGN KEY (board_writer_id) REFERENCES
+ member(member_id) ON UPDATE CASCADE,
+board_writer_nickname varchar(50) not null,
+ FOREIGN KEY (board_writer_nickname) REFERENCES
+ member(member_nickname) ON UPDATE CASCADE,
+upload_file varchar(2000),
+upload_fileImg varchar(2000),
+board_heading varchar(20) not null,
+board_hit int default 0,
+board_thumbs int default 0,
+board_date timestamp not null,
+board_update timestamp
+);
+
+
+create table etc_comment(
+comment_index int primary key,
+board_comment_index int not null,
+FOREIGN KEY (board_comment_index) REFERENCES
+etc_board(board_index) ON UPDATE CASCADE,
+comment_cont varchar(5000),
+comment_writer_id varchar(50) not null,
+FOREIGN KEY (comment_writer_id) REFERENCES
+member(member_id) ON UPDATE CASCADE,
+comment_writer_nickname varchar(50) not null,
+FOREIGN KEY (comment_writer_nickname) REFERENCES
+ member(member_nickname) ON UPDATE CASCADE,
+commemt_date timestamp not null,
+commemt_update timestamp,
+comment_hit int default 0
+);
+
+create table matching(
+matched boolean default 0,
+accept boolean default 0,
+game_name varchar(50) not null,
+tier varchar(50) not null,
+matching_user_id varchar(50) primary key,
+FOREIGN KEY (matching_user_id) REFERENCES
+ member(member_id) ON UPDATE CASCADE,
+matching_user_nickname varchar(50) unique not null,
+FOREIGN KEY (matching_user_nickname) REFERENCES
+ member(member_nickname) ON UPDATE CASCADE,
+discord_nickname varchar(50) unique,
+kakao_id varchar(50) unique,
+matching_regdate timestamp
+);
+
+
+commit;
+
+
+create table legend_comment(
+comment_index int primary key,
+board_comment_index int not null,
+FOREIGN KEY (board_comment_index) REFERENCES
+legend_board(board_index) ON UPDATE CASCADE,
+comment_cont varchar(5000),
+comment_writer_id varchar(50) not null,
+FOREIGN KEY (comment_writer_id) REFERENCES
+member(member_id) ON UPDATE CASCADE,
+comment_writer_nickname varchar(50) not null,
+FOREIGN KEY (comment_writer_nickname) REFERENCES
+ member(member_nickname) ON UPDATE CASCADE,
+commemt_date timestamp not null,
+commemt_update timestamp,
+comment_hit int default 0
+);
+
+create table free_comment(
+comment_index int primary key,
+board_comment_index int not null,
+FOREIGN KEY (board_comment_index) REFERENCES
+free_board(board_index) ON UPDATE CASCADE,
+comment_cont varchar(5000),
+comment_writer_id varchar(50) not null,
+FOREIGN KEY (comment_writer_id) REFERENCES
+member(member_id) ON UPDATE CASCADE,
+comment_writer_nickname varchar(50) not null,
+FOREIGN KEY (comment_writer_nickname) REFERENCES
+ member(member_nickname) ON UPDATE CASCADE,
+commemt_date timestamp not null,
+commemt_update timestamp,
+comment_hit int default 0
+);
+
+create table notice_comment(
+comment_index int primary key,
+board_comment_index int not null,
+FOREIGN KEY (board_comment_index) REFERENCES
+notice_board(board_index) ON UPDATE CASCADE,
+comment_cont varchar(5000),
+comment_writer_id varchar(50) not null,
+FOREIGN KEY (comment_writer_id) REFERENCES
+member(member_id) ON UPDATE CASCADE,
+comment_writer_nickname varchar(50) not null,
+FOREIGN KEY (comment_writer_nickname) REFERENCES
+ member(member_nickname) ON UPDATE CASCADE,
+commemt_date timestamp not null,
+commemt_update timestamp,
+comment_hit int default 0
+);
+
+commit;
+---------------------------------------------------------
+create table semiProject.member(
+member_index int not null unique,
+member_id varchar(50) primary key unique,
+member_pwd varchar(50) not null,
+member_nickname varchar(50) not null unique,
+member_email varchar(50) not null unique,
+member_point int default 0,
+member_regdate timestamp not null,
+member_phone varchar(50) not null,
+prefer_game1 varchar(50) default null,
+prefer_game2 varchar(50) default null,
+prefer_game3 varchar(50) default null
+);
+
+create table free_board(
+board_type varchar(50) not null,
+board_index int primary key,
+board_title varchar(100) not null,
+board_cont varchar(10000),
+board_writer_id varchar(50) not null,
+ FOREIGN KEY (board_writer_id) REFERENCES
+ member(member_id) ON UPDATE CASCADE ON DELETE CASCADE,
+board_writer_nickname varchar(50) not null,
+ FOREIGN KEY (board_writer_nickname) REFERENCES
+ member(member_nickname) ON UPDATE CASCADE ON DELETE CASCADE,
+upload_file varchar(2000),
+upload_fileImg varchar(2000),
+board_heading varchar(20) not null,
+board_hit int default 0,
+board_thumbs int default 0,
+board_date timestamp not null,
+board_update timestamp
+);
+
+
+create table legend_board(
+board_type varchar(50) not null,
+board_index int primary key,
+board_title varchar(100) not null,
+board_cont varchar(10000),
+board_writer_id varchar(50) not null,
+ FOREIGN KEY (board_writer_id) REFERENCES
+ member(member_id) ON UPDATE CASCADE ON DELETE CASCADE,
+board_writer_nickname varchar(50) not null,
+ FOREIGN KEY (board_writer_nickname) REFERENCES
+ member(member_nickname) ON UPDATE CASCADE ON DELETE CASCADE,
+upload_file varchar(2000),
+upload_fileImg varchar(2000),
+board_heading varchar(20) not null,
+board_hit int default 0,
+board_thumbs int default 0,
+board_date timestamp not null,
+board_update timestamp
+);
+
+create table notice_board(
+board_type varchar(50) not null,
+board_index int primary key,
+board_title varchar(100) not null,
+board_cont varchar(10000),
+board_writer_id varchar(50) not null,
+ FOREIGN KEY (board_writer_id) REFERENCES
+ member(member_id) ON UPDATE CASCADE ON DELETE CASCADE,
+board_writer_nickname varchar(50) not null,
+ FOREIGN KEY (board_writer_nickname) REFERENCES
+ member(member_nickname) ON UPDATE CASCADE ON DELETE CASCADE,
+upload_file varchar(2000),
+upload_fileImg varchar(2000),
+board_heading varchar(20) not null,
+board_hit int default 0,
+board_thumbs int default 0,
+board_date timestamp not null,
+board_update timestamp
+);
+
+create table etc_board(
+board_type varchar(50) not null,
+board_index int primary key,
+board_title varchar(100) not null,
+board_cont varchar(10000),
+board_writer_id varchar(50) not null,
+ FOREIGN KEY (board_writer_id) REFERENCES
+ member(member_id) ON UPDATE CASCADE ON DELETE CASCADE,
+board_writer_nickname varchar(50) not null,
+ FOREIGN KEY (board_writer_nickname) REFERENCES
+ member(member_nickname)ON UPDATE CASCADE ON DELETE CASCADE,
+upload_file varchar(2000),
+upload_fileImg varchar(2000),
+board_heading varchar(20) not null,
+board_hit int default 0,
+board_thumbs int default 0,
+board_date timestamp not null,
+board_update timestamp
+);
+
+
+create table etc_comment(
+comment_index int primary key,
+board_comment_index int not null,
+FOREIGN KEY (board_comment_index) REFERENCES
+etc_board(board_index) ON UPDATE CASCADE ON DELETE CASCADE,
+comment_cont varchar(5000),
+comment_writer_id varchar(50) not null,
+FOREIGN KEY (comment_writer_id) REFERENCES
+member(member_id) ON UPDATE CASCADE ON DELETE CASCADE,
+comment_writer_nickname varchar(50) not null,
+FOREIGN KEY (comment_writer_nickname) REFERENCES
+ member(member_nickname) ON UPDATE CASCADE ON DELETE CASCADE,
+commemt_date timestamp not null,
+commemt_update timestamp,
+comment_hit int default 0
+);
+
+create table matching(
+matched varchar(20) default 0,
+accept varchar(20) default 0,
+game_name varchar(50) not null,
+tier varchar(50) not null,
+matching_user_id varchar(50) primary key,
+FOREIGN KEY (matching_user_id) REFERENCES
+ member(member_id) ON UPDATE CASCADE ON DELETE CASCADE ,
+matching_user_nickname varchar(50) unique not null,
+FOREIGN KEY (matching_user_nickname) REFERENCES
+ member(member_nickname) ON UPDATE CASCADE ON DELETE CASCADE ,
+discord_nickname varchar(50) unique,
+kakao_id varchar(50) unique,
+matching_regdate timestamp
+);
+
+
+commit;
+
+
+create table legend_comment(
+comment_index int primary key,
+board_comment_index int not null,
+FOREIGN KEY (board_comment_index) REFERENCES
+legend_board(board_index) ON UPDATE CASCADE ON DELETE CASCADE,
+comment_cont varchar(5000),
+comment_writer_id varchar(50) not null,
+FOREIGN KEY (comment_writer_id) REFERENCES
+member(member_id) ON UPDATE CASCADE ON DELETE CASCADE,
+comment_writer_nickname varchar(50) not null,
+FOREIGN KEY (comment_writer_nickname) REFERENCES
+ member(member_nickname) ON UPDATE CASCADE ON DELETE CASCADE,
+commemt_date timestamp not null,
+commemt_update timestamp,
+comment_hit int default 0
+);
+
+create table free_comment(
+comment_index int primary key,
+board_comment_index int not null,
+FOREIGN KEY (board_comment_index) REFERENCES
+free_board(board_index) ON UPDATE CASCADE ON DELETE CASCADE,
+comment_cont varchar(5000),
+comment_writer_id varchar(50) not null,
+FOREIGN KEY (comment_writer_id) REFERENCES
+member(member_id) ON UPDATE CASCADE ON DELETE CASCADE,
+comment_writer_nickname varchar(50) not null,
+FOREIGN KEY (comment_writer_nickname) REFERENCES
+ member(member_nickname) ON UPDATE CASCADE ON DELETE CASCADE,
+commemt_date timestamp not null,
+commemt_update timestamp,
+comment_hit int default 0
+);
+
+create table notice_comment(
+comment_index int primary key,
+board_comment_index int not null,
+FOREIGN KEY (board_comment_index) REFERENCES
+notice_board(board_index) ON UPDATE CASCADE ON DELETE CASCADE,
+comment_cont varchar(5000),
+comment_writer_id varchar(50) not null,
+FOREIGN KEY (comment_writer_id) REFERENCES
+member(member_id) ON UPDATE CASCADE ON DELETE CASCADE,
+comment_writer_nickname varchar(50) not null,
+FOREIGN KEY (comment_writer_nickname) REFERENCES
+ member(member_nickname) ON UPDATE CASCADE ON DELETE CASCADE,
+commemt_date timestamp not null,
+commemt_update timestamp,
+comment_hit int default 0
+);
+
+create table board_thumbs(
+
+member_id varchar(50) not null,
+FOREIGN KEY (member_id) REFERENCES
+member(member_id) ON UPDATE CASCADE ON DELETE CASCADE,
+board_type varchar(50) not null,
+board_index int not null
+
+);
+
+
+commit;
+
+alter table member  add is_Activation boolean default 0; 
+
+drop table notice_board;
+
+

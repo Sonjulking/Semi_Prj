@@ -1,0 +1,203 @@
+/* 바디 전체 */
+@font-face {
+	font-family: "pixel"; /* 사용하고 싶은 font-family명을 지정 */
+	src: url("./font/neodgm.woff") format("opentype"); /* 폰트파일 불러오기 */
+}
+
+body {
+  /* background-color: #f5dcaa; */
+
+  /* background-image: url("../img/869ps2.png"); */
+
+  height: 1080px;
+
+  background-color: #212529;
+  /* background-color: #0b7efb; */
+}
+
+.title {
+  font-size: 30px !important;
+  position: relative;
+  top: -15px;
+}
+.box_text {
+  font-size: 100px;
+  font-family: "pixel", sans-serif;
+  text-align: center;
+}
+/* 로그인 회원가입 */
+.login_wrap .Login {
+  color: aliceblue;
+}
+
+/* 메뉴바 설정 */
+.navcolor {
+  box-sizing: content-box !important;
+  padding: 0px !important;
+}
+
+.main_box1 {
+  position: absolute;
+  width: 400px;
+  height: 675px;
+
+  margin-right: 625px;
+}
+
+.main_box2 {
+  position: absolute;
+  width: 400px;
+  height: 675px;
+  border-radius: 5px;
+  margin-left: 625px;
+}
+
+.main_wrap {
+	padding-top: 50px;
+	padding-left: 350px;
+	padding-right: 350px;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-evenly;
+}
+
+.main_wrap a {
+	color: aliceblue;
+	text-decoration: none;
+}
+
+.item {
+  border: 2px dashed aliceblue;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  align-content: center;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 10px;
+}
+
+.item:hover {
+	background-color: rgb(172, 172, 172);
+}
+
+.ranking {
+	font-weight: 999;
+	font-size: 15pt;
+	font-style: italic;
+	text-decoration: underline;
+	color: aliceblue;
+	margin-right: 5px;
+}
+
+.sumimg {
+	width: 75px;
+	height: 75px;
+}
+
+.date_writer_con {
+	margin-top: 5px;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.date {
+	font-size: 10pt;
+}
+
+.writer {
+	margin-top: 2px;
+	margin-left: 10px;
+	margin-right: 10px;
+	font-size: 7pt;
+	color: antiquewhite;
+	font-weight: bold;
+}
+
+.comment {
+	font-size: 5pt;
+}
+
+.matching-img {
+	position: relative;
+	top: 75px;
+	left: 250px;
+	transform: translate(-50%);
+	display: block;
+	margin: auto;
+	width: 450px;
+	height: 225px;
+}
+
+#match-btn1 {
+  color: aliceblue;
+  margin-top: 100px;
+  box-sizing: border-box;
+  position: relative;
+  width: 150px;
+  height: 50px;
+  text-align: center !important;
+  padding-bottom: 40px !important;
+}
+#match-btn1:hover {
+  background-color: rgb(172, 172, 172);
+}
+#match-btn2 {
+  color: aliceblue;
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%);
+  width: 150px;
+  height: 50px;
+  background-color: rgba(0, 0, 0, 0);
+  border: 2px solid aliceblue;
+  border-radius: 3px;
+}
+
+#foot {
+  padding-top: 5px;
+  margin-top: 150px;
+  border-top: 1px solid aliceblue;
+
+  color: aliceblue;
+  text-align: center;
+  font-size: 15px;
+}
+
+/* 캐릭터 이미지 */
+.ruru {
+	display: inline-block;
+	position: relative;
+	left: -25%;
+	width: 200px;
+	height: 200px;
+}
+
+.timo {
+  display: inline-block;
+  position: relative;
+  left: +48%;
+  width: 200px;
+  height: 200px;
+}
+
+.nar {
+  display: inline-block;
+  position: relative;
+  left: -40%;
+  transform: translate(-50%, +160%);
+  width: 200px;
+  height: 200px;
+}
+
+.youme {
+  display: inline-block;
+  position: relative;
+  left: +32%;
+  transform: translate(-45%, +155%);
+  width: 200px;
+  height: 200px;
+}

@@ -1,0 +1,169 @@
+/* cdn import */
+@import
+	url("https://fonts.googleapis.com/css2?family=Dongle:wght@700&display=swap")
+	;
+
+@font-face {
+	font-family: "pixel"; /* 사용하고 싶은 font-family명을 지정 */
+	src: url("./font/DungGeunMo.woff") format("opentype"); /* 폰트파일 불러오기 */
+}
+
+body {
+  font-family: "pixel" !important;
+  cursor: auto !important;
+  /* color: rgb(0, 0, 0); */
+
+	/* background-color: #303030; */
+	/* background-color: rgb(255, 255, 255); */
+	/* font-family: "Quicksand", sans-serif; */
+}
+
+#murshroom {
+	position:relative;
+	width: 30px;
+	height: 30px;
+}
+
+/* 아이콘  */
+#logo {
+	width: 100px;
+	height: 100px;
+	margin-left: 70px;
+}
+
+.main_header_wrap {
+	padding: 5px;
+	display: flex;
+	justify-content: space-between;
+}
+
+.login_wrap a {
+
+  color: white;
+  text-decoration-line: none;
+  font-size: 25px;
+}
+
+.login_wrap a :hover {
+  color: rgb(172, 172, 172) !important;
+  text-decoration-line: underline;
+  font-size: 25px;
+
+}
+/* a {
+  color: salmon;
+}
+nav ul {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  list-style: none;
+  border-top: 3px solid #814efa;
+  border-bottom: 3px solid #814efa;
+  text-align: center;
+  padding: 20px;
+}
+
+nav ul li {
+  font-weight: 600;
+  font-size: 20pt;
+  color: #814efa;
+} */
+
+/* 여기부터 페이지 제목 설정 전까지 메뉴 바 밑줄 설정 */
+
+/* nav ul a::before {
+  content: "";
+  height: 3px;
+  width: 0;
+  /* background-color: black; */
+/* transition: 0.3s;
+  position: absolute;
+  bottom: 0;
+  left: 48%;
+  margin-bottom: 0px;
+} */
+
+/* nav ul a:hover::before {
+  width: 50%;
+  background-color: rgb(255, 145, 163);
+}
+
+nav ul a::after {
+  content: "";
+  height: 3px;
+  width: 0;
+  background-color: #fff;
+  border-radius: 10px;
+  transition: 0.3s;
+  position: absolute;
+  bottom: 0;
+  right: 48%;
+  margin-bottom: 0px;
+}
+
+nav ul a:hover::after {
+  width: 50%;
+  background-color: rgb(255, 145, 163);
+} */
+
+/* 페이지 제목 설정 */
+#main_logo_text {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%);
+  font-size: 50px;
+  font-family: "pixel", sans-serif;
+  margin-bottom: 1px;
+}
+
+nav ul a:link,
+#logo_link {
+  color: aliceblue;
+  text-decoration: none;
+
+}
+
+nav ul a:visited {
+
+  color: aliceblue;
+  text-decoration: none;
+}
+nav ul a:hover {
+  color: rgb(172, 172, 172);
+  text-decoration: underline;
+}
+
+nav ul a:active {
+	color: pink;
+	text-decoration: none;
+}
+
+nav ul {
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  list-style: none;
+  border-bottom-color: white !important;
+  border-top-color: white !important;
+  /* border-top: 3px solid #814efa; */
+  /* border-top: 3px solid #814efa; */
+  /* border-bottom: 3px solid #814efa; */
+  text-align: center;
+  padding-top: 0px;
+  padding-bottom: 5px;
+  font-weight: 200;
+  font-size: 25pt;
+  margin-top: 0px;
+  margin-bottom: 10px;
+  font-family: "pixel", sans-serif;
+
+}
+
+.box_text {
+	font-size: 30px;
+	margin-top: 8px;
+	margin-bottom: 8px;
+}
